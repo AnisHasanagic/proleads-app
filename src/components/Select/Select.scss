@@ -1,0 +1,140 @@
+@import "../../variables.scss";
+
+.selectGroup {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+
+  &:hover {
+    .errors {
+      opacity: 1;
+    }
+  }
+
+  label {
+    margin-bottom: 10px;
+    display: block;
+
+    .required {
+      color: red;
+    }
+  }
+
+  .inputInner {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+    transition: 200ms;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 2px solid transparent;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 20%;
+      height: 3px;
+      background: #2748f1;
+      transition: 200ms;
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+        background: $light-gold;
+      }
+
+      .prepend {
+        color: $light-gold;
+      }
+    }
+  }
+
+  + .inputGroup {
+    margin-top: 15px;
+  }
+
+  .formControl {
+    display: block;
+    flex: 1;
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    background-color: $body-color;
+    background-clip: padding-box;
+    border: 0;
+    outline: none;
+  }
+
+  &.large {
+    .formControl {
+      padding: 1rem;
+    }
+  }
+
+  &.error {
+    label {
+        color: $alert-error-text;
+    }
+    .inputInner {
+        border-color: $alert-error-text!important;
+        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    .prepend {
+        color: $alert-error-text;
+    }
+
+    .formControl {
+      padding-right: 40px;
+    }
+}
+
+  &.light {
+    .inputInner {
+      border-radius: 10px;
+      box-shadow: none;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .formControl {
+      background: #f4f5f9;
+    }
+
+    .prepend,
+    .append {
+      background: #f4f5f9;
+      color: #2a456b;
+    }
+  }
+
+  .prepend,
+  .append {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem 0.75rem;
+    background: #2748f1;
+    transition: 200ms;
+    color: #fff;
+  }
+
+  .errorMessage {
+    margin: 0;
+    margin-top: 5px;
+    font-size: 0.9em;
+    line-height: 1.1em;
+    text-align: left;
+    color: $alert-error-text;
+    width: 100%;
+  }
+}

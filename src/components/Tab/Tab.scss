@@ -1,0 +1,18 @@
+@import '../../variables.scss';
+
+.tab {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    transition: .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 200px;
+
+    p {
+        z-index: 1;
+    }
+}

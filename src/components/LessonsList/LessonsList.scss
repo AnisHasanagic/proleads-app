@@ -1,0 +1,96 @@
+@import "../../variables.scss";
+
+.lessons-list {
+    width: 340px;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background: $box-color;
+    z-index: 10;
+    padding: 20px;
+    transform: translateX(400px);
+    transition: 200ms;
+    box-shadow: -50px 0 100px rgba($body-color, 1);
+    display: flex;
+    flex-direction: column;
+
+    &.isCoursePage {
+        position: relative;
+        flex: 1;
+        height: 100%;
+        margin: 0;
+        border-radius: 0;
+        transform: none;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+
+        .lessons {
+            background: transparent;
+            margin: 0;
+            padding: 0 20px;
+            margin-right: -20px;
+        }
+    }
+
+    .details {
+        .title {
+            > h3 {
+                font-weight: 700;
+                font-size: 1.2em;
+            }
+
+            > p {
+                color: $light-text-color;
+                font-size: 0.9em;
+            }
+        }
+
+        .close {
+            flex: 0 0 auto;
+            width: 40px;
+            height: 40px;
+            background-color: $box-color;
+            border-radius: 10px;
+            border: 1px solid $footer-color;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 200ms;
+
+            &:hover {
+                background-color: $footer-color;
+            }
+        }
+    }
+
+    &.active {
+        transform: translateX(0);
+    }
+
+    .lessons {
+        padding: 0;
+        overflow: hidden;
+        overflow-y: auto;
+        flex: 1;
+        margin-top: 20px;
+        padding: 0 20px;
+        margin: 0 -20px;
+        margin-top: 20px;
+    }
+
+    @media screen and (max-width: 1024px) {
+        &.isCoursePage {
+            width: 100%;
+            
+            .lessons {
+                margin-right: 0;
+                margin: 0 -20px;
+                margin-top: 30px;
+            }
+        }
+    }
+}

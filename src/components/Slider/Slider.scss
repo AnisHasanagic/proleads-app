@@ -1,0 +1,110 @@
+@import '../../variables.scss';
+
+.inputSwitch {
+    display: flex;
+    flex-direction: column;
+
+    .realLabel {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    &.small {
+        margin-bottom: 10px!important;
+
+        .switch {
+            width: 50px;
+            height: 20px;
+
+            .slider {
+                &:before {
+                    height: 16px;
+                    width: 16px;
+                    left: 6px;
+                    bottom: 2px;
+                }
+            }
+
+            input {
+                &:checked + .slider:before {
+                    -webkit-transform: translateX(22px);
+                    -ms-transform: translateX(22px);
+                    transform: translateX(22px);
+                }
+            }
+        }
+    }
+
+    .switch {
+        position: relative;
+        display: block;
+        width: 60px;
+        height: 30px;
+        margin-right: 10px;
+        flex: 0 0 auto;
+
+        input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+
+            &:checked + .slider {
+                background: $box-color;
+            }
+
+            &:checked + .slider:before {
+                -webkit-transform: translateX(24px);
+                -ms-transform: translateX(24px);
+                transform: translateX(24px);
+                background: $blue-color;
+                opacity: 1;
+            }
+    
+            &:disabled + .slider {
+                opacity: 0.5;
+            }
+        }
+    
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: $box-color;
+            -webkit-transition: .4s;
+            transition: .4s;
+    
+            &:before {
+                position: absolute;
+                content: "";
+                height: 24px;
+                width: 24px;
+                left: 6px;
+                bottom: 3px;
+                background: $blue-color;
+                -webkit-transition: .4s;
+                transition: .4s;
+                opacity: 0.5;
+                z-index: 1;
+            }
+    
+            &.round {
+                border-radius: 100px;
+    
+                &::before {
+                    border-radius: 100px;
+                }
+            }
+        }
+    }
+
+    &.light {
+        .switch {
+            .slider {
+                background: $box-color;
+            }
+        }
+    }
+}

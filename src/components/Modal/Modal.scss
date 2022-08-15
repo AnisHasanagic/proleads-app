@@ -1,0 +1,92 @@
+@import "../../variables.scss";
+
+.modal {
+    z-index: 50;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+
+    .modal-overlay {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: rgb(22 29 45 / 70%);
+        opacity: 0;
+        transition: 200ms;
+    }
+
+    .modal-content {
+        max-width: 800px;
+        margin: 0 50px;
+        padding: 30px;
+        background: #161d2d;
+        z-index: 40;
+        position: relative;
+        box-shadow: 0px 10px 1000px 0 rgb(0 0 0 / 50%);
+        border-radius: 15px;
+        max-height: 90%;
+        overflow: hidden;
+        overflow-y: auto;
+        transform: translateY(-1000px);
+        transition: 200ms;
+        min-width: 600px;
+
+        .close {
+            padding: 20px;
+            border: 1px solid $footer-color;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px 0 rgba(#000, 0.5);
+            background-color: $box-color;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            right: 40px;
+            top: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 200ms;
+            z-index: 10;
+
+            &:hover {
+                color: $light-text-color;
+            }
+        }
+    }
+
+    &.show {
+        opacity: 1;
+        pointer-events: all;
+
+        .modal-overlay {
+            opacity: 1;
+        }
+
+        .modal-content {
+            transform: none;
+        }
+    }
+
+    @media screen and (max-width: 640px) {
+        .modal-content {
+            height: 100%;
+            max-height: none;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            border-radius: 0;
+            min-width: auto;
+        }
+    }
+}

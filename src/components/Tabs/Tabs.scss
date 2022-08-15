@@ -1,0 +1,10 @@
+@import '../../variables.scss';
+
+.tabs {
+    display: flex;
+    height: 70px;
+
+    &.small {
+        height: 45px;
+    }
+}

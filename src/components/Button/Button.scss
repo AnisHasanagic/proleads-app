@@ -1,0 +1,205 @@
+@import '../../variables.scss';
+
+.btn {
+  display: flex;
+  padding: 0 35px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  transition: 200ms;
+  position: relative;
+  height: 40px;
+  box-shadow: none;
+  font-weight: 700;
+  border-radius: 10px;
+
+  > span {
+    z-index: 1;
+  }
+
+  .text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  &.iconOnly {
+    height: 50px;
+    flex: 0 0 auto;
+    width: 50px;
+    padding: 0;
+    font-size: 20px;
+  }
+
+  &.rounded {
+    border-radius: 100px;
+  }
+
+  &.loading {
+      .text {
+          opacity: 0;
+      }
+
+      .prepend, .append {
+          opacity: 0;
+      }
+  }
+
+  &.line {
+    background: transparent;
+    border: 1px solid $button;
+    color: $button;
+  }
+
+  &.large {
+    width: 100%;
+  }
+
+  &.big {
+    height: 50px;
+    font-weight: 700;
+  }
+
+  &.small {
+    height: 30px;
+    padding: 0 25px;
+  }
+
+  &.right {
+    margin-left: auto;
+  }
+
+  &.center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &.primary {
+    color: #000;
+
+    &.line {
+      background: transparent;
+      border: 1px solid $button-primary;
+      color: $button-primary;
+    }
+
+    background: linear-gradient(300deg, $light-gold 0%, $dark-gold 100%);
+    background-size: 200%;
+    transition: 200ms;
+
+    &:hover, &.active {
+        color: #fff;
+        background-position: 100%;
+    }
+  }
+
+  &.danger {
+    &.line {
+      background: transparent;
+      border: 1px solid $button-danger;
+      color: $button-danger;
+    }
+
+    &:hover, &.active {
+      box-shadow: 0 2px 5px 0 rgba($button-danger, .4);
+    }
+  }
+
+  &.success {
+    &.line {
+      background: transparent;
+      border: 1px solid $button-success;
+      color: $button-success;
+    }
+
+    &:hover, &.active {
+      box-shadow: 0 2px 5px 0 rgba($button-success, .4);
+    }
+  }
+
+  &.warning {
+    &.line {
+      background: transparent;
+      border: 1px solid $button-warning;
+      color: $button-warning;
+    }
+
+    &:hover, &.active {
+      box-shadow: 0 2px 5px 0 rgba($button-warning, .4);
+    }
+  }
+
+  &.secondary {
+    background: $button-secondary;
+    color: #fff;
+
+    &:hover, &.active {
+        background: adjust-hue($button-secondary, -5deg);
+    }
+
+    &.line {
+        background: transparent;
+        border: 1px solid $button-secondary;
+        color: $button-secondary;
+    }
+  }
+
+  &.info {
+    &.line {
+      background: transparent;
+      border: 1px solid $button-info;
+      color: $button-info;
+    }
+
+    &:hover, &.active {
+      box-shadow: 0 2px 5px 0 rgba($button-info, .4);
+    }
+  }
+
+
+  &.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    filter: grayscale(1);
+
+    &.line {
+      background: transparent;
+      border: 1px solid $button-disabled;
+      color: $button-disabled;
+    }
+
+    &:hover, &.active {
+      box-shadow: 0 2px 5px 0 rgba($button-disabled, .4);
+    }
+  }
+
+  &.transparent {
+    color: #fff;
+
+    &.line {
+      background: transparent;
+      border: 1px solid $button-primary;
+      color: $button-primary;
+    }
+
+    &:hover, &.active {
+      box-shadow: none;
+      background: transparent;
+      color: $time-blue;
+    }
+  }
+
+
+  &:active {
+    transform: translateY(2px);
+  }
+
+  .prepend {
+    margin-right: 10px;
+  }
+}
