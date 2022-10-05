@@ -10,26 +10,58 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import { GuestRoute } from "./components/GuestRoute/GuestRoute";
 
 const Auth = React.lazy(() => import("./containers/Auth/Auth"));
-
-
+const AdminUsers = React.lazy(()=>import("./containers/AdminPanel/AdminUsers/AdminUsers"))
+const AdminCompany = React.lazy(()=>import("./containers/AdminPanel/AdminCompany/AdminCompanies"))
+const Dashboard = React.lazy(()=>import("./containers/Dashboard/Dashboard"))
 function App() {
     return (
         <Provider store={store}>
+            <BrowserRouter>
                 <Routes>
-                    
                     <Route
-                        path="/auth"
+                        path="/dashboard"
+                        element={
+                            <React.Suspense fallback={<>...</>}>
+                                   
+                                    <Dashboard />
+                                    
+                            </React.Suspense>
+                        }
+                    />
+                    <Route
+                        path="/"
                         element={
                             <React.Suspense fallback={<>...</>}>
                                     <Auth />
                             </React.Suspense>
                         }
                     />
-        
+                    <Route
+                        path="/dashboard/admin-panel/users"
+                        element={
+                            <React.Suspense fallback={<>...</>}>
+
+                                    <AdminUsers />
+                                    
+                            </React.Suspense>
+                        }
+                    />
+                    <Route
+                        path="/dashboard/admin-panel/company"
+                        element={
+                            <React.Suspense fallback={<>...</>}>
+                                
+                                    <AdminCompany />
+                                    
+                            </React.Suspense>
+                        }
+                    />
                 </Routes>
+                </BrowserRouter>
         </Provider>
     );
 }

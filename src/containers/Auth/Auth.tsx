@@ -1,6 +1,5 @@
 import React, { Suspense, useEffect, useState } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, ButtonTypes } from "../../components/Button/Button";
@@ -37,13 +36,11 @@ function Auth() {
         });
     };
 
-    
-    
 
     const loginUser = (): void => {
         dispatch(
             login(
-                newLoginUser.email,
+                newLoginUser.username,
                 newLoginUser.password,
                 navigate,
             )
@@ -73,9 +70,11 @@ function Auth() {
     }, [user.token]);
 
     return (
-        <Form>
+        <div id="auth">
+        <h1>Sign in</h1>
+        <Form className="sign">
         <Input
-            id={"loginEmail"}
+            id={"loginUsername"}
             type={"username"}
             name={"username"}
             value={newLoginUser["username"]}
@@ -114,6 +113,7 @@ function Auth() {
             Sign In
         </Button>
     </Form>
+    </div>
     );
 }
 

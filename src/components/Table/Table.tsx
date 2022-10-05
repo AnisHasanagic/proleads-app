@@ -1,13 +1,13 @@
 import React from "react";
 import { useTable } from "react-table";
 import { Button, ButtonTypes } from "../Button/Button";
+import { useMemo } from "react";
 
 import "./Table.scss";
 
 const Table = ({ data, actions, columnsToShow }: any) => {
-    const columns = React.useMemo(() => {
-        let columns: any = [];
-
+    const columns = useMemo(() => {
+        let columns : any = [];
         if (columnsToShow)
             columns = Object.keys(data[0] ? data[0] : {}).filter((el) => {
                 return columnsToShow.includes(el);
