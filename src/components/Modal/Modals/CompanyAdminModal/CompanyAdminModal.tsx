@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
     updateCompany,
     addCompany,
@@ -14,7 +15,7 @@ import "./CompanyAdminModal.scss";
 
 function CompanyAdminModal({ Company, isAdd }: any) {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     const company = useSelector((state: any) => state.company);
 
     const INITIAL_Company = {
@@ -185,7 +186,7 @@ function CompanyAdminModal({ Company, isAdd }: any) {
         <div id="Company-admin-modal">
             <Form>
                 <Input
-                    id={"Companyname"}
+                    id={"name"}
                     type={"text"}
                     name={"name"}
                     value={newCompany["name"]}
@@ -195,7 +196,17 @@ function CompanyAdminModal({ Company, isAdd }: any) {
                     placeholder={"name"}
                 />
                 <Input
-                    id={"CompanyDesc"}
+                    id={"address"}
+                    type={"text"}
+                    name={"address"}
+                    value={newCompany["address"]}
+                    onChange={(e: any): void => changeEvent(e)}
+                    onBlur={(e: any): void => blurEvent(e)}
+                    errors={newCompanyErrors["address"]}
+                    placeholder={"address"}
+                />
+                <Input
+                    id={""}
                     type={"text"}
                     name={"description"}
                     value={newCompany["description"]}
@@ -206,37 +217,67 @@ function CompanyAdminModal({ Company, isAdd }: any) {
                     isTextarea
                 />
                 <Input
-                    id={"CompanyLink"}
+                    id={"company_info"}
                     type={"text"}
-                    name={"link"}
-                    value={newCompany["link"]}
+                    name={"company_info"}
+                    value={newCompany["company_info"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["link"]}
-                    placeholder={"Zoom Link"}
+                    errors={newCompanyErrors["company_info"]}
+                    placeholder={"Company info"}
+                    isTextarea
                 />
                 <Input
-                    id={"companytartsAt"}
-                    type={"datetime-local"}
-                    name={"starts_at"}
-                    value={newCompany["starts_at"]}
+                    id={"price_per_call"}
+                    type={"number"}
+                    name={"price_per_call"}
+                    value={newCompany["price_per_call"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["starts_at"]}
-                    placeholder={"Starts At"}
+                    errors={newCompanyErrors["price_per_call"]}
+                    placeholder={"price_per_call in euros"}
                 />
-                <Checkbox
-                    checkItem={(): void =>
-                        setNewCompany({
-                            ...newCompany,
-                            is_active: !newCompany.is_active,
-                        })
-                    }
-                    isChecked={newCompany.is_active}
-                    disabled={false}
-                    label="Is active?"
+                <Input
+                    id={"initial_time"}
+                    type={"number"}
+                    name={"initial_time"}
+                    value={newCompany["initial_time"]}
+                    onChange={(e: any): void => changeEvent(e)}
+                    onBlur={(e: any): void => blurEvent(e)}
+                    errors={newCompanyErrors["initial_time"]}
+                    placeholder={"initial_time in seconds"}
                 />
-                
+                <Input
+                    id={"price_per_minutes_overdue"}
+                    type={"number"}
+                    name={"price_per_minutes_overdue"}
+                    value={newCompany["price_per_minutes_overdue"]}
+                    onChange={(e: any): void => changeEvent(e)}
+                    onBlur={(e: any): void => blurEvent(e)}
+                    errors={newCompanyErrors["price_per_minutes_overdue"]}
+                    placeholder={"price_per_minutes_overdue in euros"}
+                />
+                <Input
+                    id={"overdue_time"}
+                    type={"number"}
+                    name={"overdue_time"}
+                    value={newCompany["overdue_time"]}
+                    onChange={(e: any): void => changeEvent(e)}
+                    onBlur={(e: any): void => blurEvent(e)}
+                    errors={newCompanyErrors["overdue_time"]}
+                    placeholder={"overdue_time in seconds"}
+                />
+                <Input
+                    id={"company_fields"}
+                    type={"text"}
+                    name={"company_fields"}
+                    value={newCompany["company_fields"]}
+                    onChange={(e: any): void => changeEvent(e)}
+                    onBlur={(e: any): void => blurEvent(e)}
+                    errors={newCompanyErrors["company_fields"]}
+                    placeholder={"company_fields"}
+                    isTextarea
+                />
                 {!isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
@@ -252,7 +293,7 @@ function CompanyAdminModal({ Company, isAdd }: any) {
                 {isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
-                        onClick={() => dispatch(addCompany(newCompany))}
+                        onClick={() => dispatch(addCompany(newCompany,navigate))}
                         loading={company.add.loading}
                         disabled={company.add.loading || hasSomeErrors()}
                     >

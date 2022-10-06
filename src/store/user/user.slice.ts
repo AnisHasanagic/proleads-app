@@ -2,13 +2,14 @@ import { createSlice } from '@reduxjs/toolkit'
 
 type User = {
   token: string | null;
+  userChecked: boolean;
   role: string;
   username: string;
   first_name: string;
   last_name: string;
-  message: string;
+  message:string;
   errors: any;
-  loading: boolean;
+  loading:boolean;
   update: {
     loading: boolean;
     errors: any[];
@@ -18,6 +19,7 @@ type User = {
 
 const INITIAL_STATE: User = {
   token: null,
+  userChecked: false,
   role: '',
   username: '',
   first_name: '',

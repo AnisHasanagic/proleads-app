@@ -3,24 +3,28 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     createAccount,
-} from "../../../../store/user/user.actions";
+    updateAccount
+} from "../../../../store/users/users.actions";
 import { Button, ButtonTypes } from "../../../Button/Button";
 import { Checkbox } from "../../../Checkbox/Checkbox";
+import { Link, useNavigate, useParams } from "react-router-dom";
+
 import { Form } from "../../../Form/Form";
 import { Input } from "../../../Input/Input";
 
 import "./UserAdminModal.scss";
 
-function UserAdminModal({ User, isAdd }: any) {
+function UserAdminModal({ user, isAdd }: any) {
     const dispatch = useDispatch();
-
-    const Users = useSelector((state: any) => state.users);
+    const navigate = useNavigate();
+    const users = useSelector((state: any) => state.users);
 
     const INITIAL_User = {
         username: "",
         password: "",
         first_name:"",
-        last_name:""
+        last_name:"",
+        role:""
     };
 
     const [newUser, setNewUser] = useState<any>(INITIAL_User);
@@ -126,36 +130,42 @@ function UserAdminModal({ User, isAdd }: any) {
     };
 
     useEffect(() => {
-        if (User) {
+        if (user) {
             setNewUser({
-                username: User.username,
-                password: User.password,
-                first_name: User.first_name,
-                last_name: User.last_name,
+                username: user.username,
+                password: user.password,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                role: user.role
             });
             setNewUserErrors({});
         }
-    }, [User]);
+    }, [user]);
 
 
     useEffect(() => {
-        console.log("@2")
-        if (Users.update.errors) {
-            setNewUserErrors(Users.update.errors);
+        if (users.update.errors) {
+            setNewUserErrors(users.update.errors);
         }
-    }, [Users.update]);
+    }, [users.update]);
 
     useEffect(() => {
-        if (Users.add.errors) {
-            setNewUserErrors(Users.add.errors);
+        if (users.add.errors) {
+            setNewUserErrors(users.add.errors);
         }
-    }, [Users.add]);
+    }, [users.add]);
+
+    const createUser = (): void => {
+        dispatch(
+            createAccount(newUser.username, newUser.password, newUser.first_name, newUser.last_name , newUser.role, navigate)
+        );
+    };
 
     return (
         <div id="User-admin-modal">
             <Form>
                 <Input
-                    id={"Username"}
+                    id={"username"}
                     type={"text"}
                     name={"username"}
                     value={newUser["username"]}
@@ -166,14 +176,13 @@ function UserAdminModal({ User, isAdd }: any) {
                 />
                 <Input
                     id={"password"}
-                    type={"text"}
+                    type={"password"}
                     name={"password"}
                     value={newUser["password"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newUserErrors["password"]}
                     placeholder={"password"}
-                    isTextarea
                 />
                 <Input
                     id={"first_name"}
@@ -195,35 +204,34 @@ function UserAdminModal({ User, isAdd }: any) {
                     errors={newUserErrors["last_name"]}
                     placeholder={"last_name"}
                 />
-                <Checkbox
-                    checkItem={(): void =>
-                        setNewUser({
-                            ...newUser,
-                            is_active: !newUser.is_active,
-                        })
-                    }
-                    isChecked={newUser.is_active}
-                    disabled={false}
-                    label="Is active?"
+                 <Input
+                    id={"role"}
+                    type={"text"}
+                    name={"role"}
+                    value={newUser["role"]}
+                    onChange={(e: any): void => changeEvent(e)}
+                    onBlur={(e: any): void => blurEvent(e)}
+                    errors={newUserErrors["role"]}
+                    placeholder={"role"}
                 />
-                <Checkbox
-                    checkItem={(): void =>
-                        setNewUser({
-                            ...newUser,
-                            is_archived: !newUser.is_archived,
-                        })
-                    }
-                    isChecked={newUser.is_archived}
-                    disabled={false}
-                    label="Is archived?"
-                />
-                
+                {!isAdd && (
+                    <Button
+                        btnClass={ButtonTypes.primary}
+                        onClick={() =>
+                            dispatch(updateAccount(newUser, user.id))
+                        }
+                        loading={users.update.loading}
+                        disabled={users.update.loading || hasSomeErrors()}
+                    >
+                        Save
+                    </Button>
+                )}
                 {isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
-                        onClick={() => dispatch(createAccount(newUser))}
-                        loading={Users.add.loading}
-                        disabled={Users.add.loading || hasSomeErrors()}
+                        onClick={() => createUser()}
+                        loading={users.add.loading}
+                        disabled={users.add.loading || hasSomeErrors()}
                     >
                         Create
                     </Button>

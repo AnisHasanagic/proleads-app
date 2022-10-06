@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 type CompanySlice = {
-    loading: boolean;
-    list:   Company[];
-    error: string;
+    loading: boolean,
+    list:Company[],
+    error: string,
     update: {
         loading: boolean;
         errors: any[];
@@ -28,13 +28,13 @@ type Company = {
     overdue_time: number,
     company_fields: string,
     is_active:boolean,
-    created_at: Date;
-    udated_at: Date;
+    created_at: Date,
+    updated_at: Date,
 };
 
 const INITIAL_STATE: CompanySlice = {
-    loading: false,
     list: [],
+    loading:false,
     error: "",
     update: {
         loading: false,
@@ -48,10 +48,13 @@ const INITIAL_STATE: CompanySlice = {
     },
 };
 
-const CompanySlice = createSlice({
-    name: "company",
+const companySlice = createSlice({
+    name: "companies",
     initialState: INITIAL_STATE,
     reducers: {
+        loading: (state) => {
+            state.loading = true;
+        },
         loadPending: (state) => {
             state.loading = true;
             state.list = [];
@@ -100,4 +103,4 @@ const CompanySlice = createSlice({
     },
 });
 
-export default CompanySlice;
+export default companySlice;

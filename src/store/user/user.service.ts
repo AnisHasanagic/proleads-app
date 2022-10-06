@@ -6,13 +6,13 @@ export default class AuthService {
     static login(user: any): Promise<Response> {
         return apiCall(API_URI + "/auth/signin", user, "POST");
     };
-
-    static createUser(user: any): Promise<Response> {
-        return apiCall(API_URI + "/user/createUser", user, "POST");
-    };
       
     static getAll(): Promise<Response> {
         return apiCall(API_URI + "/user", null, "GET", true);
+    };
+
+    static createUser(user: any): Promise<Response> {
+        return apiCall(API_URI + "/user/createUser", user, "POST");
     };
 
     static updatePassword(user: any): Promise<Response> {

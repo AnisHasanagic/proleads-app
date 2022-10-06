@@ -17,6 +17,8 @@ const Auth = React.lazy(() => import("./containers/Auth/Auth"));
 const AdminUsers = React.lazy(()=>import("./containers/AdminPanel/AdminUsers/AdminUsers"))
 const AdminCompany = React.lazy(()=>import("./containers/AdminPanel/AdminCompany/AdminCompanies"))
 const Dashboard = React.lazy(()=>import("./containers/Dashboard/Dashboard"))
+const AgentList = React.lazy(()=>import("./containers/AgentList/AgentList"))
+
 function App() {
     return (
         <Provider store={store}>
@@ -56,6 +58,16 @@ function App() {
                             <React.Suspense fallback={<>...</>}>
                                 
                                     <AdminCompany />
+                                    
+                            </React.Suspense>
+                        }
+                    />
+                     <Route
+                        path="/dashboard/company"
+                        element={
+                            <React.Suspense fallback={<>...</>}>
+                                
+                                    <AgentList />
                                     
                             </React.Suspense>
                         }

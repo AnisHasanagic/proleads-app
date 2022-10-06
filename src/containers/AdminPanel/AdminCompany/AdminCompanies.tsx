@@ -16,7 +16,7 @@ function AdminCompanies() {
     const [currentCompany, setCurrentCompany] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
 
-    const Companies = useSelector((state: any) => state.company);
+    const company = useSelector((state: any) => state.company);
 
     useEffect(() => {
         dispatch(loadCompanies());
@@ -53,11 +53,10 @@ function AdminCompanies() {
 
     return (
         <DashboardLayout>
-            <section id="admin-Companies">
-                <div className="title mb-5 flex">
+            <section id="admin-company">
                     <div className="mr-3">
-                        <h1>All Companies</h1>
-                        <p>List of all Companies.</p>
+                        <h1>All company</h1>
+                        <p>List of all company.</p>
                     </div>
                     <Button
                         btnClass={ButtonTypes.primary}
@@ -69,7 +68,7 @@ function AdminCompanies() {
                                 address: "",
                                 description: "",
                                 company_info: "",
-                                company_fields: null,
+                                company_fields: "",
                                 price_per_call: null,
                                 price_per_minutes_overdue: null,
                                 initial_time: null,
@@ -79,9 +78,8 @@ function AdminCompanies() {
                     >
                         Add New
                     </Button>
-                </div>
                 <Table
-                    data={Companies.list}
+                    data={company.list}
                     actions={actions}
                     columnsToShow={columnsToShow}
                 />

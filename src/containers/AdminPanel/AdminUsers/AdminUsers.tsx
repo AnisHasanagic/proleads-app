@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import Modal from "../../../components/Modal/Modal";
 import Table from "../../../components/Table/Table";
 import DashboardLayout from "../../../layouts/DashboardLayout";
@@ -11,12 +12,11 @@ import{ Button, ButtonTypes } from "../../../components/Button/Button"
 
 function AdminUsers() {
     const dispatch = useDispatch();
-
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
     
     const users = useSelector((state: any) => state.users);
-
+     
     useEffect(() => {
         dispatch(loadUsers());
     }, []);
@@ -38,6 +38,7 @@ function AdminUsers() {
     const columnsToShow = [
         "id",
         "username",
+        "password",
         "first_name",
         "last_name",
         "role",
@@ -76,7 +77,7 @@ function AdminUsers() {
                 />
             </section>
             <Modal show={currentUser} closeModal={() => setCurrentUser(null)}>
-                <UserAdminModal User={currentUser} isAdd={isAdd}/>
+                <UserAdminModal user={currentUser} isAdd={isAdd}/>
             </Modal>
         </DashboardLayout>
     );

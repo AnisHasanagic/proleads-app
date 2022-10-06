@@ -62,6 +62,45 @@ export const login =
         }
     };
 
+    
+
+    export const logout = (): any => async (dispatch: any) => {
+        try {
+            dispatch(loading());
+    
+            await removeToken();
+            toast.success("SUCCESSFUL_LOGOUT");
+    
+            return dispatch(logoutSuccess());
+        } catch (e: any) {
+            return console.error(e.message);
+        }
+    };
+
+    export const checkIfUserIsAuthenticated = (): any => async (dispatch: any) => {
+        try {
+            const response = await AuthService.checkAuthenticated();
+    
+            let data: any = null;
+    
+            try {
+                data = await response.clone().json();
+            } catch {
+                data = await response.clone().text();
+            }
+    
+            if (response.ok) {
+                const user = data.data.user;
+    
+                dispatch(loginSuccess({ token: localStorage.getItem('access_token'), user }));
+            } else {
+                dispatch(checkUserAuthenticatedError());
+            }
+        } catch (e: any) {
+            dispatch(checkUserAuthenticatedError());
+        }
+    };
+
     export const createAccount =
     (user:any): any =>
     async (dispatch: any) => {
@@ -102,43 +141,6 @@ export const login =
                     errors: null,
                 })
             );
-        }
-    };
-
-    export const logout = (): any => async (dispatch: any) => {
-        try {
-            dispatch(loading());
-    
-            await removeToken();
-            toast.success("SUCCESSFUL_LOGOUT");
-    
-            return dispatch(logoutSuccess());
-        } catch (e: any) {
-            return console.error(e.message);
-        }
-    };
-
-    export const checkIfUserIsAuthenticated = (): any => async (dispatch: any) => {
-        try {
-            const response = await AuthService.checkAuthenticated();
-    
-            let data: any = null;
-    
-            try {
-                data = await response.clone().json();
-            } catch {
-                data = await response.clone().text();
-            }
-    
-            if (response.ok) {
-                const user = data.data.user;
-    
-                dispatch(loginSuccess({ token: localStorage.getItem('access_token'), user }));
-            } else {
-                dispatch(checkUserAuthenticatedError());
-            }
-        } catch (e: any) {
-            dispatch(checkUserAuthenticatedError());
         }
     };
 

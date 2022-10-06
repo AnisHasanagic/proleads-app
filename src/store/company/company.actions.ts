@@ -29,7 +29,7 @@ export const loadCompanies = (): any => async (dispatch: any) => {
         }
 
         if (response.ok) {
-            dispatch(loadSuccess({ list: data.company }));
+            dispatch(loadSuccess({ list: data.companys }));
         } else {
             dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
         }
@@ -76,7 +76,8 @@ export const updateCompany =
     };
 
 export const addCompany =
-    (company: any): any =>
+    (company: any,
+        navigate:any): any =>
     async (dispatch: any) => {
         try {
             dispatch(addLoading());
@@ -95,6 +96,7 @@ export const addCompany =
                 dispatch(addSuccess());
                 dispatch(loadCompanies());
                 toast.success(data.message);
+                navigate("/dashboard")
             } else {
                 const error: any = {
                     message: data.message ? data.message : null,

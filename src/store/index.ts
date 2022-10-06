@@ -8,7 +8,7 @@ import usersSlice from './users/users.slice';
 const reducer = combineReducers({
   user: userSlice.reducer,
   users: usersSlice.reducer,
-  company:companySlice.reducer,
+  company: companySlice.reducer,
 })
 
 const store = configureStore({

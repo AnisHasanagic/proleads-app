@@ -50,8 +50,8 @@ const usersSlice = createSlice({
         },
         loadSuccess: (state, action) => {
             state.loading = false;
-            state.error = "";
             state.list = action.payload.list;
+            state.error = "";
         },
         loadFailed: (state, action) => {
             state.loading = false;
