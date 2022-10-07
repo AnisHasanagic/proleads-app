@@ -6,47 +6,36 @@ import {
     updateCompany,
     addCompany,
 } from "../../../../store/company/company.actions";
+import {
+    addCall
+}from "../../../../store/call/call.actions"
+import companySlice from "../../../../store/company/company.slice";
 import { Button, ButtonTypes } from "../../../Button/Button";
 import { Checkbox } from "../../../Checkbox/Checkbox";
 import { Form } from "../../../Form/Form";
 import { Input } from "../../../Input/Input";
 
-import "./CompanyAdminModal.scss";
+import "./CallModal.scss";
 
-function CompanyAdminModal({ Company, isAdd }: any) {
+function CallModal({ call,companys, isAdd }: any) {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const company = useSelector((state: any) => state.company);
     
-    const INITIAL_Company = {
-        name: "",
-        address: "",
-        description: "",
-        company_info: "",
+    const INITIAL_Call = {
         price_per_call:"",
         initial_time:"",
-        price_per_minutes_overdue: "",
+        price_per_minute_overdue: "",
         overdue_time:"",
-        company_fields:"",
+        call_fields:"",
     };
 
-    const [inputList, setInputList] = useState<any>([{company_field: ""}])
-    const [newCompany, setNewCompany] = useState<any>(INITIAL_Company);
-    const [newCompanyErrors, setNewCompanyErrors] = useState<any>({});
+    const [inputList, setInputList] = useState<any>([{call_field: ""}])
+    const [newCall, setNewCall] = useState<any>(INITIAL_Call);
+    const [newCallErrors, setNewCallErrors] = useState<any>({});
 
     const validations: any = {
-        name: {
-            isRequired: true,
-        },
-        address: {
-            isRequired: true,
-        },
-        description: {
-            isRequired: true,
-        },
-        company_info: {
-            isRequired: true,
-        },
         price_per_call: {
             isRequired: true,
         },
@@ -59,9 +48,10 @@ function CompanyAdminModal({ Company, isAdd }: any) {
         overdue_time: {
             isRequired: true,
         },
-        company_fields: {
+        call_fields: {
             isRequired: true,
-        }
+        },
+       
     };
 
     const changeEvent = (e: any): void => {
@@ -85,18 +75,18 @@ function CompanyAdminModal({ Company, isAdd }: any) {
             }
         }
 
-        setNewCompany({
-            ...newCompany,
-            [name]: value ? value.trim() : "",
+        setNewCall({
+            ...newCall,
+            [name]: value,
         });
         if (errors.length > 0)
-            setNewCompanyErrors({
-                ...newCompanyErrors,
+            setNewCallErrors({
+                ...newCallErrors,
                 [name]: errors,
             });
         else
-            setNewCompanyErrors({
-                ...newCompanyErrors,
+            setNewCallErrors({
+                ...newCallErrors,
                 [name]: [],
             });
     };
@@ -122,19 +112,19 @@ function CompanyAdminModal({ Company, isAdd }: any) {
             }
         }
 
-        setNewCompany({
-            ...newCompany,
+        setNewCall({
+            ...newCall,
             [name]: value ? value.trim() : "",
         });
 
         if (errors.length > 0)
-            setNewCompanyErrors({
-                ...newCompanyErrors,
+            setNewCallErrors({
+                ...newCallErrors,
                 [name]: errors,
             });
         else
-            setNewCompanyErrors({
-                ...newCompanyErrors,
+            setNewCallErrors({
+                ...newCallErrors,
                 [name]: [],
             });
     };
@@ -162,17 +152,16 @@ function CompanyAdminModal({ Company, isAdd }: any) {
         }
 
         setInputList({
-            ...inputList,
             list
         });
         if (errors.length > 0)
-            setNewCompanyErrors({
-                ...newCompanyErrors,
+            setNewCallErrors({
+                ...newCallErrors,
                 [name]: errors,
             });
         else
-            setNewCompanyErrors({
-                ...newCompanyErrors,
+            setNewCallErrors({
+                ...newCallErrors,
                 [name]: [],
             });
     };
@@ -200,56 +189,51 @@ function CompanyAdminModal({ Company, isAdd }: any) {
         }
 
         setInputList({
-            ...inputList,
             list
         });
 
         if (errors.length > 0)
-            setNewCompanyErrors({
-                ...newCompanyErrors,
+            setNewCallErrors({
+                ...newCallErrors,
                 [name]: errors,
             });
         else
-            setNewCompanyErrors({
-                ...newCompanyErrors,
+            setNewCallErrors({
+                ...newCallErrors,
                 [name]: [],
             });
     };
     const hasSomeErrors = (): boolean => {
-        const hasErrors = Object.keys(newCompanyErrors).some(
-            (value: any) => newCompanyErrors[value].length > 0
+        const hasErrors = Object.keys(newCallErrors).some(
+            (value: any) => newCallErrors[value].length > 0
         );
 
         return hasErrors;
     };
 
     useEffect(() => {
-        if (Company) {
-            setNewCompany({
-                name: Company.name,
-                address: Company.address,
-                description: Company.description,
-                company_info: Company.company_info,
-                price_per_call: Company.price_per_call,
-                initial_time: Company.initial_time,
-                price_per_minutes_overdue: Company.price_per_minutes_overdue,
-                overdue_time:Company.overdue_time,
-                company_fields:Company.company_fields,
+        if (companys) {
+            setNewCall({
+                price_per_call: companys.price_per_call,
+                initial_time: companys.initial_time,
+                price_per_minutes_overdue: companys.price_per_minutes_overdue,
+                overdue_time:companys.overdue_time,
+                call_fields:companys.call_fields,
             });
-            setNewCompanyErrors({});
+            setNewCallErrors({});
         }
-    }, [Company]);
+    }, [companys]);
 
 
     useEffect(() => {
         if (company.update.errors) {
-            setNewCompanyErrors(company.update.errors);
+            setNewCallErrors(company.update.errors);
         }
     }, [company.update]);
 
     useEffect(() => {
         if (company.add.errors) {
-            setNewCompanyErrors(company.add.errors);
+            setNewCallErrors(company.add.errors);
         }
     }, [company.add]);
 
@@ -264,101 +248,65 @@ function CompanyAdminModal({ Company, isAdd }: any) {
         setInputList([...inputList, { company_field: ""}]);
       };
     return (
-        <div id="Company-admin-modal">
+        <div id="call-admin-modal">
+            <div id="info">
+                <div id="company_info">{company.company_info}</div>
+                <div id="description">{company.description}</div>
+                <div id="address">{company.address}</div>
+                <div id="name">{company.name}</div>
+            </div>
             <Form>
-                <Input
-                    id={"name"}
-                    type={"text"}
-                    name={"name"}
-                    value={newCompany["name"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["name"]}
-                    placeholder={"name"}
-                />
-                <Input
-                    id={"address"}
-                    type={"text"}
-                    name={"address"}
-                    value={newCompany["address"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["address"]}
-                    placeholder={"address"}
-                />
-                <Input
-                    id={"description"}
-                    type={"text"}
-                    name={"description"}
-                    value={newCompany["description"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["description"]}
-                    placeholder={"Description"}
-                    isTextarea
-                />
-                <Input
-                    id={"company_info"}
-                    type={"text"}
-                    name={"company_info"}
-                    value={newCompany["company_info"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["company_info"]}
-                    placeholder={"Company info"}
-                    isTextarea
-                />
                 <Input
                     id={"price_per_call"}
                     type={"number"}
                     name={"price_per_call"}
-                    value={newCompany["price_per_call"]}
+                    value={newCall["price_per_call"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["price_per_call"]}
+                    errors={newCallErrors["price_per_call"]}
                     placeholder={"price_per_call in euros"}
                 />
                 <Input
                     id={"initial_time"}
                     type={"number"}
                     name={"initial_time"}
-                    value={newCompany["initial_time"]}
+                    value={newCall["initial_time"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["initial_time"]}
+                    errors={newCallErrors["initial_time"]}
                     placeholder={"initial_time in seconds"}
                 />
                 <Input
                     id={"price_per_minutes_overdue"}
                     type={"number"}
                     name={"price_per_minutes_overdue"}
-                    value={newCompany["price_per_minutes_overdue"]}
+                    value={newCall["price_per_minutes_overdue"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["price_per_minutes_overdue"]}
+                    errors={newCallErrors["price_per_minutes_overdue"]}
                     placeholder={"price_per_minutes_overdue in euros"}
                 />
                 <Input
                     id={"overdue_time"}
                     type={"number"}
                     name={"overdue_time"}
-                    value={newCompany["overdue_time"]}
+                    value={newCall["overdue_time"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["overdue_time"]}
+                    errors={newCallErrors["overdue_time"]}
                     placeholder={"overdue_time in seconds"}
                 />
                
-               {inputList.map((field:any,i:any)=> {
+                {inputList.map((field:any,i:any)=> {
                 <div key={i}>
                  <Input 
-                id={"company_field"}
-                name={"company_field"}
+                id={"call_field"}
+                name={"call_field"}
                 type={"text"}
-                value={inputList["company_fields"]}
+                value={field.company_field}
                 onChange={(e: any,i:any): void => changeInputEvent(e,i)}
                 onBlur={(e: any,i :any): void => blurInputEvent(e,i)}
-                placeholder={"Company field"}
+                placeholder={"call field"}
                  />
 
                  {inputList.length !== 1 && <Button
@@ -368,24 +316,12 @@ function CompanyAdminModal({ Company, isAdd }: any) {
                   </div>
                 })}
                 <Button onClick={handleAddClick}>Add</Button>
-                {!isAdd && (
-                    <Button
-                        btnClass={ButtonTypes.primary}
-                        onClick={() =>
-                            dispatch(updateCompany(newCompany, Company.id))
-                        }
-                        loading={company.update.loading}
-                        disabled={company.update.loading || hasSomeErrors()}
-                    >
-                        Save
-                    </Button>
-                )}
                 {isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
-                        onClick={() => dispatch(addCompany(newCompany,navigate))}
-                        loading={company.add.loading}
-                        disabled={company.add.loading || hasSomeErrors()}
+                        onClick={() => dispatch(addCall(newCall,navigate))}
+                        loading={call.add.loading}
+                        disabled={call.add.loading || hasSomeErrors()}
                     >
                         Create
                     </Button>
@@ -395,4 +331,4 @@ function CompanyAdminModal({ Company, isAdd }: any) {
     );
 }
 
-export default CompanyAdminModal;
+export default CallModal;
