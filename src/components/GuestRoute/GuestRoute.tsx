@@ -25,12 +25,13 @@ export const GuestRoute = (props: any): any => {
     )
         return <Navigate replace to="/dashboard" />;
 
-    if (
-        user.userChecked &&
-        user.token &&
-        user.role 
-    )
-        return <Navigate replace to="/dashboard" />;
+        if (
+            user.userChecked &&
+            user.token &&
+            user.role &&
+            user.role === "agent"
+        )
+            return <Navigate replace to="/dashboard" />;
 
     return children;
 };

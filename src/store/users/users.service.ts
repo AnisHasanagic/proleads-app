@@ -8,7 +8,7 @@ export default class UsersService {
     };
 
     static createUser(user: any): Promise<Response> {
-        return apiCall(API_URI + "/user/createUser", user, "POST");
+        return apiCall(API_URI + "/user/createUser", user, "POST",true);
     };
 
     static update(user: any, user_id: string): Promise<Response> {

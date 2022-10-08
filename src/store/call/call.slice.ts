@@ -4,11 +4,6 @@ type CallSlice = {
     loading: boolean,
     list:Call[],
     error: string,
-    update: {
-        loading: boolean;
-        errors: any[];
-        message: string;
-    };
     add: {
         loading: boolean;
         errors: any[];
@@ -26,17 +21,19 @@ type Call = {
     call_fields: string,
     created_at: Date,
     updated_at: Date,
+    first_name:string,
+    last_name:string,
+    gender:string,
+    email:string,
+    phone:string,
+    country:string,
+    city :string
 };
 
 const INITIAL_STATE: CallSlice = {
     list: [],
     loading:false,
     error: "",
-    update: {
-        loading: false,
-        errors: [],
-        message: "",
-    },
     add: {
         loading: false,
         errors: [],
@@ -65,21 +62,6 @@ const callSlice = createSlice({
             state.loading = false;
             state.list = [];
             state.error = action.payload.message;
-        },
-        updateLoading: (state) => {
-            state.update.loading = true;
-            state.update.errors = [];
-            state.update.message = "";
-        },
-        updateSuccess: (state) => {
-            state.update.loading = false;
-            state.update.errors = [];
-            state.update.message = "";
-        },
-        updateError: (state, action) => {
-            state.update.loading = false;
-            state.update.message = action.payload.message;
-            state.update.errors = action.payload.errors;
         },
         addLoading: (state) => {
             state.add.loading = true;

@@ -90,7 +90,7 @@ export const login =
             }
     
             if (response.ok) {
-                const user = data.data.user;
+                const user = data.user;
     
                 dispatch(loginSuccess({ token: localStorage.getItem('access_token'), user }));
             } else {

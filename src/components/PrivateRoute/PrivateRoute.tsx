@@ -17,13 +17,8 @@ export const PrivateRoute = (props: any): any => {
 
     if (!user.userChecked) return null;
 
-    if (user.userChecked && !user.token) return <Navigate replace to="/auth/signin" />;
+    if (user.userChecked && !user.token) return <Navigate replace to="/" />;
 
-    const isSubscribedMember =
-        user.role === "member" ;
-
-    if (user.userChecked && user.token && user.role)
-        return <Navigate replace to="/" />;
 
     if (
         user.userChecked &&
@@ -32,7 +27,7 @@ export const PrivateRoute = (props: any): any => {
         (!roles.includes(user.role) ||
             (roles.includes(user.role) &&
                 user.role !== "admin" &&
-                !isSubscribedMember))
+                user.role !== "agent"))
     )
         return <Navigate replace to="/" />;
 

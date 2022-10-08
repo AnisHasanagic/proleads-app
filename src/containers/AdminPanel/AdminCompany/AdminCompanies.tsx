@@ -69,10 +69,10 @@ function AdminCompanies() {
                                 description: "",
                                 company_info: "",
                                 company_fields: "",
-                                price_per_call: null,
-                                price_per_minutes_overdue: null,
-                                initial_time: null,
-                                overdue_time: null
+                                price_per_call: "",
+                                price_per_minutes_overdue: "",
+                                initial_time: "",
+                                overdue_time: ""
                             });
                         }}
                     >

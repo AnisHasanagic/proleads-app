@@ -52,7 +52,25 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                 },
             ],
         },
-
+        {
+            name: "Dashboard",
+            link: "/dashboard",
+            isActiveSub: route.pathname === "/dashboard",
+            sub: [
+                {
+                    name: "Dashboard",
+                    link: "/dashboard",
+                    isActive: route.pathname === "/dashboard",
+                    description: "Dashboard of ProLeads app",
+                },
+                {
+                    name: "Companies",
+                    link: "/dashboard/company",
+                    isActive: route.pathname === "/dashboard/company",
+                    description: "List of companies",
+                },
+            ],
+        },
        
     ];
 

@@ -28,9 +28,9 @@ function App() {
                         path="/dashboard"
                         element={
                             <React.Suspense fallback={<>...</>}>
-                                   
+                                   <PrivateRoute roles={["agent","admin"]}>
                                     <Dashboard />
-                                    
+                                    </PrivateRoute>
                             </React.Suspense>
                         }
                     />
@@ -38,7 +38,9 @@ function App() {
                         path="/"
                         element={
                             <React.Suspense fallback={<>...</>}>
+                                <GuestRoute>
                                     <Auth />
+                                 </GuestRoute>
                             </React.Suspense>
                         }
                     />
@@ -46,9 +48,7 @@ function App() {
                         path="/dashboard/admin-panel/users"
                         element={
                             <React.Suspense fallback={<>...</>}>
-
                                     <AdminUsers />
-                                    
                             </React.Suspense>
                         }
                     />
@@ -56,9 +56,10 @@ function App() {
                         path="/dashboard/admin-panel/company"
                         element={
                             <React.Suspense fallback={<>...</>}>
-                                
+                                 <PrivateRoute roles={["admin"]}>
+                 
                                     <AdminCompany />
-                                    
+                                </PrivateRoute>
                             </React.Suspense>
                         }
                     />
@@ -66,9 +67,10 @@ function App() {
                         path="/dashboard/company"
                         element={
                             <React.Suspense fallback={<>...</>}>
-                                
+                            <PrivateRoute roles={["admin","agent"]}>
+
                                     <AgentList />
-                                    
+                            </PrivateRoute>
                             </React.Suspense>
                         }
                     />

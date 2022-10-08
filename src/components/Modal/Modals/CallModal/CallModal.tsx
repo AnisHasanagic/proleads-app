@@ -3,35 +3,52 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-    updateCompany,
-    addCompany,
-} from "../../../../store/company/company.actions";
-import {
     addCall
 }from "../../../../store/call/call.actions"
-import companySlice from "../../../../store/company/company.slice";
 import { Button, ButtonTypes } from "../../../Button/Button";
-import { Checkbox } from "../../../Checkbox/Checkbox";
 import { Form } from "../../../Form/Form";
 import { Input } from "../../../Input/Input";
 
 import "./CallModal.scss";
 
-function CallModal({ call,companys, isAdd }: any) {
+function CallModal({ companys, isAdd }: any) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const company = useSelector((state: any) => state.company);
+    const call = useSelector((state:any)=>state.call)
+    let start_time = null
+
+
+
+    let getTimestampInSeconds = () => {
+        return Math.floor(Date.now() / 1000)
+      }
     
+
+   useEffect(()=>{
+       start_time=getTimestampInSeconds();
+   },[]);
+
+
     const INITIAL_Call = {
+        company_id:"",
+        start_time:"",
+        end_time:"",
         price_per_call:"",
         initial_time:"",
-        price_per_minute_overdue: "",
+        price_per_minutes_overdue: "",
         overdue_time:"",
         call_fields:"",
+        first_name:"",
+        last_name:"",
+        gender:"",
+        email:"",
+        phone:"",
+        country:"",
+        city:"" 
     };
-
-    const [inputList, setInputList] = useState<any>([{call_field: ""}])
+    const [inputList, setInputList] = useState<any>([]);
     const [newCall, setNewCall] = useState<any>(INITIAL_Call);
     const [newCallErrors, setNewCallErrors] = useState<any>({});
 
@@ -42,7 +59,7 @@ function CallModal({ call,companys, isAdd }: any) {
         initial_time: {
             isRequired: true,
         },
-        price_per_minute_overdue: {
+        price_per_minutes_overdue: {
             isRequired: true,
         },
         overdue_time: {
@@ -130,9 +147,18 @@ function CallModal({ call,companys, isAdd }: any) {
     };
     const changeInputEvent = (e: any,index:any): void => {
         const name = e.target.name;
-        const value = e.target.value;
-        const list = [...inputList]
-        list[index][name] = value
+        let value = e.target.value;
+        let list = [...inputList]
+
+
+        list = [
+            ...list.slice(0, index),
+            {
+                [name]: value
+            },
+            ...list.slice(index + 1)
+        ]
+
 
         const validator = validations[name];
         const errors = [];
@@ -140,68 +166,53 @@ function CallModal({ call,companys, isAdd }: any) {
         if (validator) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
-                    if (value !== true || value !== false) {
+                    if (name !== true || name !== false) {
                         errors.push("REQUIRED_FIELD");
                     }
                 } else {
-                    if (value.length < 1) {
+                    if (name.length < 1) {
                         errors.push("REQUIRED_FIELD");
                     }
                 }
             }
         }
 
-        setInputList({
+        setInputList(
             list
-        });
-        if (errors.length > 0)
-            setNewCallErrors({
-                ...newCallErrors,
-                [name]: errors,
-            });
-        else
-            setNewCallErrors({
-                ...newCallErrors,
-                [name]: [],
-            });
+        );
     };
 
     const blurInputEvent = (e:any,index:any): void => {
         const name = e.target.name;
-        const value = e.target.value;
-        const list = [...inputList]
-        list[index][name] = value
+        let value = e.target.value;
+        let list = [...inputList]
+
+        list = [
+            ...list.slice(0, index),
+            {
+                [name]: value
+            },
+            ...list.slice(index + 1)
+        ]
+
         const validator = validations[name];
         const errors = [];
 
         if (validator) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
-                    if (value !== true || value !== false) {
+                    if (name !== true || name !== false) {
                         errors.push("REQUIRED_FIELD");
                     }
                 } else {
-                    if (value.length < 1) {
+                    if (name.length < 1) {
                         errors.push("REQUIRED_FIELD");
                     }
                 }
             }
         }
 
-        setInputList({
-            list
-        });
-
-        if (errors.length > 0)
-            setNewCallErrors({
-                ...newCallErrors,
-                [name]: errors,
-            });
-        else
-            setNewCallErrors({
-                ...newCallErrors,
-                [name]: [],
-            });
+        setInputList(list);
     };
     const hasSomeErrors = (): boolean => {
         const hasErrors = Object.keys(newCallErrors).some(
@@ -214,112 +225,124 @@ function CallModal({ call,companys, isAdd }: any) {
     useEffect(() => {
         if (companys) {
             setNewCall({
+                company_id:companys.id,
                 price_per_call: companys.price_per_call,
                 initial_time: companys.initial_time,
                 price_per_minutes_overdue: companys.price_per_minutes_overdue,
                 overdue_time:companys.overdue_time,
-                call_fields:companys.call_fields,
             });
+            setInputList(JSON.parse(companys.company_fields))
             setNewCallErrors({});
         }
+
+
     }, [companys]);
 
 
-    useEffect(() => {
-        if (company.update.errors) {
-            setNewCallErrors(company.update.errors);
-        }
-    }, [company.update]);
-
-    useEffect(() => {
-        if (company.add.errors) {
-            setNewCallErrors(company.add.errors);
-        }
-    }, [company.add]);
-
-    const handleRemoveClick = (index:any) => {
-        const list = [...inputList];
-        list.splice(index, 1);
-        setInputList(list);
-      };
-       
     
-      const handleAddClick = () => {
-        setInputList([...inputList, { company_field: ""}]);
-      };
+
+    useEffect(() => {
+        if (call.add.errors) {
+            setNewCallErrors(call.add.errors);
+        }
+    }, [call.add]);
+
+    const CreateCall=():void => {
+        let end_time=getTimestampInSeconds();
+        dispatch(addCall({...newCall,call_fields:JSON.stringify(inputList)},navigate))
+    };
+
+    
+    let beutifyString = (value:any) => {
+        let temp = value
+        temp = temp.replace(/_+/g, ' ')
+        temp = temp.charAt(0).toUpperCase() + temp.slice(1);
+        return temp
+    }
+    
     return (
         <div id="call-admin-modal">
             <div id="info">
-                <div id="company_info">{company.company_info}</div>
-                <div id="description">{company.description}</div>
-                <div id="address">{company.address}</div>
-                <div id="name">{company.name}</div>
             </div>
             <Form>
-                <Input
-                    id={"price_per_call"}
-                    type={"number"}
-                    name={"price_per_call"}
-                    value={newCall["price_per_call"]}
+            <Input
+                    id={"first_name"}
+                    type={"text"}
+                    name={"first_name"}
+                    value={newCall["first_name"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCallErrors["price_per_call"]}
-                    placeholder={"price_per_call in euros"}
+                    errors={newCallErrors["first_name"]}
+                    placeholder={"first_name"}
                 />
                 <Input
-                    id={"initial_time"}
-                    type={"number"}
-                    name={"initial_time"}
-                    value={newCall["initial_time"]}
+                    id={"last_name"}
+                    type={"text"}
+                    name={"last_name"}
+                    value={newCall["last_name"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCallErrors["initial_time"]}
-                    placeholder={"initial_time in seconds"}
+                    errors={newCallErrors["last_name"]}
+                    placeholder={"last_name"}
                 />
                 <Input
-                    id={"price_per_minutes_overdue"}
-                    type={"number"}
-                    name={"price_per_minutes_overdue"}
-                    value={newCall["price_per_minutes_overdue"]}
+                    id={"gender"}
+                    type={"text"}
+                    name={"gender"}
+                    value={newCall["gender"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCallErrors["price_per_minutes_overdue"]}
-                    placeholder={"price_per_minutes_overdue in euros"}
+                    errors={newCallErrors["gender"]}
+                    placeholder={"gender"}
                 />
                 <Input
-                    id={"overdue_time"}
-                    type={"number"}
-                    name={"overdue_time"}
-                    value={newCall["overdue_time"]}
+                    id={"email"}
+                    type={"text"}
+                    name={"email"}
+                    value={newCall["email"]}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCallErrors["overdue_time"]}
-                    placeholder={"overdue_time in seconds"}
+                    errors={newCallErrors["email"]}
+                    placeholder={"email"}
                 />
-               
-                {inputList.map((field:any,i:any)=> {
-                <div key={i}>
+                <Input
+                    id={"country"}
+                    type={"text"}
+                    name={"country"}
+                    value={newCall["country"]}
+                    onChange={(e: any): void => changeEvent(e)}
+                    onBlur={(e: any): void => blurEvent(e)}
+                    errors={newCallErrors["country"]}
+                    placeholder={"country"}
+                />
+                <Input
+                    id={"city"}
+                    type={"text"}
+                    name={"city"}
+                    value={newCall["city"]}
+                    onChange={(e: any): void => changeEvent(e)}
+                    onBlur={(e: any): void => blurEvent(e)}
+                    errors={newCallErrors["city"]}
+                    placeholder={"city"}
+                />
+            {inputList.map((field:any,i:any)=> {
+                return (<div key={i}>
                  <Input 
-                id={"call_field"}
-                name={"call_field"}
+                id={"company_field"+i}
+                name={Object.keys(field)[0]}
                 type={"text"}
-                value={field.company_field}
-                onChange={(e: any,i:any): void => changeInputEvent(e,i)}
-                onBlur={(e: any,i :any): void => blurInputEvent(e,i)}
-                placeholder={"call field"}
-                 />
-
-                 {inputList.length !== 1 && <Button
-                    className="mr10"
-                    onClick={() => handleRemoveClick(i)}>Remove</Button>}
-                  
-                  </div>
+                value={Object.values(field)[0]}
+                onChange={(e: any): void => changeInputEvent(e,i)}
+                onBlur={(e: any): void => blurInputEvent(e,i)}
+                placeholder={"Company field"}
+                label={beutifyString(Object.keys(field)[0])}
+                 />                  
+                  </div>)
                 })}
-                <Button onClick={handleAddClick}>Add</Button>
-                {isAdd && (
+                        {isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
-                        onClick={() => dispatch(addCall(newCall,navigate))}
+                        onClick={() => CreateCall()}
                         loading={call.add.loading}
                         disabled={call.add.loading || hasSomeErrors()}
                     >

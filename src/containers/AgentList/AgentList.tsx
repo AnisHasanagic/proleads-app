@@ -13,7 +13,6 @@ import "./AgentList.scss";
 function AgentList() {
     const dispatch = useDispatch();
 
-    const [currentCall, setCurrentCall] = useState<any>(null)
     const [currentCompany, setCurrentCompany] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
 
@@ -23,14 +22,16 @@ function AgentList() {
         dispatch(loadCompanies());
     }, []);
 
-    const showCompany = (Company: any) => {
+    const showCompany = (companys: any) => {
         setIsAdd(false);
-        setCurrentCompany(Company);
+        setCurrentCompany(companys);
     };
+      
+   
 
     const actions = [
         {
-            name: "Call",
+            name: "Edit",
             row: "id",
             text: "Call",
             action: showCompany,
@@ -59,7 +60,7 @@ function AgentList() {
                 show={currentCompany}
                 closeModal={() => setCurrentCompany(null)}
             >
-            <CallModal call={currentCall} companys={currentCompany} isAdd="true"/>
+            <CallModal companys={currentCompany} isAdd="true"/>
             </Modal>
         </DashboardLayout>
     );

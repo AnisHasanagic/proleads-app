@@ -38,7 +38,6 @@ function AdminUsers() {
     const columnsToShow = [
         "id",
         "username",
-        "password",
         "first_name",
         "last_name",
         "role",

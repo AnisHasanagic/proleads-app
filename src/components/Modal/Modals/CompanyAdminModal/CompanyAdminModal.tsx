@@ -13,10 +13,10 @@ import { Input } from "../../../Input/Input";
 
 import "./CompanyAdminModal.scss";
 
-function CompanyAdminModal({ Company, isAdd }: any) {
+function CompanyAdminModal({ company, isAdd }: any) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const company = useSelector((state: any) => state.company);
+    const company_state = useSelector((state: any) => state.company);
     
     const INITIAL_Company = {
         name: "",
@@ -30,7 +30,7 @@ function CompanyAdminModal({ Company, isAdd }: any) {
         company_fields:"",
     };
 
-    const [inputList, setInputList] = useState<any>([{company_field: ""}])
+    const [inputList, setInputList] = useState<any>([])
     const [newCompany, setNewCompany] = useState<any>(INITIAL_Company);
     const [newCompanyErrors, setNewCompanyErrors] = useState<any>({});
 
@@ -53,7 +53,7 @@ function CompanyAdminModal({ Company, isAdd }: any) {
         initial_time: {
             isRequired: true,
         },
-        price_per_minute_overdue: {
+        price_per_minutes_overdue: {
             isRequired: true,
         },
         overdue_time: {
@@ -138,11 +138,41 @@ function CompanyAdminModal({ Company, isAdd }: any) {
                 [name]: [],
             });
     };
+
+    let valueToLowerCase = (value:any) => {
+        let temp = value 
+        temp = temp ? temp.trim() : ""
+        temp = temp.toLowerCase();
+        temp = temp.replace(/ /g,"_")
+        return temp
+    }
+
+    let beutifyString = (value:any) => {
+        let temp = value
+        temp = temp.replace(/_+/g, ' ')
+        temp = temp.charAt(0).toUpperCase() + temp.slice(1);
+        return temp
+    }
+    
     const changeInputEvent = (e: any,index:any): void => {
         const name = e.target.name;
-        const value = e.target.value;
-        const list = [...inputList]
-        list[index][name] = value
+        let value = e.target.value;
+        let list = [...inputList]
+        
+
+
+        list = [
+            ...list.slice(0, index),
+            {
+                [value]: ""
+            },
+            ...list.slice(index + 1)
+        ]
+
+        console.log(list);
+
+
+
 
         const validator = validations[name];
         const errors = [];
@@ -150,21 +180,22 @@ function CompanyAdminModal({ Company, isAdd }: any) {
         if (validator) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
-                    if (value !== true || value !== false) {
+                    if (name !== true || name !== false) {
                         errors.push("REQUIRED_FIELD");
                     }
                 } else {
-                    if (value.length < 1) {
+                    if (name.length < 1) {
                         errors.push("REQUIRED_FIELD");
                     }
                 }
             }
         }
 
-        setInputList({
-            ...inputList,
+        setInputList(
             list
-        });
+        );
+
+
         if (errors.length > 0)
             setNewCompanyErrors({
                 ...newCompanyErrors,
@@ -179,30 +210,40 @@ function CompanyAdminModal({ Company, isAdd }: any) {
 
     const blurInputEvent = (e:any,index:any): void => {
         const name = e.target.name;
-        const value = e.target.value;
-        const list = [...inputList]
-        list[index][name] = value
+        let value = e.target.value;
+        let list = [...inputList]
+     
+        value=valueToLowerCase(value)
+        console.log(value)
+
+        list = [
+            ...list.slice(0, index),
+            {
+                [value]: ""
+            },
+            ...list.slice(index + 1)
+        ]
+
+        console.log(list);
+
         const validator = validations[name];
         const errors = [];
 
         if (validator) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
-                    if (value !== true || value !== false) {
+                    if (name !== true || name !== false) {
                         errors.push("REQUIRED_FIELD");
                     }
                 } else {
-                    if (value.length < 1) {
+                    if (name.length < 1) {
                         errors.push("REQUIRED_FIELD");
                     }
                 }
             }
         }
 
-        setInputList({
-            ...inputList,
-            list
-        });
+        setInputList(list);
 
         if (errors.length > 0)
             setNewCompanyErrors({
@@ -224,34 +265,34 @@ function CompanyAdminModal({ Company, isAdd }: any) {
     };
 
     useEffect(() => {
-        if (Company) {
+        if (company) {
             setNewCompany({
-                name: Company.name,
-                address: Company.address,
-                description: Company.description,
-                company_info: Company.company_info,
-                price_per_call: Company.price_per_call,
-                initial_time: Company.initial_time,
-                price_per_minutes_overdue: Company.price_per_minutes_overdue,
-                overdue_time:Company.overdue_time,
-                company_fields:Company.company_fields,
+                name: company.name,
+                address: company.address,
+                description: company.description,
+                company_info: company.company_info,
+                price_per_call: company.price_per_call,
+                initial_time: company.initial_time,
+                price_per_minutes_overdue: company.price_per_minutes_overdue,
+                overdue_time:company.overdue_time,
+                company_fields:company.company_fields,
             });
             setNewCompanyErrors({});
         }
-    }, [Company]);
+    }, [company]);
 
 
     useEffect(() => {
-        if (company.update.errors) {
-            setNewCompanyErrors(company.update.errors);
+        if (company_state.update.errors) {
+            setNewCompanyErrors(company_state.update.errors);
         }
-    }, [company.update]);
+    }, [company_state.update]);
 
     useEffect(() => {
-        if (company.add.errors) {
-            setNewCompanyErrors(company.add.errors);
+        if (company_state.add.errors) {
+            setNewCompanyErrors(company_state.add.errors);
         }
-    }, [company.add]);
+    }, [company_state.add]);
 
     const handleRemoveClick = (index:any) => {
         const list = [...inputList];
@@ -261,7 +302,8 @@ function CompanyAdminModal({ Company, isAdd }: any) {
        
     
       const handleAddClick = () => {
-        setInputList([...inputList, { company_field: ""}]);
+        setInputList([...inputList, {"": ""}]);
+
       };
     return (
         <div id="Company-admin-modal">
@@ -350,14 +392,14 @@ function CompanyAdminModal({ Company, isAdd }: any) {
                 />
                
                {inputList.map((field:any,i:any)=> {
-                <div key={i}>
+                return (<div key={i}>
                  <Input 
-                id={"company_field"}
-                name={"company_field"}
+                id={"company_field"+i}
+                name={"company_field"+i}
                 type={"text"}
-                value={inputList["company_fields"]}
-                onChange={(e: any,i:any): void => changeInputEvent(e,i)}
-                onBlur={(e: any,i :any): void => blurInputEvent(e,i)}
+                value={beutifyString(Object.keys(field)[0])}
+                onChange={(e: any): void => changeInputEvent(e,i)}
+                onBlur={(e: any): void => blurInputEvent(e,i)}
                 placeholder={"Company field"}
                  />
 
@@ -365,17 +407,17 @@ function CompanyAdminModal({ Company, isAdd }: any) {
                     className="mr10"
                     onClick={() => handleRemoveClick(i)}>Remove</Button>}
                   
-                  </div>
+                  </div>)
                 })}
                 <Button onClick={handleAddClick}>Add</Button>
                 {!isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
                         onClick={() =>
-                            dispatch(updateCompany(newCompany, Company.id))
+                            dispatch(updateCompany(newCompany, company.id))
                         }
-                        loading={company.update.loading}
-                        disabled={company.update.loading || hasSomeErrors()}
+                        loading={company_state.update.loading}
+                        disabled={company_state.update.loading || hasSomeErrors()}
                     >
                         Save
                     </Button>
@@ -383,9 +425,9 @@ function CompanyAdminModal({ Company, isAdd }: any) {
                 {isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
-                        onClick={() => dispatch(addCompany(newCompany,navigate))}
-                        loading={company.add.loading}
-                        disabled={company.add.loading || hasSomeErrors()}
+                        onClick={() => dispatch(addCompany({...newCompany,company_fields: JSON.stringify(inputList)},navigate))}
+                        loading={company_state.add.loading}
+                        disabled={company_state.add.loading || hasSomeErrors()}
                     >
                         Create
                     </Button>
