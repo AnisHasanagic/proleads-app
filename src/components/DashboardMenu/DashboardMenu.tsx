@@ -50,6 +50,14 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                         route.pathname === "/dashboard/admin-panel/company",
                     description: "List of companies",
                 },
+                {
+                    name: "Calls",
+                    icon: faUsers,
+                    link: "/dashboard/admin-panel/calls",
+                    isActive:
+                        route.pathname === "/dashboard/admin-panel/calls",
+                    description: "List of calls and export tool",
+                },
             ],
         },
         {
@@ -94,7 +102,7 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
             <div className="right active">
                 <div className="top">
                     <Link to="/dashboard" className="mr-5">
-                     <h1>PROLEADS d.o.o.</h1>
+                     <h1 className="red">PROLEADS d.o.o.</h1>
                     </Link>
                 </div>
                 <div className="menu">
@@ -136,14 +144,6 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                         );
                     })}
                 </div>
-                <div className="user-data flex mt-auto">
-                    <Link to={"/dashboard/account"} className="flex">
-                        <div className="image" ref={imageRef}></div>
-                        <div className="data">
-                            <p>{user.email}</p>
-                            <p className="role">{user.role}</p>
-                        </div>
-                    </Link>
                     <div
                         onClick={(e: any) => {
                             e.stopPropagation();
@@ -154,7 +154,6 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                         <FontAwesomeIcon icon={faRightFromBracket} />
                     </div>
                 </div>
-            </div>
         </section>
     );
 });

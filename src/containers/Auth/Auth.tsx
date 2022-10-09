@@ -70,9 +70,12 @@ function Auth() {
     }, [user.token]);
 
     return (
+        <div id="page">
         <div id="auth">
-        <h1>Sign in</h1>
-        <Form className="sign">
+        <h1>Welcome to ProLeads</h1>
+        <div className="sign-box">
+        <div className="form-box">
+        <Form>
         <Input
             id={"loginUsername"}
             type={"username"}
@@ -113,6 +116,9 @@ function Auth() {
             Sign In
         </Button>
     </Form>
+    </div>
+    </div>
+    </div>
     </div>
     );
 }

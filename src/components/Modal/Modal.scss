@@ -28,7 +28,7 @@
     .modal-content {
         max-width: 800px;
         margin: 0 50px;
-        padding: 30px;
+        padding: 100px;
         background: #161d2d;
         z-index: 40;
         position: relative;
@@ -42,13 +42,13 @@
         min-width: 600px;
 
         .close {
-            padding: 20px;
+            padding: 10px;
             border: 1px solid $footer-color;
             border-radius: 10px;
             box-shadow: 0 10px 30px 0 rgba(#000, 0.5);
             background-color: $box-color;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             position: absolute;
             right: 40px;
             top: 40px;

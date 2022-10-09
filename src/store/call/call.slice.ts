@@ -27,7 +27,9 @@ type Call = {
     email:string,
     phone:string,
     country:string,
-    city :string
+    city :string,
+    start_timer: number,
+    end_timer: number
 };
 
 const INITIAL_STATE: CallSlice = {

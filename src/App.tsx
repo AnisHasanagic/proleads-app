@@ -12,6 +12,7 @@ import store from "./store";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import { GuestRoute } from "./components/GuestRoute/GuestRoute";
+import AdminExport from "./containers/AdminPanel/AdminExport/AdminExport";
 
 const Auth = React.lazy(() => import("./containers/Auth/Auth"));
 const AdminUsers = React.lazy(()=>import("./containers/AdminPanel/AdminUsers/AdminUsers"))
@@ -48,7 +49,9 @@ function App() {
                         path="/dashboard/admin-panel/users"
                         element={
                             <React.Suspense fallback={<>...</>}>
+                         <PrivateRoute roles={["admin"]}>
                                     <AdminUsers />
+                            </PrivateRoute>
                             </React.Suspense>
                         }
                     />
@@ -60,6 +63,16 @@ function App() {
                  
                                     <AdminCompany />
                                 </PrivateRoute>
+                            </React.Suspense>
+                        }
+                    />
+                    <Route
+                        path="/dashboard/admin-panel/calls"
+                        element={
+                            <React.Suspense fallback={<>...</>}>
+                         <PrivateRoute roles={["admin"]}>
+                                    <AdminExport />
+                            </PrivateRoute>
                             </React.Suspense>
                         }
                     />

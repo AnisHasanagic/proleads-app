@@ -17,7 +17,7 @@ function CallModal({ companys, isAdd }: any) {
     const navigate = useNavigate();
     const company = useSelector((state: any) => state.company);
     const call = useSelector((state:any)=>state.call)
-    let start_time = null
+    
 
 
 
@@ -26,9 +26,7 @@ function CallModal({ companys, isAdd }: any) {
       }
     
 
-   useEffect(()=>{
-       start_time=getTimestampInSeconds();
-   },[]);
+   
 
 
     const INITIAL_Call = {
@@ -46,7 +44,9 @@ function CallModal({ companys, isAdd }: any) {
         email:"",
         phone:"",
         country:"",
-        city:"" 
+        city:"",
+        start_timer:"",
+        end_timer:""
     };
     const [inputList, setInputList] = useState<any>([]);
     const [newCall, setNewCall] = useState<any>(INITIAL_Call);
@@ -224,12 +224,14 @@ function CallModal({ companys, isAdd }: any) {
 
     useEffect(() => {
         if (companys) {
+            let startTime=getTimestampInSeconds();
             setNewCall({
                 company_id:companys.id,
                 price_per_call: companys.price_per_call,
                 initial_time: companys.initial_time,
                 price_per_minutes_overdue: companys.price_per_minutes_overdue,
                 overdue_time:companys.overdue_time,
+                start_timer:startTime
             });
             setInputList(JSON.parse(companys.company_fields))
             setNewCallErrors({});
@@ -248,8 +250,9 @@ function CallModal({ companys, isAdd }: any) {
     }, [call.add]);
 
     const CreateCall=():void => {
-        let end_time=getTimestampInSeconds();
-        dispatch(addCall({...newCall,call_fields:JSON.stringify(inputList)},navigate))
+        let endTime=getTimestampInSeconds();
+        console.log(endTime)
+        dispatch(addCall({...newCall,call_fields:JSON.stringify(inputList),end_timer:endTime},navigate))
     };
 
     

@@ -6,6 +6,9 @@ const {
     addLoading,
     addSuccess,
     addError,
+    loadPending,
+    loadFailed,
+    loadSuccess
 } = CallSlice.actions;
 
 
@@ -44,5 +47,32 @@ export const addCall =
             return dispatch(
                 addError({ message: "SOMETHING_WENT_WRONG", errors: null })
             );
+        }
+    };
+    export const loadCalls = (
+        company_id:string,
+        start_date:any,
+        end_date:any
+    ): any => async (dispatch: any) => {
+        try {
+            dispatch(loadPending());
+    
+            const response = await CallService.getAll(company_id,start_date,end_date);
+    
+            let data: any = null;
+    
+            try {
+                data = await response.clone().json();
+            } catch {
+                data = await response.clone().text();
+            }
+    
+            if (response.ok) {
+                dispatch(loadSuccess({ list: data.calls }));
+            } else {
+                dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+            }
+        } catch (e: any) {
+            dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
         }
     };

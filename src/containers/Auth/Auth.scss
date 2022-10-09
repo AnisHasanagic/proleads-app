@@ -1,51 +1,51 @@
 @import '../../variables.scss';
 
-
-.sign{
+#page {
     text-align: center;
     align-items: center;
-    
-    Input{
-        width:50px;
-    }
-}
-#auth {
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
-    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    background: #00416A;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E4E5E6, #00416A);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E4E5E6, #00416A);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-    .auth-desc {
-        background: white;
-        border-radius: 30px;
-        padding: 50px;
-        position: relative;
-        display: flex;
-        flex-direction: column;
+
+    #auth {
+        padding: 10px;
+        height: 50vh;
+        width: 50vw;
         overflow: hidden;
-
-        .auth-desc-content {
-            position: relative;
-            z-index: 1;
-            height: 100%;
-            text-align: center;
-
-            > h1 {
-                display: inline-block;
-                font-family: $montserrat-font;
-                font-style: normal;
-                font-weight: 700;
-                font-size: 3em;
-                line-height: 1em;
-                z-index: 1;
-            }
-        
-            > h2 {
-                font-family: 'Open Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 1.2em;
-                z-index: 1;
-            }
+        overflow-y: auto;
+        margin: auto;
+        border-radius: 10px;
+        border: none;
+        background: #01273f;
+        box-shadow: none;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        >h1 {
+            font-family: Helvetica, sans-serif;
+            color: white
         }
-    }}
+
+        
+
+        .sign-box {
+            width: 50%;
+            margin: auto;
+            
+            >Button {
+               color: white;
+            } 
+        }
+
+
+
+    }
+}
