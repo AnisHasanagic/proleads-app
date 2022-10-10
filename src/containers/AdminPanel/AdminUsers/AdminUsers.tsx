@@ -36,13 +36,10 @@ function AdminUsers() {
     ];
 
     const columnsToShow = [
-        "id",
         "username",
         "first_name",
         "last_name",
-        "role",
-        "created_at",
-        "updated_at",
+        "role"
     ];
 
     const keys = columnsToShow

@@ -47,8 +47,6 @@ function AdminCompanies() {
         "price_per_minutes_overdue",
         "initial_time",
         "overdue_time",
-        "created_at",
-        "updated_at",
     ];
 
     const keys = columnsToShow

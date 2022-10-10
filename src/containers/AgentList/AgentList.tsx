@@ -47,7 +47,11 @@ function AgentList() {
         "address",
     ];
 
-    const keys = columnsToShow
+    const keys = [
+        "name",
+        "address"
+    ]
+
     const search = (data:any) => {
         return data.filter(
             (item:any) => 

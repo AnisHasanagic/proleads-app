@@ -31,6 +31,8 @@
         background: #00416A;
         transition: 200ms;
         box-shadow: 10px 0 20px rgba($body-color, 0.4);
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px ;
         
 
         &.active {
@@ -57,6 +59,7 @@
             flex: 1;
             overflow: hidden;
             overflow-y: auto;
+            border-radius: 0.3;
 
             .menu-item {
                 margin-bottom: 10px;

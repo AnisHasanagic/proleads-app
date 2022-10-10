@@ -46,7 +46,7 @@ const Table = ({ data, actions, columnsToShow }: any) => {
                 };
             });
 
-            columns = [...action_columns, ...columns];
+            columns = [ ...columns,...action_columns];
         }
 
         return columns;

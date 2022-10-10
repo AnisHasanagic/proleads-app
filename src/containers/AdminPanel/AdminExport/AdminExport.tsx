@@ -39,7 +39,6 @@ function AdminExport() {
     ];
 
     const columnsToShow = [
-        "id",
         "name",
         "address",
         "description",
@@ -49,8 +48,6 @@ function AdminExport() {
         "price_per_minutes_overdue",
         "initial_time",
         "overdue_time",
-        "created_at",
-        "updated_at",
     ];
 
     return (

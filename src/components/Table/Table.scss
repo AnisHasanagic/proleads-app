@@ -102,7 +102,7 @@ td {
 }
 
 .table100-head th {
-    padding: 15px;
+    padding: 1px;
 }
 
 .table100-body td {
@@ -134,9 +134,11 @@ td {
     line-height: 1.4;
     text-transform: uppercase;
     text-align: left;
-    color: #000;
-    background-color: #f9e686;
+    color: rgb(255, 255, 255);
+    background-color: #00416a;
     font-weight: 700;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .table100.ver1 td {
@@ -399,3 +401,8 @@ td {
 .table100.ver5 .ps__rail-y .ps__thumb-y::before {
     background-color: #ccc;
 }
+.cell100{
+    text-align: center;
+    padding: 10px;
+}
+
