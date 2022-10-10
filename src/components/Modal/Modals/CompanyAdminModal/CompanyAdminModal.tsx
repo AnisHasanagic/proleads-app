@@ -17,6 +17,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const company_state = useSelector((state: any) => state.company);
+
+    
     
     const INITIAL_Company = {
         name: "",
@@ -312,7 +314,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     id={"name"}
                     type={"text"}
                     name={"name"}
-                    value={newCompany["name"]}
+                    value={beutifyString(newCompany["name"])}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCompanyErrors["name"]}
@@ -322,7 +324,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     id={"address"}
                     type={"text"}
                     name={"address"}
-                    value={newCompany["address"]}
+                    value={beutifyString(newCompany["address"])}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCompanyErrors["address"]}
@@ -332,7 +334,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     id={"description"}
                     type={"text"}
                     name={"description"}
-                    value={newCompany["description"]}
+                    value={beutifyString(newCompany["description"])}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCompanyErrors["description"]}
@@ -343,7 +345,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     id={"company_info"}
                     type={"text"}
                     name={"company_info"}
-                    value={newCompany["company_info"]}
+                    value={beutifyString(newCompany["company_info"])}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCompanyErrors["company_info"]}
@@ -354,7 +356,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     id={"price_per_call"}
                     type={"number"}
                     name={"price_per_call"}
-                    value={newCompany["price_per_call"]}
+                    value={beutifyString(newCompany["price_per_call"])}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCompanyErrors["price_per_call"]}
@@ -364,7 +366,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     id={"initial_time"}
                     type={"number"}
                     name={"initial_time"}
-                    value={newCompany["initial_time"]}
+                    value={beutifyString(newCompany["initial_time"])}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCompanyErrors["initial_time"]}
@@ -374,7 +376,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     id={"price_per_minutes_overdue"}
                     type={"number"}
                     name={"price_per_minutes_overdue"}
-                    value={newCompany["price_per_minutes_overdue"]}
+                    value={beutifyString(newCompany["price_per_minutes_overdue"])}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCompanyErrors["price_per_minutes_overdue"]}
@@ -384,7 +386,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     id={"overdue_time"}
                     type={"number"}
                     name={"overdue_time"}
-                    value={newCompany["overdue_time"]}
+                    value={beutifyString(newCompany["overdue_time"])}
                     onChange={(e: any): void => changeEvent(e)}
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCompanyErrors["overdue_time"]}

@@ -50,14 +50,12 @@ export const addCall =
         }
     };
     export const loadCalls = (
-        company_id:string,
-        start_date:any,
-        end_date:any
+        exportData:any
     ): any => async (dispatch: any) => {
         try {
             dispatch(loadPending());
-    
-            const response = await CallService.getAll(company_id,start_date,end_date);
+            console.log(exportData)
+            const response = await CallService.getAll(exportData);
     
             let data: any = null;
     

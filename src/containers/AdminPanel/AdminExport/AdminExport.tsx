@@ -18,18 +18,20 @@ function AdminExport() {
 
     const company = useSelector((state: any) => state.company);
 
+
     useEffect(() => {
         dispatch(loadCompanies());
     }, []);
 
     const showCompany = (Company: any) => {
+        console.log(Company)
         setIsAdd(false);
         setCurrentCompany(Company);
     };
 
     const actions = [
         {
-            name: "Export",
+            name: "Edit",
             row: "id",
             text: "Export",
             action: showCompany,
@@ -68,7 +70,7 @@ function AdminExport() {
                 show={currentCompany}
                 closeModal={() => setCurrentCompany(null)}
             >
-                <ExportCallsModal Company={currentCompany} />
+                <ExportCallsModal companys={currentCompany} />
             </Modal>
         </DashboardLayout>
     );

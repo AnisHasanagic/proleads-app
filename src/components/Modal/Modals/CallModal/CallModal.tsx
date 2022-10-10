@@ -224,6 +224,7 @@ function CallModal({ companys, isAdd }: any) {
 
     useEffect(() => {
         if (companys) {
+            console.log(companys)
             let startTime=getTimestampInSeconds();
             setNewCall({
                 company_id:companys.id,

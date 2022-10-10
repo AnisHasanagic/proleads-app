@@ -7,7 +7,8 @@ export default class CallService {
         return apiCall(API_URI + "/call", call, "POST", true);
     };
 
-    static getAll(company_id:string,start_date:any,end_date:any) : Promise<Response> {
-        return apiCall(API_URI + "/call",{company_id,start_date,end_date},"GET",true)
+    static getAll(data:any) : Promise<Response> {
+        console.log(data)
+        return apiCall(API_URI + "/call",data,"GET",true,true)
     };
 }

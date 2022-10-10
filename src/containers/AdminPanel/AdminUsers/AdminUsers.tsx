@@ -7,7 +7,7 @@ import DashboardLayout from "../../../layouts/DashboardLayout";
 import UserAdminModal from "../../../components/Modal/Modals/UserAdminModal/UserAdminModal"
 import { loadUsers } from "../../../store/users/users.actions";
 import "./AdminUsers.scss";
-
+import { Input } from "../../../components/Input/Input";
 import{ Button, ButtonTypes } from "../../../components/Button/Button"
 
 function AdminUsers() {
@@ -16,7 +16,7 @@ function AdminUsers() {
     const [isAdd, setIsAdd] = useState<any>(false);
     
     const users = useSelector((state: any) => state.users);
-     
+    const [searchValue,setSearchValue] = useState("")
     useEffect(() => {
         dispatch(loadUsers());
     }, []);
@@ -45,7 +45,12 @@ function AdminUsers() {
         "updated_at",
     ];
 
-
+    const keys = columnsToShow
+    const search = (data:any) => {
+        return data.filter(
+            (item:any) => 
+            keys.some(key =>item[key].toLowerCase().includes(searchValue)))
+    }
     return (
         <DashboardLayout>
             <section id="admin-users">
@@ -53,6 +58,13 @@ function AdminUsers() {
                 <h1>All Users</h1>
                 <p className="mb-5">List of all users.</p>
                 </div>
+                <Input
+                id={"search"}
+                type={"text"}
+                className={"search"}
+                onChange={(e: any): void => setSearchValue(e.target.value)}
+                placeholder={"Search..."}
+            />
                 <Button
                         btnClass={ButtonTypes.primary}
                         customClass="ml-auto"
@@ -70,7 +82,7 @@ function AdminUsers() {
                         Add New
                     </Button>
                 <Table
-                    data={users.list}
+                    data={search(users.list)}
                     actions={actions}
                     columnsToShow={columnsToShow}
                 />

@@ -7,7 +7,7 @@ import CallModal from "../../components/Modal/Modals/CallModal/CallModal";
 import Table from "../../components/Table/Table";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { loadCompanies } from "../../store/company/company.actions";
-
+import { Input } from "../../components/Input/Input";
 import "./AgentList.scss";
 
 function AgentList() {
@@ -15,6 +15,10 @@ function AgentList() {
 
     const [currentCompany, setCurrentCompany] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
+    
+     const [searchValue,setSearchValue] = useState("")
+   
+     
 
     const company = useSelector((state: any) => state.company);
 
@@ -43,6 +47,14 @@ function AgentList() {
         "address",
     ];
 
+    const keys = columnsToShow
+    const search = (data:any) => {
+        return data.filter(
+            (item:any) => 
+            keys.some(key =>item[key].toLowerCase().includes(searchValue)))
+    }
+
+    
     return (
         <DashboardLayout>
             <section id="admin-company">
@@ -50,8 +62,15 @@ function AgentList() {
                         <h1>All company</h1>
                         <p>List of all company.</p>
                     </div>
+                <Input
+                id={"search"}
+                type={"text"}
+                className={"search"}
+                onChange={(e: any): void => setSearchValue(e.target.value)}
+                placeholder={"Search..."}
+            />
                 <Table
-                    data={company.list}
+                    data={search(company.list)}
                     actions={actions}
                     columnsToShow={columnsToShow}
                 />

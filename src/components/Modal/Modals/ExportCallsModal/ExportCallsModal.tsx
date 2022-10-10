@@ -14,19 +14,18 @@ import { Input } from "../../../Input/Input";
 
 import "./ExportCallsModal.scss";
 
-function ExportCallsModal({ company }: any) {
+function ExportCallsModal({ companys }: any) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const call_state = useSelector((state: any) => state.call);
-    let company_id :any = null
+    
+   
 
-    useEffect(()=>{
-       if(company){
-        company_id=company.id
-       }
-    },[company])
+
+   
 
     const INITIAL_STATE = {
+        company_id:"",
         startDate: "",
         endDate: ""
     }
@@ -40,7 +39,7 @@ function ExportCallsModal({ company }: any) {
         }
     }
 
-    const [Date, setDate] = useState<any>(INITIAL_STATE)
+    const [exportData, setexportData] = useState<any>(INITIAL_STATE)
 
 
     /*
@@ -69,8 +68,8 @@ function ExportCallsModal({ company }: any) {
             }
         }
 
-        setDate({
-            ...Date,
+        setexportData({
+            ...exportData,
             [name]: value ? value.trim() : "",
         });
 
@@ -97,15 +96,24 @@ function ExportCallsModal({ company }: any) {
             }
         }
 
-        setDate({
-            ...Date,
+        setexportData({
+            ...exportData,
             [name]: value ? value.trim() : "",
         });
 
     };
+    useEffect(()=>{
+       if(companys){
+        setexportData({
+        company_id: companys.id
+        }
+        )
+       }
+    },[companys])
     
     const CreateCallList = ():void => {
-        dispatch(loadCalls(company_id,Date.startDate,Date.endDate)
+        console.log(exportData.company_id)
+        dispatch(loadCalls(exportData)
         )
         console.log(call_state.list)
     }
@@ -117,7 +125,7 @@ function ExportCallsModal({ company }: any) {
                 id={"startDate"}
                 type={"date"}
                 name={"startDate"}
-                value={Date["startDate"]}
+                value={exportData["startDate"]}
                 onChange={(e: any): void => changeEvent(e)}
                 onBlur={(e: any): void => blurEvent(e)}
                 placeholder={"from"}
@@ -127,7 +135,7 @@ function ExportCallsModal({ company }: any) {
                 id={"endDate"}
                 type={"date"}
                 name={"endDate"}
-                value={Date["endDate"]}
+                value={exportData["endDate"]}
                 onChange={(e: any): void => changeEvent(e)}
                 onBlur={(e: any): void => blurEvent(e)}
                 placeholder={"to"}

@@ -7,7 +7,7 @@ import CompanyAdminModal from "../../../components/Modal/Modals/CompanyAdminModa
 import Table from "../../../components/Table/Table";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { loadCompanies } from "../../../store/company/company.actions";
-
+import { Input } from "../../../components/Input/Input";
 import "./AdminCompanies.scss";
 
 function AdminCompanies() {
@@ -17,6 +17,7 @@ function AdminCompanies() {
     const [isAdd, setIsAdd] = useState<any>(false);
 
     const company = useSelector((state: any) => state.company);
+    const [searchValue,setSearchValue] = useState("")
 
     useEffect(() => {
         dispatch(loadCompanies());
@@ -37,7 +38,6 @@ function AdminCompanies() {
     ];
 
     const columnsToShow = [
-        "id",
         "name",
         "address",
         "description",
@@ -51,6 +51,12 @@ function AdminCompanies() {
         "updated_at",
     ];
 
+    const keys = columnsToShow
+    const search = (data:any) => {
+        return data.filter(
+            (item:any) => 
+            keys.some(key =>item[key].toString().toLowerCase().includes(searchValue)))
+    }
     return (
         <DashboardLayout>
             <section id="admin-company">
@@ -58,6 +64,13 @@ function AdminCompanies() {
                         <h1>All company</h1>
                         <p>List of all company.</p>
                     </div>
+                    <Input
+                id={"search"}
+                type={"text"}
+                className={"search"}
+                onChange={(e: any): void => setSearchValue(e.target.value)}
+                placeholder={"Search..."}
+            />
                     <Button
                         btnClass={ButtonTypes.primary}
                         customClass="ml-auto"
@@ -79,7 +92,7 @@ function AdminCompanies() {
                         Add New
                     </Button>
                 <Table
-                    data={company.list}
+                    data={search(company.list)}
                     actions={actions}
                     columnsToShow={columnsToShow}
                 />
