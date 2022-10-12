@@ -54,7 +54,6 @@ export const addCall =
     ): any => async (dispatch: any) => {
         try {
             dispatch(loadPending());
-            console.log(exportData)
             const response = await CallService.getAll(exportData);
     
             let data: any = null;
@@ -67,6 +66,7 @@ export const addCall =
     
             if (response.ok) {
                 dispatch(loadSuccess({ list: data.calls }));
+                console.log(data.calls)
             } else {
                 dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
             }

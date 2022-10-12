@@ -15,4 +15,9 @@ export default class CompanyService {
     static add(company: any): Promise<Response> {
         return apiCall(API_URI + "/company", company, "POST", true);
     };
+    
+    static getOne(company_id:string): Promise<Response> {
+        return apiCall(API_URI+"/company/"+ company_id, null,"GET",true)
+    }
+
 }

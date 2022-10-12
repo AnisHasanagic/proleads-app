@@ -13,6 +13,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import { GuestRoute } from "./components/GuestRoute/GuestRoute";
 import AdminExport from "./containers/AdminPanel/AdminExport/AdminExport";
+import ExportPage from "./containers/AdminPanel/ExportPage/ExportPage";
+import CallPage from "./containers/CallPage/CallPage";
 
 const Auth = React.lazy(() => import("./containers/Auth/Auth"));
 const AdminUsers = React.lazy(()=>import("./containers/AdminPanel/AdminUsers/AdminUsers"))
@@ -62,6 +64,26 @@ function App() {
                                  <PrivateRoute roles={["admin"]}>
                  
                                     <AdminCompany />
+                                </PrivateRoute>
+                            </React.Suspense>
+                        }
+                    />
+                    <Route
+                        path="/dashboard/admin-panel/export/:id"
+                        element={
+                            <React.Suspense fallback={<>...</>}>
+                                 <PrivateRoute roles={["admin"]}>
+                                    <ExportPage />
+                                </PrivateRoute>
+                            </React.Suspense>
+                        }
+                    />
+                    <Route
+                        path="/dashboard/call/:id"
+                        element={
+                            <React.Suspense fallback={<>...</>}>
+                                 <PrivateRoute roles={["admin","agent"]}>
+                                    <CallPage />
                                 </PrivateRoute>
                             </React.Suspense>
                         }

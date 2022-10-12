@@ -38,6 +38,31 @@ export const loadCompanies = (): any => async (dispatch: any) => {
     }
 };
 
+export const loadCompany = (company_id:string): any => async (dispatch:any) => {
+    try{
+        dispatch(loadPending());
+
+        const response = await CompanyService.getOne(company_id);
+
+        let data: any = null;
+
+        try {
+            data = await response.clone().json();
+        } catch {
+            data = await response.clone().text();
+        }
+
+        if (response.ok) {
+            dispatch(loadSuccess({ list: data.companys }));
+        } else {
+            dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+        }
+    } catch (e: any) {
+        dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+    }
+    }
+
+
 export const updateCompany =
     (company: any, company_id: string): any =>
     async (dispatch: any) => {

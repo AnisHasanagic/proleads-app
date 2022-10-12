@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Button, ButtonTypes } from "../../../components/Button/Button";
 import Modal from "../../../components/Modal/Modal";
 import ExportCallsModal from "../../../components/Modal/Modals/ExportCallsModal/ExportCallsModal";
@@ -12,6 +13,8 @@ import "./AdminExport.scss";
 
 function AdminExport() {
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const [currentCompany, setCurrentCompany] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
@@ -25,8 +28,8 @@ function AdminExport() {
 
     const showCompany = (Company: any) => {
         console.log(Company)
-        setIsAdd(false);
         setCurrentCompany(Company);
+        navigate('/dashboard/admin-panel/export/'+Company.id, Company.id)
     };
 
     const actions = [
@@ -63,12 +66,6 @@ function AdminExport() {
                     columnsToShow={columnsToShow}
                 />
             </section>
-            <Modal
-                show={currentCompany}
-                closeModal={() => setCurrentCompany(null)}
-            >
-                <ExportCallsModal companys={currentCompany} />
-            </Modal>
         </DashboardLayout>
     );
 }

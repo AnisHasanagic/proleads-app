@@ -9,6 +9,7 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import { loadCompanies } from "../../store/company/company.actions";
 import { Input } from "../../components/Input/Input";
 import "./AgentList.scss";
+import { useNavigate } from "react-router-dom";
 
 function AgentList() {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ function AgentList() {
     
      const [searchValue,setSearchValue] = useState("")
    
-     
+      const navigate=useNavigate()
 
     const company = useSelector((state: any) => state.company);
 
@@ -29,6 +30,7 @@ function AgentList() {
     const showCompany = (companys: any) => {
         setIsAdd(false);
         setCurrentCompany(companys);
+        navigate('/dashboard/call/'+companys.id, companys.id)
     };
       
    
@@ -79,12 +81,6 @@ function AgentList() {
                     columnsToShow={columnsToShow}
                 />
             </section>
-            <Modal
-                show={currentCompany}
-                closeModal={() => setCurrentCompany(null)}
-            >
-            <CallModal companys={currentCompany} isAdd="true"/>
-            </Modal>
         </DashboardLayout>
     );
 }

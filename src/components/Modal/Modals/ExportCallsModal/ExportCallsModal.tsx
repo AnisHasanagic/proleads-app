@@ -11,15 +11,16 @@ import { Button, ButtonTypes } from "../../../Button/Button";
 import { Checkbox } from "../../../Checkbox/Checkbox";
 import { Form } from "../../../Form/Form";
 import { Input } from "../../../Input/Input";
+import { Link } from "react-router-dom";
 
 import "./ExportCallsModal.scss";
 
 function ExportCallsModal({ companys }: any) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const call_state = useSelector((state: any) => state.call);
+    const call_state = useSelector((state: any) => state.calls);
     
-   
+   const [calls,setCalls] = useState<any>(null)
 
 
    
@@ -113,10 +114,9 @@ function ExportCallsModal({ companys }: any) {
     
     const CreateCallList = ():void => {
         console.log(exportData.company_id)
-        dispatch(loadCalls(exportData)
+        dispatch((loadCalls(exportData))
         )
-        console.log(call_state.list)
-    }
+        }
 
 
     return (
@@ -146,7 +146,6 @@ function ExportCallsModal({ companys }: any) {
                     >
                         Create
                     </Button>
-
         </div>
     );
 }

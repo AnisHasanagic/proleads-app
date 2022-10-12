@@ -1,22 +1,25 @@
 import moment from "moment";
 import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
     addCall
-}from "../../../../store/call/call.actions"
-import { Button, ButtonTypes } from "../../../Button/Button";
-import { Checkbox } from "../../../Checkbox/Checkbox";
-import { Form } from "../../../Form/Form";
-import { Input } from "../../../Input/Input";
+}from "../../store/call/call.actions"
+import { Button, ButtonTypes } from "../../components/Button/Button";
+import { Checkbox } from "../../components/Checkbox/Checkbox";
+import { Form } from "../../components/Form/Form";
+import { Input } from "../../components/Input/Input";
 
-import "./CallModal.scss";
+import "./CallPage.scss";
+import { loadCompany } from "../../store/company/company.actions";
 
-function CallModal({ companys, isAdd }: any) {
+function CallPage() {
 
+
+    const {company_id} : any = useParams()
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const company = useSelector((state: any) => state.company);
+    const companys = useSelector((state: any) => state.company);
     const call = useSelector((state:any)=>state.call)
     const [sendMail,setSendMail] = useState(false)
 
@@ -27,7 +30,10 @@ function CallModal({ companys, isAdd }: any) {
       }
     
 
-   
+   useEffect(()=>{
+    dispatch(loadCompany(company_id))
+
+   },[])
 
 
     const INITIAL_Call = {
@@ -284,6 +290,7 @@ function CallModal({ companys, isAdd }: any) {
         <div id="call-admin-modal">
             <div id="info">
             </div>
+            <div>{newInfo.call_info}</div>
             <Form>
             <Input
                     id={"first_name"}
@@ -367,7 +374,7 @@ function CallModal({ companys, isAdd }: any) {
                 >
 
                 </Checkbox>
-                        {isAdd && (
+                        
                     <Button
                         btnClass={ButtonTypes.primary}
                         onClick={() => CreateCall()}
@@ -376,10 +383,10 @@ function CallModal({ companys, isAdd }: any) {
                     >
                         Create
                     </Button>
-                )}
+                
             </Form>
         </div>
     );
 }
 
-export default CallModal;
+export default CallPage;
