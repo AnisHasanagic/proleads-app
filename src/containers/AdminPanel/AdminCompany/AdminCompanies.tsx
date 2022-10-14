@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, ButtonTypes } from "../../../components/Button/Button";
 import Modal from "../../../components/Modal/Modal";
 import CompanyAdminModal from "../../../components/Modal/Modals/CompanyAdminModal/CompanyAdminModal";
+import AssignModal from "../../../components/Modal/Modals/AssignModal/AssignModal"
 import Table from "../../../components/Table/Table";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { loadCompanies } from "../../../store/company/company.actions";
@@ -16,8 +17,10 @@ function AdminCompanies() {
     const [currentCompany, setCurrentCompany] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
 
+    const [isEdit, setIsEdit] = useState<any>(false);
+
     const company = useSelector((state: any) => state.company);
-    const [searchValue,setSearchValue] = useState("")
+    const [searchValue, setSearchValue] = useState("")
 
     useEffect(() => {
         dispatch(loadCompanies());
@@ -25,6 +28,13 @@ function AdminCompanies() {
 
     const showCompany = (Company: any) => {
         setIsAdd(false);
+        setIsEdit(true)
+        setCurrentCompany(Company);
+    };
+
+    const showUsers = (Company: any) => {
+        setIsAdd(false);
+        setIsEdit(false)
         setCurrentCompany(Company);
     };
 
@@ -35,6 +45,12 @@ function AdminCompanies() {
             text: "Edit",
             action: showCompany,
         },
+        {
+            name: "Assign",
+            row: "id",
+            text: "Assign",
+            action: showUsers,
+        }
     ];
 
     const columnsToShow = [
@@ -50,57 +66,67 @@ function AdminCompanies() {
     ];
 
     const keys = columnsToShow
-    const search = (data:any) => {
+    const search = (data: any) => {
         return data.filter(
-            (item:any) => 
-            keys.some(key =>item[key].toString().toLowerCase().includes(searchValue)))
+            (item: any) =>
+                keys.some(key => item[key].toString().toLowerCase().includes(searchValue)))
     }
     return (
         <DashboardLayout>
             <section id="admin-company">
-                    <div className="mr-3">
-                        <h1>All company</h1>
-                        <p>List of all company.</p>
-                    </div>
-                    <Input
-                id={"search"}
-                type={"text"}
-                className={"search"}
-                onChange={(e: any): void => setSearchValue(e.target.value)}
-                placeholder={"Search..."}
-            />
-                    <Button
-                        btnClass={ButtonTypes.primary}
-                        customClass="ml-auto"
-                        onClick={() => {
-                            setIsAdd(true);
-                            setCurrentCompany({
-                                name: "",
-                                address: "",
-                                description: "",
-                                company_info: "",
-                                company_fields: "",
-                                price_per_call: "",
-                                price_per_minutes_overdue: "",
-                                initial_time: "",
-                                overdue_time: ""
-                            });
-                        }}
-                    >
-                        Add New
-                    </Button>
+                <div className="mr-3">
+                    <h1>All company</h1>
+                    <p>List of all company.</p>
+                </div>
+                <Input
+                    id={"search"}
+                    type={"text"}
+                    className={"search"}
+                    onChange={(e: any): void => setSearchValue(e.target.value)}
+                    placeholder={"Search..."}
+                />
+                <Button
+                    btnClass={ButtonTypes.primary}
+                    customClass="ml-auto"
+                    onClick={() => {
+                        setIsAdd(true);
+                        setCurrentCompany({
+                            name: "",
+                            address: "",
+                            description: "",
+                            company_info: "",
+                            company_fields: "",
+                            price_per_call: "",
+                            price_per_minutes_overdue: "",
+                            initial_time: "",
+                            overdue_time: ""
+                        });
+                    }}
+                >
+                    Add New
+                </Button>
                 <Table
                     data={search(company.list)}
                     actions={actions}
                     columnsToShow={columnsToShow}
                 />
             </section>
-            <Modal
-                show={currentCompany}
-                closeModal={() => setCurrentCompany(null)}
-            >
-                <CompanyAdminModal Company={currentCompany} isAdd={isAdd} />
-            </Modal>
+            {isEdit && (
+                <Modal
+                    show={currentCompany}
+                    closeModal={() => setCurrentCompany(null)}
+                >
+                    <CompanyAdminModal company={currentCompany} isAdd={isAdd} />
+                </Modal>
+            )}
+            {!isEdit && (
+                <Modal
+                    show={currentCompany}
+                    closeModal={() => setCurrentCompany(null)}
+                >
+                    <AssignModal company={currentCompany} isAdd={isAdd} />
+                </Modal>)}
+
         </DashboardLayout>
     );
 }

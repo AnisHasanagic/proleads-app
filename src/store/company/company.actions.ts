@@ -41,19 +41,19 @@ export const loadCompanies = (): any => async (dispatch: any) => {
 export const loadCompany = (company_id:string): any => async (dispatch:any) => {
     try{
         dispatch(loadPending());
-
+     
         const response = await CompanyService.getOne(company_id);
-
+        console.log(response)
         let data: any = null;
-
+        
         try {
             data = await response.clone().json();
         } catch {
             data = await response.clone().text();
         }
-
+      console.log(data)
         if (response.ok) {
-            dispatch(loadSuccess({ list: data.companys }));
+            dispatch(loadSuccess({ list: data.company }));
         } else {
             dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
         }

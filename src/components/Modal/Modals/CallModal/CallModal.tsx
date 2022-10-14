@@ -274,7 +274,7 @@ function CallModal({ companys, isAdd }: any) {
 
     
     let beutifyString = (value:any) => {
-        let temp = value
+        let temp = value.toString()
         temp = temp.replace(/_+/g, ' ')
         temp = temp.charAt(0).toUpperCase() + temp.slice(1);
         return temp

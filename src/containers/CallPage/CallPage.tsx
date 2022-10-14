@@ -11,16 +11,18 @@ import { Form } from "../../components/Form/Form";
 import { Input } from "../../components/Input/Input";
 
 import "./CallPage.scss";
-import { loadCompany } from "../../store/company/company.actions";
+import { loadCompany } from "../../store/detail/detail.actions";
 
 function CallPage() {
 
 
-    const {company_id} : any = useParams()
+    const {id} : any = useParams()
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const companys = useSelector((state: any) => state.company);
+    const detail = useSelector((state:any)=>state.detail)
     const call = useSelector((state:any)=>state.call)
+    const users = useSelector((state:any)=>state.user)
     const [sendMail,setSendMail] = useState(false)
 
 
@@ -30,14 +32,14 @@ function CallPage() {
       }
     
 
-   useEffect(()=>{
-    dispatch(loadCompany(company_id))
-
-   },[])
+      useEffect(()=>{
+        dispatch(loadCompany(id))
+       },[])
 
 
     const INITIAL_Call = {
         company_id:"",
+        user_id:"",
         start_time:"",
         end_time:"",
         price_per_call:"",
@@ -238,30 +240,35 @@ function CallPage() {
         return hasErrors;
     };
 
+    
+
     useEffect(() => {
-        if (companys) {
-            console.log(companys)
+        if (detail) {
+            console.log(detail)
             let startTime=getTimestampInSeconds();
             setNewInfo({
-                call_info:companys.company_info,
-                call_address:companys.address,
-                call_description:companys.description,
-                company_name:companys.name
+                call_info:detail.company_info,
+                call_address:detail.address,
+                call_description:detail.description,
+                company_name:detail.name
             });
             setNewCall({
-                company_id:companys.id,
-                price_per_call: companys.price_per_call,
-                initial_time: companys.initial_time,
-                price_per_minutes_overdue: companys.price_per_minutes_overdue,
-                overdue_time:companys.overdue_time,
+                user_id:users.id,
+                company_id:detail.id,
+                price_per_call: detail.price_per_call,
+                initial_time: detail.initial_time,
+                price_per_minutes_overdue: detail.price_per_minutes_overdue,
+                overdue_time:detail.overdue_time,
                 start_timer:startTime
             });
-            setInputList(JSON.parse(companys.company_fields))
+            let fields = JSON.parse(detail.company_fields)
+            setInputList(fields)
             setNewCallErrors({});
+            console.log("radissse")
         }
 
 
-    }, [companys]);
+    }, [detail]);
 
 
     
@@ -275,6 +282,7 @@ function CallPage() {
     const CreateCall=():void => {
         let endTime=getTimestampInSeconds();
         console.log(endTime)
+        console.log(newCall)
         dispatch(addCall({...newCall,call_fields:JSON.stringify(inputList),end_timer:endTime},navigate))
     };
 
@@ -291,6 +299,10 @@ function CallPage() {
             <div id="info">
             </div>
             <div>{newInfo.call_info}</div>
+            <div>{newInfo.call_description}</div>
+            <div>{newInfo.call_address}</div>
+            <div>{newInfo.company_name}</div>
+
             <Form>
             <Input
                     id={"first_name"}

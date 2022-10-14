@@ -14,6 +14,7 @@ type CallSlice = {
 type Call = {
     id: string;
     company_id: string;
+    user_id:string,
     price_per_call: number,
     initial_time: number,
     price_per_minutes_overdue: number,

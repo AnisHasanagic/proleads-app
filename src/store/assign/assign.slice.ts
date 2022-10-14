@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-type CompanySlice = {
+type AssignSlice = {
     loading: boolean,
-    list:Company[],
+    list: Assign[],
     error: string,
     update: {
         loading: boolean;
@@ -14,27 +14,20 @@ type CompanySlice = {
         errors: any[];
         message: string;
     };
-};
+}
 
-type Company = {
+type Assign = {
     id: string;
-    name: string;
-    address: string;
-    description: string,
-    company_info: string,
-    price_per_call: number,
-    initial_time: number,
-    price_per_minutes_overdue: number,
-    overdue_time: number,
-    company_fields: string,
-    is_active:boolean,
-    created_at: Date,
-    updated_at: Date,
+    company_id: string,
+    user_id:string,
+    message: string,
+    errors: any,
+    loading:boolean,
 };
 
-const INITIAL_STATE: CompanySlice = {
+const INITIAL_STATE :AssignSlice = {
     list: [],
-    loading:false,
+    loading: false,
     error: "",
     update: {
         loading: false,
@@ -48,8 +41,8 @@ const INITIAL_STATE: CompanySlice = {
     },
 };
 
-const companySlice = createSlice({
-    name: "companies",
+const assignSlice = createSlice({
+    name: "assign",
     initialState: INITIAL_STATE,
     reducers: {
         loading: (state) => {
@@ -65,15 +58,10 @@ const companySlice = createSlice({
             state.list = action.payload.list;
             state.error = "";
         },
-        loadOneSucces:(state,action)=>{
-            state.loading = false;
-            state.list = action.payload.list;
-            state.error = "";
-        },
         loadFailed: (state, action) => {
             state.loading = false;
-            state.list = [];
             state.error = action.payload.message;
+            state.list = [];
         },
         updateLoading: (state) => {
             state.update.loading = true;
@@ -108,4 +96,5 @@ const companySlice = createSlice({
     },
 });
 
-export default companySlice;
+
+export default assignSlice;

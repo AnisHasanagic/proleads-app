@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 type User = {
+  id:string,
   token: string | null;
   userChecked: boolean;
   role: string;
@@ -18,6 +19,7 @@ type User = {
 }
 
 const INITIAL_STATE: User = {
+  id:'',
   token: null,
   userChecked: false,
   role: '',
@@ -42,6 +44,7 @@ const userSlice = createSlice({
       state.loading = true;
     },
     loginSuccess: (state:any, action:any) => {
+      state.id=action.payload.user.id
       state.token = action.payload.token;
       state.userChecked = true;
       state.role = action.payload.user.role;
@@ -59,6 +62,7 @@ const userSlice = createSlice({
       state.loading = false;
     },
     logoutSuccess: (state:any) => {
+      state.id='';
       state.token = null;
       state.role = '';
       state.username = '';
