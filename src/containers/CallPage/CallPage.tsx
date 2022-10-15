@@ -249,7 +249,7 @@ function CallPage() {
     
 
     useEffect(() => {
-        if (detail) {
+        if (detail && detail.id) {
             console.log(detail)
             let startTime=getTimestampInSeconds();
             setNewInfo({
@@ -270,7 +270,7 @@ function CallPage() {
             let fields = JSON.parse(detail.company_fields)
             setInputList(fields)
             setNewCallErrors({});
-            console.log("radissssse")
+            console.log("radghissssssse")
         }
 
 

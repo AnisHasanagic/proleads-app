@@ -91,7 +91,7 @@ export const createAccount =
     };
 
     export const updateAccount =
-    (user: any, user_id: string): any =>
+    (user: any, user_id: string,navigate:any): any =>
     async (dispatch: any) => {
         try {
             dispatch(updateLoading());
@@ -110,6 +110,8 @@ export const createAccount =
                 dispatch(updateSuccess());
                 dispatch(loadUsers());
                 toast.success(data.message);
+                navigate('/dashboard')
+
             } else {
                 const error: any = {
                     message: data.message ? data.message : null,

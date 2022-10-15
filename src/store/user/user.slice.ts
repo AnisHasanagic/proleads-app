@@ -32,7 +32,7 @@ const INITIAL_STATE: User = {
   update: {
     loading: false,
     errors: [],
-    message: "",
+    message: '',
   }
 }
 

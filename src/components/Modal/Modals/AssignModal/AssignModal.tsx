@@ -11,7 +11,7 @@ import { Checkbox } from "../../../Checkbox/Checkbox";
 import { Form } from "../../../Form/Form";
 import { Input } from "../../../Input/Input";
 import DashboardLayout from "../../../../layouts/DashboardLayout";
-import {loadUsers} from "../../../../store/users/users.actions"
+import { loadUsers } from "../../../../store/users/users.actions"
 import Table from "../../../Table/Table";
 
 import "./AssignModal.scss";
@@ -19,49 +19,20 @@ import { isNullishCoalesce } from "typescript";
 import { addAssign } from "../../../../store/assign/assign.actions";
 
 
-function AssignModal({company,isAdd}:any) {
+function AssignModal({ company, isAdd }: any) {
 
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const users = useSelector((state: any) => state.users);
-    const [searchValue,setSearchValue] = useState("")
-
-    const INITIAL_STATE = {
-        user_id:"",
-        company_id:"",
-    }
-    
-    const [userID,SetUserID] = useState <any>(INITIAL_STATE)
-
-    const [companyID,SetCompanyID] = useState<any>(INITIAL_STATE)
-
-    const [assign,SetAssign] = useState <any>(INITIAL_STATE)
+    const [searchValue, setSearchValue] = useState("")
 
     useEffect(() => {
         dispatch(loadUsers());
     }, []);
 
-    useEffect(()=>{
-        if(company){
-         SetCompanyID({
-         company_id: company.id
-         }
-         )
-        }
-     },[company])
-
     const showUser = (user: any) => {
-        SetUserID({
-            user_id:user.id,
-        })
-        
-        SetAssign({
-            user_id:userID.user_id,
-            company_id:companyID.company_id
-        })
-        console.log(assign)
-        dispatch(addAssign(assign,navigate))
+        dispatch(addAssign({ company_id: company.id, user_id: user.id }, navigate))
     };
 
     const actions = [
@@ -81,32 +52,32 @@ function AssignModal({company,isAdd}:any) {
     ];
 
     const keys = columnsToShow
-    const search = (data:any) => {
+    const search = (data: any) => {
         return data.filter(
-            (item:any) => 
-            keys.some(key =>item[key].toLowerCase().includes(searchValue)))
+            (item: any) =>
+                keys.some(key => item[key].toLowerCase().includes(searchValue)))
     }
- 
+
     return (
-            <section id="admin-users">
-                <div>
+        <section id="admin-users">
+            <div>
                 <h1>All Users</h1>
                 <p className="mb-5">List of all users.</p>
-                </div>
-                <Input
+            </div>
+            <Input
                 id={"search"}
                 type={"text"}
                 className={"search"}
                 onChange={(e: any): void => setSearchValue(e.target.value)}
                 placeholder={"Search..."}
             />
-                <Table
-                    data={search(users.list)}
-                    actions={actions}
-                    columnsToShow={columnsToShow}
-                />
-            </section>
+            <Table
+                data={search(users.list)}
+                actions={actions}
+                columnsToShow={columnsToShow}
+            />
+        </section>
     );
-    };
+};
 
-    export default AssignModal;
+export default AssignModal;

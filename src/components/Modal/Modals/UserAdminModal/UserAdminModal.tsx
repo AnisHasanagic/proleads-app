@@ -22,15 +22,15 @@ function UserAdminModal({ user, isAdd }: any) {
     const INITIAL_User = {
         username: "",
         password: "",
-        first_name:"",
-        last_name:"",
-        role:"",
-        isDeleted:""
+        first_name: "",
+        last_name: "",
+        role: "",
+        isDeleted: ""
     };
 
     const [newUser, setNewUser] = useState<any>(INITIAL_User);
     const [newUserErrors, setNewUserErrors] = useState<any>({});
-    const [isDeleted,setIsDeleted] = useState<any>(false)
+    const [isDeleted, setIsDeleted] = useState<any>(false)
 
 
     const validations: any = {
@@ -46,7 +46,7 @@ function UserAdminModal({ user, isAdd }: any) {
         last_name: {
             isRequired: true,
         },
-        
+
     };
 
     const changeEvent = (e: any): void => {
@@ -161,7 +161,7 @@ function UserAdminModal({ user, isAdd }: any) {
 
     const createUser = (): void => {
         dispatch(
-            createAccount(newUser.username, newUser.password, newUser.first_name, newUser.last_name , newUser.role, isDeleted ,navigate)
+            createAccount(newUser.username, newUser.password, newUser.first_name, newUser.last_name, newUser.role, isDeleted, navigate)
         );
     };
 
@@ -198,7 +198,7 @@ function UserAdminModal({ user, isAdd }: any) {
                     errors={newUserErrors["first_name"]}
                     placeholder={"first_name"}
                 />
-                 <Input
+                <Input
                     id={"last_name"}
                     type={"text"}
                     name={"last_name"}
@@ -208,7 +208,7 @@ function UserAdminModal({ user, isAdd }: any) {
                     errors={newUserErrors["last_name"]}
                     placeholder={"last_name"}
                 />
-                 <Input
+                <Input
                     id={"role"}
                     type={"text"}
                     name={"role"}
@@ -219,17 +219,21 @@ function UserAdminModal({ user, isAdd }: any) {
                     placeholder={"role"}
                 />
                 <Checkbox
-                checkItem={(): void =>
-                     setIsDeleted(true)
-                }
-                label="Do you want to soft delete this?"
-                >
-                </Checkbox>
+                    checkItem={() =>
+                        setNewUser({
+                            ...newUser,
+                            isDeleted:!newUser.isDeleted
+                        })
+                    }
+                    isChecked={newUser.isDeleted}
+                    disabled={false}
+                    label="Do you want to soft delete this?"
+                />
                 {!isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
                         onClick={() =>
-                            dispatch(updateAccount(newUser, user.id))
+                            dispatch(updateAccount(newUser, user.id, navigate))
                         }
                         loading={users.update.loading}
                         disabled={users.update.loading || hasSomeErrors()}

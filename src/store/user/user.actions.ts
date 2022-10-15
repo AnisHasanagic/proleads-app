@@ -4,6 +4,8 @@ import userSlice from "./user.slice";
 
 import { toast } from "react-toastify";
 
+import { io } from "socket.io-client";
+
 const {
     loginSuccess,
     loginError,
@@ -11,7 +13,6 @@ const {
     logoutSuccess,
     createAccountSuccess,
     createAccountError,
-    checkUserAuthenticated,
     checkUserAuthenticatedError
 } = userSlice.actions;
 
@@ -42,20 +43,19 @@ export const login =
                 await storeToken(data.token);
                 toast.success(data.message);
                 const socket = io();
-                socket.emit('login',{userId:'YourUserID'});
                 const user = data.data.user;
-
                 dispatch(loginSuccess({ token: data.token, user }));
+                socket.emit('login',{userId: user.id});
             } else {
                 const error: any = {
                     message: data.message ? data.message : null,
                     errors: data.errors ? data.errors : null,
                 };
-
                 if (error.message) toast.error(error.message);
                 return dispatch(loginError(error));
             }
         } catch (e: any) {
+            console.log(e)
             toast.error("LOGIN_ERROR");
             return dispatch(
                 loginError({ message: "LOGIN_ERROR", errors: null })
@@ -91,8 +91,7 @@ export const login =
             }
     
             if (response.ok) {
-                const user = data.user;
-    
+                const user = data.data.user;    
                 dispatch(loginSuccess({ token: localStorage.getItem('access_token'), user }));
             } else {
                 dispatch(checkUserAuthenticatedError());
