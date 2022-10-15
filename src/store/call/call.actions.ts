@@ -74,3 +74,29 @@ export const addCall =
             dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
         }
     };
+
+    export const mailSend = (
+        Maildata:any
+    ): any=>async (dispatch:any) => {
+        try{
+            console.log(Maildata)
+            const response = await CallService.sendMail(Maildata);
+    
+            let data: any = null;
+    
+            try {
+                data = await response.clone().json();
+            } catch {
+                data = await response.clone().text();
+            }
+    
+            if (response.ok) {
+                toast.success(data.message);
+            } else {
+                dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+            }
+        } catch (e: any) {
+            dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+        }
+        
+    }

@@ -42,6 +42,7 @@ export const createAccount =
         first_name:string,
         last_name:string,
         role:string,
+        isDeleted:boolean,
         navigate:any): any =>
     async (dispatch: any) => {
         try {
@@ -52,7 +53,8 @@ export const createAccount =
                 password,
                 first_name,
                 last_name,
-                role
+                role,
+                isDeleted
             });
 
             let data: any = null;

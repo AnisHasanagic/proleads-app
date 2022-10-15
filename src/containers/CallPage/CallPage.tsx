@@ -3,7 +3,8 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-    addCall
+    addCall,
+    mailSend
 }from "../../store/call/call.actions"
 import { Button, ButtonTypes } from "../../components/Button/Button";
 import { Checkbox } from "../../components/Checkbox/Checkbox";
@@ -63,9 +64,14 @@ function CallPage() {
         call_description:"",
         company_name:""
     }
+
+    const INITIAL_MAIL = {
+        email:"",
+        fields:""
+    }
     const [inputList, setInputList] = useState<any>([]);
     const [newCall, setNewCall] = useState<any>(INITIAL_Call);
-
+    const [mailData,setMailData] = useState<any>(INITIAL_MAIL)
     const [newInfo, setNewInfo] = useState<any>(INITIAL_Info);
 
     const [newCallErrors, setNewCallErrors] = useState<any>({});
@@ -264,7 +270,7 @@ function CallPage() {
             let fields = JSON.parse(detail.company_fields)
             setInputList(fields)
             setNewCallErrors({});
-            console.log("radissse")
+            console.log("radissssse")
         }
 
 
@@ -282,8 +288,9 @@ function CallPage() {
     const CreateCall=():void => {
         let endTime=getTimestampInSeconds();
         console.log(endTime)
-        console.log(newCall)
+        console.log(newCall.email)
         dispatch(addCall({...newCall,call_fields:JSON.stringify(inputList),end_timer:endTime},navigate))
+        if(sendMail) dispatch(mailSend({...mailData,fields:JSON.stringify(inputList),email:newCall.email}))
     };
 
     
@@ -384,7 +391,6 @@ function CallPage() {
                 }
                 label="Do you want to send email"
                 >
-
                 </Checkbox>
                         
                     <Button

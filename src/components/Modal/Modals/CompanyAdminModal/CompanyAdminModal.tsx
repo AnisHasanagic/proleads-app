@@ -30,11 +30,13 @@ function CompanyAdminModal({ company, isAdd }: any) {
         price_per_minutes_overdue: "",
         overdue_time:"",
         company_fields:"",
+        isDeleted:""
     };
 
     const [inputList, setInputList] = useState<any>([])
     const [newCompany, setNewCompany] = useState<any>(INITIAL_Company);
     const [newCompanyErrors, setNewCompanyErrors] = useState<any>({});
+    const [isDeleted,setIsDeleted] = useState<any>(false)
 
     const validations: any = {
         name: {
@@ -278,6 +280,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                 price_per_minutes_overdue: company.price_per_minutes_overdue,
                 overdue_time:company.overdue_time,
                 company_fields:company.company_fields,
+                isDeleted:company.isDeleted
             });
             setNewCompanyErrors({});
         }
@@ -392,6 +395,14 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     errors={newCompanyErrors["overdue_time"]}
                     placeholder={"overdue_time in seconds"}
                 />
+
+                <Checkbox
+                checkItem={(): void =>
+                     setIsDeleted(true)
+                }
+                label="Do you want to soft delete this?"
+                >
+                </Checkbox>
                
                {inputList.map((field:any,i:any)=> {
                 return (<div key={i}>
@@ -427,7 +438,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                 {isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
-                        onClick={() => dispatch(addCompany({...newCompany,company_fields: JSON.stringify(inputList)},navigate))}
+                        onClick={() => dispatch(addCompany({...newCompany,company_fields: JSON.stringify(inputList),isDeleted:isDeleted},navigate))}
                         loading={company_state.add.loading}
                         disabled={company_state.add.loading || hasSomeErrors()}
                     >

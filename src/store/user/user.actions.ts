@@ -41,7 +41,8 @@ export const login =
             if (response.ok) {
                 await storeToken(data.token);
                 toast.success(data.message);
-
+                const socket = io();
+                socket.emit('login',{userId:'YourUserID'});
                 const user = data.data.user;
 
                 dispatch(loginSuccess({ token: data.token, user }));

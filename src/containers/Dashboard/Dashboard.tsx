@@ -4,6 +4,10 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import "./Dashboard.scss";
 
 function Dashboard() {
+
+
+
+    
     return (
         <DashboardLayout>
             <div id="privacy" className="container mx-auto py-[40px]">

@@ -24,11 +24,14 @@ function UserAdminModal({ user, isAdd }: any) {
         password: "",
         first_name:"",
         last_name:"",
-        role:""
+        role:"",
+        isDeleted:""
     };
 
     const [newUser, setNewUser] = useState<any>(INITIAL_User);
     const [newUserErrors, setNewUserErrors] = useState<any>({});
+    const [isDeleted,setIsDeleted] = useState<any>(false)
+
 
     const validations: any = {
         username: {
@@ -136,7 +139,8 @@ function UserAdminModal({ user, isAdd }: any) {
                 password: user.password,
                 first_name: user.first_name,
                 last_name: user.last_name,
-                role: user.role
+                role: user.role,
+                isDeleted: user.isDeleted
             });
             setNewUserErrors({});
         }
@@ -157,7 +161,7 @@ function UserAdminModal({ user, isAdd }: any) {
 
     const createUser = (): void => {
         dispatch(
-            createAccount(newUser.username, newUser.password, newUser.first_name, newUser.last_name , newUser.role, navigate)
+            createAccount(newUser.username, newUser.password, newUser.first_name, newUser.last_name , newUser.role, isDeleted ,navigate)
         );
     };
 
@@ -214,6 +218,13 @@ function UserAdminModal({ user, isAdd }: any) {
                     errors={newUserErrors["role"]}
                     placeholder={"role"}
                 />
+                <Checkbox
+                checkItem={(): void =>
+                     setIsDeleted(true)
+                }
+                label="Do you want to soft delete this?"
+                >
+                </Checkbox>
                 {!isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}

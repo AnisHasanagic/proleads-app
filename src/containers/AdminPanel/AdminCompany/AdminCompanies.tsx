@@ -17,7 +17,7 @@ function AdminCompanies() {
     const [currentCompany, setCurrentCompany] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
 
-    const [isEdit, setIsEdit] = useState<any>(false);
+    const [isAssign, setIsAssign] = useState<any>(false);
 
     const company = useSelector((state: any) => state.company);
     const [searchValue, setSearchValue] = useState("")
@@ -28,13 +28,13 @@ function AdminCompanies() {
 
     const showCompany = (Company: any) => {
         setIsAdd(false);
-        setIsEdit(true)
+        setIsAssign(false)
         setCurrentCompany(Company);
     };
 
     const showUsers = (Company: any) => {
         setIsAdd(false);
-        setIsEdit(false)
+        setIsAssign(true)
         setCurrentCompany(Company);
     };
 
@@ -111,7 +111,7 @@ function AdminCompanies() {
                     columnsToShow={columnsToShow}
                 />
             </section>
-            {isEdit && (
+            {!isAssign && (
                 <Modal
                     show={currentCompany}
                     closeModal={() => setCurrentCompany(null)}
@@ -119,7 +119,7 @@ function AdminCompanies() {
                     <CompanyAdminModal company={currentCompany} isAdd={isAdd} />
                 </Modal>
             )}
-            {!isEdit && (
+            {isAssign && (
                 <Modal
                     show={currentCompany}
                     closeModal={() => setCurrentCompany(null)}
