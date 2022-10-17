@@ -270,7 +270,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
 
     useEffect(() => {
 
-        if (company) {
+        if (company && company.id) {
             setNewCompany({
                 name: company.name,
                 address: company.address,

@@ -13,6 +13,7 @@ import { Input } from "../../components/Input/Input";
 
 import "./CallPage.scss";
 import { loadCompany } from "../../store/detail/detail.actions";
+import DashboardLayout from "../../layouts/DashboardLayout";
 
 function CallPage() {
 
@@ -302,6 +303,7 @@ function CallPage() {
     }
     
     return (
+        <DashboardLayout>
         <div id="call-admin-modal">
             <div id="info">
             </div>
@@ -404,6 +406,7 @@ function CallPage() {
                 
             </Form>
         </div>
+        </DashboardLayout>
     );
 }
 
