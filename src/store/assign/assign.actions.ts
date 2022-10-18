@@ -36,7 +36,7 @@ export const addAssign =
             if (response.ok) {
                 dispatch(addSuccess());
                 toast.success(data.message);
-                navigate("/dashboard")
+                window.location.reload();
             } else {
                 const error: any = {
                     message: data.message ? data.message : null,

@@ -25,7 +25,6 @@ export const loadCompany = (company_id:string): any => async (dispatch:any) => {
       console.log(data.data.company)
         if (response.ok) {
             dispatch(loadSuccess({ company: data.data.company}));
-            console.log()
         } else {
             dispatch(loadError({ message: "SOMETHING_WENT_WRONG" }));
         }

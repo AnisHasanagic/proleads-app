@@ -27,7 +27,9 @@ function AssignModal({ company, isAdd }: any) {
     const users = useSelector((state: any) => state.users);
     const [searchValue, setSearchValue] = useState("")
 
-    
+    useEffect(()=>{
+     dispatch(loadUsers())
+    },[])
 
     const showUser = (user: any) => {
         dispatch(addAssign({ company_id: company.id, user_id: user.id }, navigate))

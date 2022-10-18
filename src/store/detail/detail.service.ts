@@ -6,7 +6,7 @@ export default class DetailService {
     
     
     static getOne(company_id:string): Promise<Response> {
-        return apiCall(API_URI+"/company/"+ company_id, null,"GET",true)
+        return apiCall(API_URI+"/company/detail/"+ company_id, null,"GET",true)
     }
 
 }

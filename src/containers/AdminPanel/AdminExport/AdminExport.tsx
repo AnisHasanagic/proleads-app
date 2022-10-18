@@ -18,12 +18,12 @@ function AdminExport() {
 
     const [currentCompany, setCurrentCompany] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
-
+    const user = useSelector((state:any)=> state.user)
     const company = useSelector((state: any) => state.company);
 
 
     useEffect(() => {
-        dispatch(loadCompanies());
+        dispatch(loadCompanies(user.id));
     }, []);
 
     const showCompany = (Company: any) => {

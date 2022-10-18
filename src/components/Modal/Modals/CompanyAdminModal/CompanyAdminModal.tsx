@@ -17,12 +17,13 @@ function CompanyAdminModal({ company, isAdd }: any) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const company_state = useSelector((state: any) => state.company);
-
+    const user = useSelector((state:any)=> state.user)
 
 
     const INITIAL_Company = {
         name: "",
         address: "",
+        emial: "",
         description: "",
         company_info: "",
         price_per_call: "",
@@ -43,6 +44,9 @@ function CompanyAdminModal({ company, isAdd }: any) {
             isRequired: true,
         },
         address: {
+            isRequired: true,
+        },
+        email:{
             isRequired: true,
         },
         description: {
@@ -274,6 +278,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
             setNewCompany({
                 name: company.name,
                 address: company.address,
+                email: company.email,
                 description: company.description,
                 company_info: company.company_info,
                 price_per_call: company.price_per_call,
@@ -334,6 +339,16 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCompanyErrors["address"]}
                     placeholder={"address"}
+                />
+                 <Input
+                    id={"email"}
+                    type={"text"}
+                    name={"email"}
+                    value={newCompany["email"]}
+                    onChange={(e: any): void => changeEvent(e)}
+                    onBlur={(e: any): void => blurEvent(e)}
+                    errors={newCompanyErrors["email"]}
+                    placeholder={"email"}
                 />
                 <Input
                     id={"description"}
@@ -424,7 +439,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 placeholder={"Company field"}
                             />
 
-                            {inputList.length !== 1 && <Button
+                            {inputList.length !== 0 && <Button
                                 className="mr10"
                                 onClick={() => handleRemoveClick(i)}>Remove</Button>}
 
@@ -461,7 +476,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     <Button
                         btnClass={ButtonTypes.primary}
                         onClick={() =>
-                            dispatch(updateCompany({...newCompany,company_fields: JSON.stringify(inputList)}, company.id, navigate))
+                            dispatch(updateCompany({...newCompany,company_fields: JSON.stringify(inputList)}, company.id,user.id, navigate))
                         }
                         loading={company_state.update.loading}
                         disabled={company_state.update.loading || hasSomeErrors()}
@@ -472,7 +487,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                 {isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
-                        onClick={() => dispatch(addCompany({ ...newCompany, company_fields: JSON.stringify(inputList), isDeleted: isDeleted }, navigate))}
+                        onClick={() => dispatch(addCompany({ ...newCompany, company_fields: JSON.stringify(inputList), isDeleted: isDeleted },user.id, navigate))}
                         loading={company_state.add.loading}
                         disabled={company_state.add.loading || hasSomeErrors()}
                     >

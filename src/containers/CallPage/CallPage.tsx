@@ -63,12 +63,20 @@ function CallPage() {
         call_info:"",
         call_address:"",
         call_description:"",
-        company_name:""
+        company_name:"",
+        email: ""
     }
 
     const INITIAL_MAIL = {
+        emailCompany:"",
+        fields:"",
+        first_name:"",
+        last_name:"",
+        gender:"",
         email:"",
-        fields:""
+        phone:"",
+        country:"",
+        city:""
     }
     const [inputList, setInputList] = useState<any>([]);
     const [newCall, setNewCall] = useState<any>(INITIAL_Call);
@@ -257,7 +265,8 @@ function CallPage() {
                 call_info:detail.company_info,
                 call_address:detail.address,
                 call_description:detail.description,
-                company_name:detail.name
+                company_name:detail.name,
+                email: detail.email,
             });
             setNewCall({
                 user_id:users.id,
@@ -269,9 +278,9 @@ function CallPage() {
                 start_timer:startTime
             });
             let fields = JSON.parse(detail.company_fields)
+            console.log(detail.company_fields)
             setInputList(fields)
             setNewCallErrors({});
-            console.log("radghissssssse")
         }
 
 
@@ -289,9 +298,9 @@ function CallPage() {
     const CreateCall=():void => {
         let endTime=getTimestampInSeconds();
         console.log(endTime)
-        console.log(newCall.email)
+        console.log(newInfo.email)
         dispatch(addCall({...newCall,call_fields:JSON.stringify(inputList),end_timer:endTime},navigate))
-        if(sendMail) dispatch(mailSend({...mailData,fields:JSON.stringify(inputList),email:newCall.email}))
+        if(sendMail) dispatch(mailSend({...mailData,fields:JSON.stringify(inputList),emailCompany:newInfo.email,first_name:newCall.first_name,last_name:newCall.last_name,gender:newCall.gender,email:newCall.email,city:newCall.city,country:newCall.country,phone:newCall.phone}))
     };
 
     

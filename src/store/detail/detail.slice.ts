@@ -4,6 +4,7 @@ type Company = {
     id: string;
     name: string;
     address: string;
+    email: string;
     description: string,
     company_info: string,
     price_per_call: number,
@@ -20,6 +21,7 @@ const INITIAL_STATE: Company = {
     id: "",
     name: "",
     address:"",
+    email: "",
     description:"",
     company_info:"",
     price_per_call:0,
@@ -47,6 +49,7 @@ const detailSlice = createSlice({
             state.id=action.payload.company.id
             state.name = action.payload.company.name;
             state.address = action.payload.company.address;
+            state.email = action.payload.company.email;
             state.description = action.payload.company.description;
             state.company_info = action.payload.company.company_info;
             state.price_per_call = action.payload.company.price_per_call;

@@ -4,8 +4,8 @@ const API_URI = process.env.REACT_APP_API_URI || 'http://localhost:3001/api';
 
 export default class CompanyService {
     
-    static getAll(): Promise<Response> {
-        return apiCall(API_URI + "/company", null, "GET", true);
+    static getAll(user_id:string): Promise<Response> {
+        return apiCall(API_URI + "/company/"+ user_id, null, "GET", true);
     };
 
     static update(company: any, company_id: string): Promise<Response> {

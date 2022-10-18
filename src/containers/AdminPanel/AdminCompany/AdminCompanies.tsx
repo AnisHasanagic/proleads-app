@@ -17,13 +17,16 @@ function AdminCompanies() {
     const [currentCompany, setCurrentCompany] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
 
+
     const [isAssign, setIsAssign] = useState<any>(false);
 
     const company = useSelector((state: any) => state.company);
     const [searchValue, setSearchValue] = useState("")
 
+    const user = useSelector((state:any)=> state.user)
+
     useEffect(() => {
-        dispatch(loadCompanies());
+        dispatch(loadCompanies(user.id));
     }, []);
 
     const showCompany = (Company: any) => {
@@ -56,6 +59,7 @@ function AdminCompanies() {
     const columnsToShow = [
         "name",
         "address",
+        "email",
         "description",
         "company_info",
         "company_fields",
@@ -90,9 +94,11 @@ function AdminCompanies() {
                     customClass="ml-auto"
                     onClick={() => {
                         setIsAdd(true);
+                        setIsAssign(false)
                         setCurrentCompany({
                             name: "",
                             address: "",
+                            email: "",
                             description: "",
                             company_info: "",
                             company_fields: "",

@@ -67,7 +67,7 @@ export const createAccount =
 
             if (response.ok) {
                 toast.success(data.message);
-                navigate('/dashboard')
+                window.location.reload();
 
                 return dispatch(createAccountSuccess());
             } else {

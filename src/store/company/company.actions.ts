@@ -14,11 +14,11 @@ const {
     addError,
 } = CompanySlice.actions;
 
-export const loadCompanies = (): any => async (dispatch: any) => {
+export const loadCompanies = (user_id:string): any => async (dispatch: any) => {
     try {
         dispatch(loadPending());
 
-        const response = await CompanyService.getAll();
+        const response = await CompanyService.getAll(user_id);
 
         let data: any = null;
 
@@ -64,7 +64,7 @@ export const loadCompany = (company_id:string): any => async (dispatch:any) => {
 
 
 export const updateCompany =
-    (company: any, company_id: string,navigate:any): any =>
+    (company: any, company_id: string,user_id:string,navigate:any): any =>
     async (dispatch: any) => {
         try {
             dispatch(updateLoading());
@@ -81,7 +81,7 @@ export const updateCompany =
 
             if (response.ok) {
                 dispatch(updateSuccess());
-                dispatch(loadCompanies());
+                dispatch(loadCompanies(user_id));
                 toast.success(data.message);
                 navigate("/dashboard")
 
@@ -104,6 +104,7 @@ export const updateCompany =
 
 export const addCompany =
     (company: any,
+        user_id: string,
         navigate:any): any =>
     async (dispatch: any) => {
         try {
@@ -121,9 +122,9 @@ export const addCompany =
 
             if (response.ok) {
                 dispatch(addSuccess());
-                dispatch(loadCompanies());
+                dispatch(loadCompanies(user_id));
                 toast.success(data.message);
-                navigate("/dashboard")
+                window.location.reload();
             } else {
                 const error: any = {
                     message: data.message ? data.message : null,

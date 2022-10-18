@@ -17,6 +17,8 @@ function AgentList() {
     const [currentCompany, setCurrentCompany] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
     
+    const user = useSelector((state:any)=> state.user)
+
      const [searchValue,setSearchValue] = useState("")
    
       const navigate=useNavigate()
@@ -24,7 +26,7 @@ function AgentList() {
     const company = useSelector((state: any) => state.company);
 
     useEffect(() => {
-        dispatch(loadCompanies());
+        dispatch(loadCompanies(user.id));
     }, []);
 
     const showCompany = (companys: any) => {
