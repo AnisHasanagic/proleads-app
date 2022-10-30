@@ -11,6 +11,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { Form } from "../../../Form/Form";
 import { Input } from "../../../Input/Input";
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import CTBFields from "../../../../assets/CTBFields.svg"
 
 import "./UserAdminModal.scss";
 
@@ -28,16 +32,19 @@ function UserAdminModal({ user, isAdd }: any) {
         isDeleted: ""
     };
 
+    const password ={
+        password:"",
+    }
+
     const [newUser, setNewUser] = useState<any>(INITIAL_User);
     const [newUserErrors, setNewUserErrors] = useState<any>({});
     const [isDeleted, setIsDeleted] = useState<any>(false)
+    const [userRole, setUserRole] = useState<any>("");
+    const [currentPassword, setCurrentPassword] = useState<any>(password)
 
 
     const validations: any = {
         username: {
-            isRequired: true,
-        },
-        password: {
             isRequired: true,
         },
         first_name: {
@@ -134,9 +141,11 @@ function UserAdminModal({ user, isAdd }: any) {
 
     useEffect(() => {
         if (user) {
+            setCurrentPassword({
+                password: user.password,
+            })
             setNewUser({
                 username: user.username,
-                password: user.password,
                 first_name: user.first_name,
                 last_name: user.last_name,
                 role: user.role,
@@ -159,82 +168,117 @@ function UserAdminModal({ user, isAdd }: any) {
         }
     }, [users.add]);
 
+    const handleRole = (e: any): void => {
+        const value = e.target.value;
+        setUserRole(value);
+    };
+
     const createUser = (): void => {
         dispatch(
-            createAccount(newUser.username, newUser.password, newUser.first_name, newUser.last_name, newUser.role, isDeleted, navigate)
+            createAccount(newUser.username, newUser.password, newUser.first_name, newUser.last_name, userRole, isDeleted, navigate)
         );
     };
 
+    const updateUser=(): void => {
+        dispatch(updateAccount(newUser,user.id,navigate))
+    }
+
     return (
         <div id="User-admin-modal">
-            <Form>
-                <Input
-                    id={"username"}
-                    type={"text"}
-                    name={"username"}
-                    value={newUser["username"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newUserErrors["username"]}
-                    placeholder={"username"}
-                />
-                <Input
-                    id={"password"}
-                    type={"password"}
-                    name={"password"}
-                    value={newUser["password"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newUserErrors["password"]}
-                    placeholder={"password"}
-                />
-                <Input
-                    id={"first_name"}
-                    type={"text"}
-                    name={"first_name"}
-                    value={newUser["first_name"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newUserErrors["first_name"]}
-                    placeholder={"first_name"}
-                />
-                <Input
-                    id={"last_name"}
-                    type={"text"}
-                    name={"last_name"}
-                    value={newUser["last_name"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newUserErrors["last_name"]}
-                    placeholder={"last_name"}
-                />
-                <Input
-                    id={"role"}
-                    type={"text"}
-                    name={"role"}
-                    value={newUser["role"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newUserErrors["role"]}
-                    placeholder={"role"}
-                />
-                <Checkbox
-                    checkItem={() =>
-                        setNewUser({
-                            ...newUser,
-                            isDeleted:!newUser.isDeleted
-                        })
-                    }
-                    isChecked={newUser.isDeleted}
-                    disabled={false}
-                    label="Do you want to soft delete this?"
-                />
+            <div className="tab">
+                <img src={CTBFields}
+                    className="add-image"
+                    alt="" />
+                <h2>Add User</h2>
+            </div>
+            <div className="forma">
+                <Form className="form">
+                    <div className="inp">
+                        <h2 className="adm">Username</h2>
+                        <Input
+                            id={"username"}
+                            type={"text"}
+                            name={"username"}
+                            value={newUser["username"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newUserErrors["username"]}
+                            placeholder={"username"}
+                        />
+                        <h2 className="adm">Firstname</h2>
+                        <Input
+                            id={"first_name"}
+                            type={"text"}
+                            name={"first_name"}
+                            value={newUser["first_name"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newUserErrors["first_name"]}
+                            placeholder={"Firstname"}
+                        />
+                        <h2 className="adm">Lastname</h2>
+                        <Input
+                            id={"last_name"}
+                            type={"text"}
+                            name={"last_name"}
+                            value={newUser["last_name"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newUserErrors["last_name"]}
+                            placeholder={"Lastname"}
+                        />
+
+                    </div>
+                    <div className="inp">
+                        <h2 className="adm">Password</h2>
+                        <Input
+                            id={"password"}
+                            type={"password"}
+                            name={"password"}
+                            value={newUser["password"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newUserErrors["password"]}
+                            placeholder={"Password"}
+                        />
+                        <h2 className="adm">Admin?</h2>
+                        <div className="toggle">
+                            <ToggleButtonGroup
+                                id="role"
+                                onChange={(e): void => handleRole(e)}
+                                onBlur={(e: any): void => handleRole(e)}
+                                value={userRole}
+                                aria-label="Is Admin?"
+                                color="success"
+                            >
+
+                                <ToggleButton className="tglbtn" value={"agent"} aria-label="false">FALSE</ToggleButton>
+                                <ToggleButton className="tglbtn" value={"admin"} aria-label="true">TRUE</ToggleButton>
+                            </ToggleButtonGroup>
+                            <h3 className="desc">By making an user admin he will get the full access to the app.</h3>
+                        </div>
+                        <br/>
+                        {!isAdd && (
+                            <Checkbox
+                                checkItem={() =>
+                                    setNewUser({
+                                        ...newUser,
+                                        isDeleted: !newUser.isDeleted
+                                    })
+                                }
+                                isChecked={newUser.isDeleted}
+                                disabled={false}
+                                label="Do you want to soft delete this user?"
+                            />
+                        )}
+                    </div>
+                </Form>
+            </div>
+            <div className="butt">
                 {!isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
-                        onClick={() =>
-                            dispatch(updateAccount(newUser, user.id, navigate))
-                        }
+                        onClick={() => updateUser()}
                         loading={users.update.loading}
                         disabled={users.update.loading || hasSomeErrors()}
                     >
@@ -251,8 +295,9 @@ function UserAdminModal({ user, isAdd }: any) {
                         Create
                     </Button>
                 )}
-            </Form>
+            </div>
         </div>
+
     );
 }
 

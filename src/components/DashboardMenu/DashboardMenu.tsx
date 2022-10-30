@@ -10,7 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { logout } from "../../store/user/user.actions";
 import { onlyCapitalLetters } from "../../utils/helpers";
+
+import DashboardIcon from "../../assets/dash.svg"
+import Users from '@material-ui/icons/PeopleAlt';
+import Export from "../../assets/export.svg"
+import Companies from "../../assets/Vector.svg"
+
+import logo from "../../assets/logo.svg"
 import "./DashboardMenu.scss";
+import { iteratorSymbol } from "immer/dist/internal";
 
 
 
@@ -27,6 +35,19 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
     const route = useLocation();
 
     const menuItems = [
+
+        {
+            
+            sub: [
+                {
+                name: "Dashboard",
+                link: "/dashboard",
+                icon: DashboardIcon,
+                isActive: route.pathname === "/dashboard",
+
+                }
+            ]
+        },
         {
             name: "Admin Panel",
             link: "/dashboard/admin-panel",
@@ -37,49 +58,39 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
             sub: [
                 {
                     name: "Users",
-                    icon: faUsers,
+                    icon: Users,
                     link: "/dashboard/admin-panel/users",
                     isActive: route.pathname === "/dashboard/admin-panel/users",
-                    description: "List of users",
                 },
                 {
                     name: "Company",
-                    icon: faUsers,
+                    icon: Companies,
                     link: "/dashboard/admin-panel/company",
                     isActive:
                         route.pathname === "/dashboard/admin-panel/company",
-                    description: "List of companies",
                 },
                 {
-                    name: "Calls",
-                    icon: faUsers,
+                    name: "Export",
+                    icon: Export,
                     link: "/dashboard/admin-panel/calls",
                     isActive:
                         route.pathname === "/dashboard/admin-panel/calls",
-                    description: "List of calls and export tool",
                 },
             ],
         },
         {
-            name: "Dashboard",
+            name: "General",
             link: "/dashboard",
             isActiveSub: route.pathname === "/dashboard",
             sub: [
                 {
-                    name: "Dashboard",
-                    link: "/dashboard",
-                    isActive: route.pathname === "/dashboard",
-                    description: "Dashboard of ProLeads app",
-                },
-                {
-                    name: "Companies",
+                    name: "Calls",
                     link: "/dashboard/company",
                     isActive: route.pathname === "/dashboard/company",
-                    description: "List of companies",
                 },
             ],
         },
-       
+
     ];
 
 
@@ -90,9 +101,8 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
         >
             <div
                 onClick={() => setIsMobileMenuActive(!isMobileMenuActive)}
-                className={`flex items-center ml-auto hamburger-menu ${
-                    isMobileMenuActive ? "active" : ""
-                }`}
+                className={`flex items-center ml-auto hamburger-menu ${isMobileMenuActive ? "active" : ""
+                    }`}
             >
                 <FontAwesomeIcon
                     icon={isMobileMenuActive ? faClose : faBars}
@@ -100,15 +110,21 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                 />
             </div>
             <div className="right active">
-                <div className="top">
-                    <Link to="/dashboard" className="mr-5">
-                     <h1 className="red">PROLEADS d.o.o.</h1>
-                    </Link>
-                </div>
+                <Link to="/dashboard" className="mr-5">
+                    <div className="top">
+                        <img className="logo-image"
+                            src={logo}
+                            alt="" />
+                        <div className="proleads">
+                            <h1 className="hed">ProLeads</h1>
+                            <h2 className="inb">Inbound</h2>
+                        </div>
+                    </div>
+                </Link>
                 <div className="menu">
                     {menuItems.map((menu, index) => {
                         if (menu.adminOnly && user.role !== 'admin') return null;
-                    
+
                         return (
                             <div key={index} className="menu-item">
                                 <div className="top-menu-item flex">
@@ -119,21 +135,17 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                                 </div>
                                 <ul className={`active`}>
                                     {menu.sub.map((item, index) => (
-                                        <Link key={index} to={item.link}>
+                                        <Link key={index} to={item.link} className="links">
                                             <li
-                                                className={`flex ${
-                                                    item.isActive
+                                                className={`flex ${item.isActive
                                                         ? "active"
                                                         : ""
-                                                }`}
+                                                    }`}
                                             >
-                                                {/* <div className="icon"></div> */}
+                                                 {/* <div className="icon"></div> */}
                                                 <div>
                                                     <p className="title">
                                                         {item.name}
-                                                    </p>
-                                                    <p className="desc">
-                                                        {item.description}
                                                     </p>
                                                 </div>
                                             </li>
@@ -144,16 +156,16 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                         );
                     })}
                 </div>
-                    <div
-                        onClick={(e: any) => {
-                            e.stopPropagation();
-                            dispatch(logout());
-                        }}
-                        className="logout"
-                    >
-                        <FontAwesomeIcon icon={faRightFromBracket} />
-                    </div>
+                <div
+                    onClick={(e: any) => {
+                        e.stopPropagation();
+                        dispatch(logout());
+                    }}
+                    className="logout"
+                >
+                    <FontAwesomeIcon icon={faRightFromBracket} />
                 </div>
+            </div>
         </section>
     );
 });

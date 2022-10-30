@@ -1,0 +1,27 @@
+.admin-company{
+    .search-butt{
+        display: flex;
+        justify-content: space-between;
+
+        
+
+        Input{
+            width: 50vh;
+        }
+
+        Button{
+            float: right;
+        }
+    }
+    
+}
+
+div.search-butt{
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.admin-users.search-butt{
+    display: flex;
+}

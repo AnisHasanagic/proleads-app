@@ -6,6 +6,8 @@ import { Button, ButtonTypes } from "../../components/Button/Button";
 import { Form } from "../../components/Form/Form";
 import { Input } from "../../components/Input/Input";
 import { login } from "../../store/user/user.actions";
+
+import logo from "../../assets/logo.svg"
 import "./Auth.scss";
 
 
@@ -24,6 +26,9 @@ function Auth() {
 
     const [newLoginUser, setNewLoginUser] = useState<any>(INITIAL_USER);
     const [newLoginUserErrors, setNewLoginUserErrors] = useState<any>({});
+
+    const [name, setName] = useState('');
+    const [room, setRoom] = useState("onlineUsers");
 
 
     const changeEvent = (e: any): void => {
@@ -45,6 +50,7 @@ function Auth() {
                 navigate,
             )
         );
+        setName(newLoginUser.username)
     };
 
 
@@ -65,61 +71,71 @@ function Auth() {
 
     useEffect(() => {
         if (user.token) {
-          navigate("/dashboard");
-          }
+            navigate("/dashboard");
+        }
     }, [user.token]);
 
     return (
         <div id="page">
-        <div id="auth">
-        <h1>Welcome to ProLeads</h1>
-        <div className="sign-box">
-        <div className="form-box">
-        <Form>
-        <Input
-            id={"loginUsername"}
-            type={"username"}
-            name={"username"}
-            value={newLoginUser["username"]}
-            onKeyPress={(e: any): void =>
-                handleKeypress(e)
-            }
-            onChange={(e: any): void =>
-                changeEvent(e)
-            }
-            errors={newLoginUserErrors["username"]}
-            placeholder={"Username"}  
-        />
-        <Input
-            id={"loginPassword"}
-            type={"password"}
-            name={"password"}
-            value={newLoginUser["password"]}
-            onKeyPress={(e: any): void =>
-                handleKeypress(e)
-            }
-            onChange={(e: any): void =>
-                changeEvent(e)
-            }
-            errors={newLoginUserErrors["password"]}
-            placeholder={"Password"}
-        />
-        <Button
-            onClick={() => loginUser()}
-            btnClass={ButtonTypes.primary}
-            big
-            loading={user.loading}
-            disabled={
-                user.loading 
-            }
-        >
-            Sign In
-        </Button>
-    </Form>
-    </div>
-    </div>
-    </div>
-    </div>
+            <div id="auth">
+                <div>
+                    <img
+                        className="logo-image"
+                        src={logo} alt="" />
+                </div>
+                <h1 id="head">Welcome Back!</h1>
+                <h2 id="underHeader">Log in to your ProLeads account</h2>
+                <div className="sign-box">
+                    <div className="form-box">
+                        <Form>
+                            <Input
+                                id={"loginUsername"}
+                                type={"username"}
+                                className="username"
+                                name={"username"}
+                                value={newLoginUser["username"]}
+                                onKeyPress={(e: any): void =>
+                                    handleKeypress(e)
+                                }
+                                onChange={(e: any): void =>
+                                    changeEvent(e)
+                                }
+                                errors={newLoginUserErrors["username"]}
+                                placeholder={"Username"}
+                                label="Username"
+                            />
+                            <Input
+                                id={"loginPassword"}
+                                type={"password"}
+                                className="pass"
+                                name={"password"}
+                                value={newLoginUser["password"]}
+                                onKeyPress={(e: any): void =>
+                                    handleKeypress(e)
+                                }
+                                onChange={(e: any): void =>
+                                    changeEvent(e)
+                                }
+                                errors={newLoginUserErrors["password"]}
+                                placeholder={"Password"}
+                                label="Password"
+                            />
+                            <Button
+                                onClick={() => loginUser()}
+                                btnClass={ButtonTypes.primary}
+                                big
+                                loading={user.loading}
+                                disabled={
+                                    user.loading
+                                }
+                            >
+                                Login
+                            </Button>
+                        </Form>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 

@@ -28,33 +28,66 @@
         flex-direction: column;
         height: 100%;
         width: 280px;
-        background: #00416A;
+        background: #FFFFFF;
         transition: 200ms;
-        box-shadow: 10px 0 20px rgba($body-color, 0.4);
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px ;
-        
+        border: none;
+
 
         &.active {
             display: flex;
         }
 
-        .top {
-            display: flex;
-            margin-bottom: 20px;
+        .mr-5 {
 
-            h1 {
-                font-size: 30px;
-                font-family: 'Courier New', Courier, monospace;
-            }
-            
-            .red {
-                color: white;
-                font-weight: bold;
-                text-decoration: none;
+            text-decoration: none;
+            text-align: center;
+            align-items: center;
+            height: 72px;
+            border-bottom: 1px solid #EAEAEF;
+
+            .top {
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                .logo-image {
+                    width: 32px;
+                    height: 32px;
+                    
+                   
+                }
+
+                .proleads {
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 14px;
+                    text-decoration: none;
+                    margin-left: 6px;
+
+                    .hed {
+                        text-decoration: none;
+                        margin-bottom: -15px;
+                        font-family: 'Inter';
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 14px;
+                        color: #32324D;
+                    }
+
+                    .inb {
+                        text-decoration: none;
+                        font-family: 'Inter';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 12px;
+                        color: #666687;
+                        margin-right: 17px;
+                    }
+                }
+
+
             }
         }
-        
+
         .menu {
             flex: 1;
             overflow: hidden;
@@ -68,7 +101,9 @@
                     padding: 10px 0;
                     position: relative;
                     border-radius: 10px;
-                    color: #fff;
+                    font-family: 'Inter';
+                    font-style: normal;
+                    color: #666687;
                     transition: 200ms;
                     display: flex;
                     align-items: center;
@@ -77,13 +112,6 @@
                     .icon {
                         width: 34px;
                         height: 34px;
-                        background: linear-gradient(
-                            300deg,
-                            $light-gold 0%,
-                            $dark-gold 25%,
-                            $dark-gold 50%,
-                            $light-gold 100%
-                        );
                         margin-right: 10px;
                         border-radius: 10px;
                         display: flex;
@@ -95,15 +123,23 @@
                     .title {
                         line-height: 1em;
                         font-weight: 700;
+                        font-size: 11px;
                         text-transform: uppercase;
+                        text-decoration: none;
                     }
                 }
+                 
+                .links{
+                    text-decoration: none;
+                }
 
-                > ul {
+                >ul {
                     display: none;
+                    text-decoration: none;
 
                     &.active {
                         display: block;
+                        margin-left: -20%;
                     }
 
                     li {
@@ -111,9 +147,16 @@
                         padding: 10px 15px;
                         position: relative;
                         border-radius: 10px;
-                        color: #fff;
+                        font-family: 'Inter';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 20px;
+                        color: #666687;
                         transition: 200ms;
                         list-style: none;
+                        text-decoration: none;
+
                         .icon {
                             width: 12px;
                             height: 12px;
@@ -129,11 +172,13 @@
                         }
 
                         &.active {
-                            background-color: $footer-color;
+                            background-color:#6BE29A;
+                            color: white;
                         }
 
                         .title {
                             line-height: 1em;
+                            text-decoration: none;
                         }
 
                         .desc {
@@ -145,21 +190,21 @@
             }
         }
 
-        
-            .logout {
-                margin-left: auto;
-                cursor: pointer;
-                transition: 200ms;
-                color: $light-text-color;
-                margin-bottom: 30px;
 
-                &:hover {
-                    color: #fff;
-                }
+        .logout {
+            margin-left: auto;
+            cursor: pointer;
+            transition: 200ms;
+            color: $light-text-color;
+            margin-bottom: 30px;
+
+            &:hover {
+                color: #6BE29A;
             }
         }
-    
-    
+    }
+
+
 
 
     @media screen and (max-width: 1024px) {

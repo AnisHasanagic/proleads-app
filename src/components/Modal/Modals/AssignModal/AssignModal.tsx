@@ -17,6 +17,7 @@ import Table from "../../../Table/Table";
 import "./AssignModal.scss";
 import { isNullishCoalesce } from "typescript";
 import { addAssign } from "../../../../store/assign/assign.actions";
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 
 function AssignModal({ company, isAdd }: any) {
@@ -39,7 +40,7 @@ function AssignModal({ company, isAdd }: any) {
         {
             name: "Assign",
             row: "id",
-            text: "Assign",
+            icon: <AssignmentIndIcon />,
             action: showUser,
         },
     ];

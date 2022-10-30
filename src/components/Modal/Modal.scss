@@ -20,44 +20,48 @@
         right: 0;
         top: 0;
         bottom: 0;
-        background: rgb(22 29 45 / 70%);
         opacity: 0;
         transition: 200ms;
     }
 
+
+
     .modal-content {
-        max-width: 800px;
+        max-width: 2200px;
         margin: 0 50px;
-        padding: 100px;
-        background: #161d2d;
+        background: #F6F6F9;
         z-index: 40;
         position: relative;
         box-shadow: 0px 10px 1000px 0 rgb(0 0 0 / 50%);
         border-radius: 15px;
-        max-height: 90%;
+        min-height: 440px;
         overflow: hidden;
         overflow-y: auto;
         transform: translateY(-1000px);
         transition: 200ms;
-        min-width: 600px;
+        min-width: 829px;
+
 
         .close {
             padding: 10px;
-            border: 1px solid $footer-color;
             border-radius: 10px;
-            box-shadow: 0 10px 30px 0 rgba(#000, 0.5);
-            background-color: $box-color;
-            width: 30px;
-            height: 30px;
+            background: #FFFFFF;       
+            color:#212134;
+            width: 16px;
+            height: 16px;
             position: absolute;
-            right: 40px;
-            top: 40px;
+            right: 16px;
+            top: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: 200ms;
             z-index: 10;
+            border: 1px solid #DCDCE4;
+            border-radius: 4px;
+
+
 
             &:hover {
                 color: $light-text-color;

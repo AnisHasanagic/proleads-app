@@ -1,0 +1,126 @@
+#User-admin-modal {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .tab {
+        background: #F6F6F9;
+        display: flex;
+        height: 64px;
+        align-items: center;
+
+        h2 {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 16px;
+            margin-top: 15px;
+
+        }
+
+        .add-image {
+            margin: 20px;
+        }
+    }
+
+    .forma {
+        background: #FFFFFF;
+    }
+
+    .form {
+        display: flex;
+
+        .inp{
+            margin-bottom: 20px;
+        }
+        .adm {
+            width: 56px;
+            height: 16px;
+
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 16px;
+            /* identical to box height, or 133% */
+
+
+            /* Light mode/Neutral800 */
+            margin-bottom: -20px;
+            color: #32324D;
+        }
+
+        .desc {
+            width: 354px;
+            height: 16px;
+
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+            /* identical to box height, or 133% */
+
+            display: flex;
+            align-items: center;
+
+            /* Light mode/Neutral600 */
+
+            color: #666687;
+        }
+
+        .toggle {
+            background: #F6F6F9;
+            width: 180px;
+            height: 40px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            align-items: center;
+            border: 1px solid #DCDCE4;
+            border-radius: 4px;
+
+
+
+            #role {
+                width: 170px;
+                height: 32px;
+                
+
+                .tglbtn {
+                    background-color: #FFFFFF;
+                    width: 85px;
+                    height: 32px;
+                    margin: 4px;
+
+                }
+                .tglbtn:after{
+                    color:#6BE29A
+                }
+            }
+        }
+
+        >div {
+            margin-left: 10px;
+        }
+
+
+    }
+
+    .butt {
+        height: 64px;
+        float: right;
+        margin-top: 30px;
+        margin-left: 850px;
+        align-items: center;
+    }
+
+}
+
+section.form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

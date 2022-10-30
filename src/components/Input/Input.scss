@@ -1,183 +1,206 @@
 @import '../../variables.scss';
 
 .inputGroup {
-    position: relative;
-    flex: 1;
-    box-sizing: border-box;
-    
-    &.light {
-      .formControl {
-        background: white;
-      }
-    }
+  position: relative;
+  flex: 1;
+  box-sizing: border-box;
 
-    &.numeric {
-      .formControl {
-        text-align: right;
-      }
-    }
-
-    &.small {
-      margin-bottom: 10px!important;
-
-      .formControl {
-        padding: 10px 15px;
-      }
-    }
-
-    label {
-        display: block;
-        margin: 0;
-        margin-bottom: 10px;
-
-        .optional {
-          display: inline-block;
-          margin-left: 10px;
-          font-style: italic;
-        }
-    }
-  
-    .inputInner {
-        position: relative;
-        display: flex;
-        align-items: stretch;
-        width: 100%;
-        box-sizing: border-box;
-        transition: 200ms;
-        overflow: hidden;
-        border: 1px solid $footer-color;
-        border-radius: 15px;
-    }
-  
+  &.light {
     .formControl {
-        display: block;
-        flex: 1;
-        padding: 20px 25px;
-        line-height: 1.5;
-        background-color: white;
-        background-clip: padding-box;
-        outline: none;
-        border: none;
-        width: 100%;
-        box-sizing: border-box;
-    }
-  
-    &.large {
-      .formControl {
-          padding: 1rem;
-      }
-    }
-  
-    &.error {
-        label {
-            color: $alert-error-text;
-        }
-        .inputInner {
-            border-color: $alert-error-text!important;
-            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-        }
-
-        .prepend {
-            color: $alert-error-text;
-        }
-
-        .formControl {
-          padding-right: 40px;
-        }
-    }
-
-    &.disabled {
-      label {
-          color: $button-disabled;
-      }
-      .inputInner {
-          border-color: transparent;
-      }
-
-      .formControl {
-        filter: grayscale(1);
-        cursor: not-allowed;
-      }
-
-      &:hover,
-      &:focus-within {
-          .inputInner {
-            border-color: transparent;
-          }
-      }
-    }
-  
-    .prepend, .append {
-      flex: 0 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
       background: white;
-      transition: 200ms;
+    }
+  }
+
+  &.numeric {
+    .formControl {
+      text-align: right;
+    }
+  }
+
+  &.small {
+    margin-bottom: 10px !important;
+
+    .formControl {
+      padding: 10px 15px;
+    }
+  }
+
+  label {
+    display: block;
+    margin:0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    color: #32324D;
+    position: absolute;
+    left:0;
+    
+    
+    .optional {
+      display: inline-block;
+      margin-left: 10px;
+      font-style: italic;
+    }
+  }
+
+  .inputInner {
+    max-height: 220px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 440px;
+    min-height: 40px;
+    margin-top: 20px;
+    overflow: hidden;
+
+
+    background: #FFFFFF;
+
+    border: 1px solid #DCDCE4;
+    border-radius: 4px;
+  }
+
+  .formControl {
+    display: block;
+    flex: 1;
+    padding: 10px 16px;
+    line-height: 1.5;
+    background-color: white;
+    background-clip: padding-box;
+    outline: none;
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &.large {
+    .formControl {
+      padding: 1rem;
+    }
+  }
+
+  &.error {
+    label {
+      color: $alert-error-text;
+    }
+
+    .inputInner {
+      border-color: $alert-error-text !important;
+      animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
     }
 
     .prepend {
-        padding-left: 20px;
+      color: $alert-error-text;
     }
 
-    .append {
-        padding-right: 20px;
+    .formControl {
+      padding-right: 40px;
     }
-  
-    .errorMessage {
-      margin: 0;
-      margin-top: 5px;
-      font-size: 0.9em;
-      line-height: 1.1em;
-      text-align: left;
-      color: $alert-error-text;
-      width: 100%;
+  }
+
+  &.disabled {
+    label {
+      color: $button-disabled;
+    }
+
+    .inputInner {
+      border-color: transparent;
+    }
+
+    .formControl {
+      filter: grayscale(1);
+      cursor: not-allowed;
     }
 
     &:hover,
     &:focus-within {
-        .inputInner {
-          border-color: maroon;
-        }
-
-        .errors {
-            opacity: 1;
-        }
-    }
-
-    .resetValue {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-
-      > button {
-        height: 20px;
-        width: 20px;
-        color: $alert-error-text;
+      .inputInner {
+        border-color: transparent;
       }
     }
   }
-  
 
-  @keyframes shake {
-    10%, 90% {
-      transform: translate3d(-1px, 0, 0);
+  .prepend,
+  .append {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: white;
+    transition: 200ms;
+  }
+
+  .prepend {
+    padding-left: 20px;
+  }
+
+  .append {
+    padding-right: 20px;
+  }
+
+  .errorMessage {
+    margin: 0;
+    margin-top: 5px;
+    font-size: 0.9em;
+    line-height: 1.1em;
+    text-align: left;
+    color: $alert-error-text;
+    width: 100%;
+  }
+
+  &:hover,
+  &:focus-within {
+    .inputInner {
+      border-color: maroon;
     }
-    
-    20%, 80% {
-      transform: translate3d(2px, 0, 0);
+
+    .errors {
+      opacity: 1;
     }
-  
-    30%, 50%, 70% {
-      transform: translate3d(-4px, 0, 0);
+  }
+
+  .resetValue {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    >button {
+      height: 20px;
+      width: 20px;
+      color: $alert-error-text;
     }
-  
-    40%, 60% {
-      transform: translate3d(4px, 0, 0);
-    }
+  }
+}
+
+
+@keyframes shake {
+
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }

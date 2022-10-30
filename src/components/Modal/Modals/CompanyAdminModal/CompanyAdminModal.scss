@@ -1,0 +1,91 @@
+#company-admin-modal{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .tab {
+        background: #F6F6F9;
+        display: flex;
+        height: 64px;
+        align-items: center;
+
+        h2 {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 16px;
+            margin-top: 15px;
+
+        }
+
+        .add-image {
+            margin: 20px;
+        }
+    }
+
+    .forma {
+        background: #FFFFFF;
+    }
+
+    .form {
+        display: flex;
+        justify-content: space-between;
+
+        .btn{
+            border: none;
+        }
+
+        div.addBtn{
+            position: absolute;
+            right: 20px;
+        }
+
+        .toggle {
+            background: #F6F6F9;
+            width: 180px;
+            height: 40px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            align-items: center;
+            border: 1px solid #DCDCE4;
+            border-radius: 4px;
+
+            #role {
+                width: 170px;
+                height: 32px;
+
+                .tglbtn {
+                    background-color: #FFFFFF;
+                    width: 85px;
+                    height: 32px;
+                    margin: 4px;
+                }
+            }
+        }
+
+        >div {
+            margin-left: 10px;
+        }
+
+
+    }
+
+    .butt {
+        
+        height: 64px;
+        float: right;
+        margin-left: 1290px;
+        margin-top: 15px;
+        align-items: center;
+    }
+
+}
+
+section.form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

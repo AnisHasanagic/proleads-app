@@ -10,7 +10,6 @@ import { Button, ButtonTypes } from "../../components/Button/Button";
 import { Checkbox } from "../../components/Checkbox/Checkbox";
 import { Form } from "../../components/Form/Form";
 import { Input } from "../../components/Input/Input";
-
 import "./CallPage.scss";
 import { loadCompany } from "../../store/detail/detail.actions";
 import DashboardLayout from "../../layouts/DashboardLayout";
@@ -316,14 +315,17 @@ function CallPage() {
         <div id="call-admin-modal">
             <div id="info">
             </div>
-            <div>{newInfo.call_info}</div>
-            <div>{newInfo.call_description}</div>
-            <div>{newInfo.call_address}</div>
-            <div>{newInfo.company_name}</div>
-
+            <div className="company_information">
+            <div><strong>Company name:</strong>{newInfo.company_name}</div>
+            <div><strong>Company address:</strong>{newInfo.call_address}</div>
+            <div><strong>Company description:</strong>{newInfo.call_description}</div>
+            </div>
+            <div className="form">
             <Form>
+                <h1>Call form</h1>
             <Input
                     id={"first_name"}
+                    className="inputs"
                     type={"text"}
                     name={"first_name"}
                     value={newCall["first_name"]}
@@ -331,9 +333,11 @@ function CallPage() {
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCallErrors["first_name"]}
                     placeholder={"first_name"}
+                    label="First name"
                 />
                 <Input
                     id={"last_name"}
+                    className="inputs"
                     type={"text"}
                     name={"last_name"}
                     value={newCall["last_name"]}
@@ -341,9 +345,11 @@ function CallPage() {
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCallErrors["last_name"]}
                     placeholder={"last_name"}
+                    label="Last name"
                 />
                 <Input
                     id={"gender"}
+                    className="inputs"
                     type={"text"}
                     name={"gender"}
                     value={newCall["gender"]}
@@ -351,9 +357,11 @@ function CallPage() {
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCallErrors["gender"]}
                     placeholder={"gender"}
+                    label="Gender"
                 />
                 <Input
                     id={"email"}
+                    className="inputs"
                     type={"text"}
                     name={"email"}
                     value={newCall["email"]}
@@ -361,9 +369,11 @@ function CallPage() {
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCallErrors["email"]}
                     placeholder={"email"}
+                    label="Email"
                 />
                 <Input
                     id={"country"}
+                    className="inputs"
                     type={"text"}
                     name={"country"}
                     value={newCall["country"]}
@@ -371,9 +381,11 @@ function CallPage() {
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCallErrors["country"]}
                     placeholder={"country"}
+                    label="Country"
                 />
                 <Input
                     id={"city"}
+                    className="inputs"
                     type={"text"}
                     name={"city"}
                     value={newCall["city"]}
@@ -381,6 +393,7 @@ function CallPage() {
                     onBlur={(e: any): void => blurEvent(e)}
                     errors={newCallErrors["city"]}
                     placeholder={"city"}
+                    label="City"
                 />
             {inputList.map((field:any,i:any)=> {
                 return (<div key={i}>
@@ -414,6 +427,10 @@ function CallPage() {
                     </Button>
                 
             </Form>
+            </div>
+            <div className="call_information">
+            <div><strong>Call information:</strong>{newInfo.call_info}</div>
+            </div>
         </div>
         </DashboardLayout>
     );

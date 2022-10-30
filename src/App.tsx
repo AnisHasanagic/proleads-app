@@ -23,7 +23,7 @@ const Dashboard = React.lazy(()=>import("./containers/Dashboard/Dashboard"))
 const AgentList = React.lazy(()=>import("./containers/AgentList/AgentList"))
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3001');
+
 
 function App() {
     return (

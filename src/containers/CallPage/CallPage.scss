@@ -1,0 +1,59 @@
+#call-admin-modal{
+    display: flex;
+    justify-content: space-around;
+
+    
+   
+    .form{
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+        text-align: center;
+        align-items: center;
+        Form{
+        background-color: grey;
+        box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        .inputs{
+            label{
+            margin-bottom:-14px ;
+            }
+        }
+    }
+
+    .call_information{
+        width: 25%;
+        margin-right: 10px;
+        border:none;
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        top: 40px;
+        bottom:40px;
+        right: 40px;
+        position:fixed;
+        overflow-y:hidden;
+        overflow-x:hidden;
+        box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.15);
+
+       
+    }
+
+    .company_information{
+        width: 25%;
+        margin-left: 10px;
+        border:none;
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        top: 40px;
+        bottom:40px;
+        left: 342px;
+        position: fixed;
+        overflow-y:hidden;
+        overflow-x:hidden;
+        box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.15);
+
+    }
+}

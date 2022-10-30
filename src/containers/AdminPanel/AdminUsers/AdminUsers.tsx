@@ -8,15 +8,19 @@ import UserAdminModal from "../../../components/Modal/Modals/UserAdminModal/User
 import { loadUsers } from "../../../store/users/users.actions";
 import "./AdminUsers.scss";
 import { Input } from "../../../components/Input/Input";
-import{ Button, ButtonTypes } from "../../../components/Button/Button"
+import { Button, ButtonTypes } from "../../../components/Button/Button"
+
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+
 
 function AdminUsers() {
     const dispatch = useDispatch();
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
-    
+
     const users = useSelector((state: any) => state.users);
-    const [searchValue,setSearchValue] = useState("")
+    const [searchValue, setSearchValue] = useState("")
     useEffect(() => {
         dispatch(loadUsers());
     }, []);
@@ -28,9 +32,8 @@ function AdminUsers() {
 
     const actions = [
         {
-            name: "Edit",
             row: "id",
-            text: "Edit",
+            icon: <EditIcon />,
             action: showUser,
         },
     ];
@@ -43,27 +46,29 @@ function AdminUsers() {
     ];
 
     const keys = columnsToShow
-    const search = (data:any) => {
+    const search = (data: any) => {
         return data.filter(
-            (item:any) => 
-            keys.some(key =>item[key].toLowerCase().includes(searchValue)))
+            (item: any) =>
+                keys.some(key => item[key].toLowerCase().includes(searchValue)))
     }
     return (
         <DashboardLayout>
             <section id="admin-users">
                 <div>
-                <h1>All Users</h1>
-                <p className="mb-5">List of all users.</p>
+                    <h1>All Users</h1>
+                    <p className="mb-5">List of all users.</p>
                 </div>
-                <Input
-                id={"search"}
-                type={"text"}
-                className={"search"}
-                onChange={(e: any): void => setSearchValue(e.target.value)}
-                placeholder={"Search..."}
-            />
-                <Button
+                <div className="search-butt">
+                    <Input
+                        id={"search"}
+                        type={"text"}
+                        className={"search"}
+                        onChange={(e: any): void => setSearchValue(e.target.value)}
+                        placeholder={"Search..."}
+                    />
+                    <Button
                         btnClass={ButtonTypes.primary}
+                        className="add-button"
                         customClass="ml-auto"
                         onClick={() => {
                             setIsAdd(true);
@@ -78,6 +83,7 @@ function AdminUsers() {
                     >
                         Add New
                     </Button>
+                </div>
                 <Table
                     data={search(users.list)}
                     actions={actions}
@@ -85,9 +91,9 @@ function AdminUsers() {
                 />
             </section>
             <Modal show={currentUser} closeModal={() => setCurrentUser(null)}>
-                <UserAdminModal user={currentUser} isAdd={isAdd}/>
+                <UserAdminModal user={currentUser} isAdd={isAdd} />
             </Modal>
         </DashboardLayout>
     );
-    };
+};
 export default AdminUsers;

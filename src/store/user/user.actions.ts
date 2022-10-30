@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 import { io } from "socket.io-client";
 
-var socket = io();
+var socket = io('ws://localhost:3001');
 
 const {
     loginSuccess,
@@ -43,12 +43,16 @@ export const login =
 
                 if (response.ok) {
                     await storeToken(data.token);
-                    toast.success(data.message);
+                    
 
                     socket.emit('user_connected', data.data.user.id)
-
+                    console.log(data.data.user.id)
                     const user = data.data.user;
-                    dispatch(loginSuccess({ token: data.token, user }),);
+                    let Online = {}
+                    socket.on('users_status',function(users){
+                        Online=users;
+                    })
+                    dispatch(loginSuccess({ token: data.token,OnlineUsers:Online, user }),toast.success(data.message));
 
                 } else {
                     const error: any = {

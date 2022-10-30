@@ -1,13 +1,19 @@
 import React from "react";
 import { useTable } from "react-table";
 import { Button, ButtonTypes } from "../Button/Button";
+import TablePagination from "@material-ui/core/TablePagination";
 import { useMemo } from "react";
 
 import "./Table.scss";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
+
 
 const Table = ({ data, actions, columnsToShow }: any) => {
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const columns = useMemo(() => {
-        let columns : any = [];
+        let columns: any = [];
         if (columnsToShow)
             columns = Object.keys(data[0] ? data[0] : {}).filter((el) => {
                 return columnsToShow.includes(el);
@@ -23,7 +29,7 @@ const Table = ({ data, actions, columnsToShow }: any) => {
                     if (string.length >= 100) {
                         string = string.slice(0, 100) + '...'
                     }
-    
+
                     return string
                 },
             };
@@ -32,26 +38,37 @@ const Table = ({ data, actions, columnsToShow }: any) => {
         if (actions) {
             const action_columns = actions.map((action: any) => {
                 return {
-                    Header: action.name,
                     id: action.name,
                     accessor: action.row,
                     Cell: ({ row }: any) => (
-                        <Button
-                            btnClass={ButtonTypes.secondary}
+                        <IconButton
+                            className="icon"
                             onClick={() => action.action(row.original)}
                         >
-                            {action.text}
-                        </Button>
+                            {action.icon}
+                        </IconButton>
                     ),
                 };
             });
 
-            columns = [ ...columns,...action_columns];
+            columns = [...columns, ...action_columns];
         }
 
         return columns;
     }, [data, actions, columnsToShow]);
 
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
+    const preparedData = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
         useTable({ columns, data });
 
@@ -99,6 +116,15 @@ const Table = ({ data, actions, columnsToShow }: any) => {
                         })}
                     </tbody>
                 </table>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={preparedData.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
             </div>
         </div>
     );

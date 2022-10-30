@@ -13,12 +13,16 @@ import { Input } from "../../../components/Input/Input";
 
 import "./ExportPage.scss";
 import { loadCompany } from "../../../store/company/company.actions";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { utils, writeFile } from "xlsx"
+
+
 
 function ExportPage() {
     const dispatch = useDispatch();
     const {id} : any  = useParams()
+
+    const navigate = useNavigate();
 
     const INITIAL_STATE = {
         company_id:"",
@@ -30,6 +34,10 @@ function ExportPage() {
     const call = useSelector((state: any) => state.call);
     const company = useSelector((state: any)=> state.company)
     const [exportData, setexportData] = useState<any>(INITIAL_STATE)
+    const detail = useSelector((state:any) => state.detail)
+
+    const [exist,setExist]=useState<any>(false)
+    
 
     
     
@@ -114,10 +122,13 @@ function ExportPage() {
 
     };
 
+    
+
     const CreateCallList = ():void => {
         console.log(exportData)
         dispatch((loadCalls(exportData))
         )
+        setExist(true);
         }
 
         useEffect(()=>{
@@ -135,7 +146,8 @@ function ExportPage() {
 
         utils.book_append_sheet(wb,ws,"List of calls");
 
-        writeFile(wb,"FirstExcel.xlsx")
+        writeFile(wb,detail.name+".xlsx")
+        navigate("/dashboard/admin-panel/calls")
      }
 
 
@@ -144,10 +156,11 @@ function ExportPage() {
             <section id="admin-company">
                 <div className="mr-3">
                     <h1>All calls</h1>
-                    <p>List of all calls.</p>
+                    <p>List of all calls for a company.</p>
                     <div>{company.company_info}</div>
                 </div>
-                <div id="Company-admin-modal">
+                <div id="export-modal">
+                    <div className="dates">
                     <Input
                         id={"startDate"}
                         type={"date"}
@@ -156,6 +169,7 @@ function ExportPage() {
                         onChange={(e: any): void => changeEvent(e)}
                         onBlur={(e: any): void => blurEvent(e)}
                         placeholder={"from"}
+                        label="Date from:"
                     />
 
                     <Input
@@ -166,13 +180,17 @@ function ExportPage() {
                         onChange={(e: any): void => changeEvent(e)}
                         onBlur={(e: any): void => blurEvent(e)}
                         placeholder={"to"}
+                        label="Date to:"
                     />
+                    </div>
                     <Button
                         btnClass={ButtonTypes.primary}
                         onClick={() => CreateCallList()}
                     >
                         Create
                     </Button>
+                    {exist &&( 
+                        <div className="preview">
                         <Table
                         data={call.list}
                         columnsToShow={columnsToShow}
@@ -183,6 +201,8 @@ function ExportPage() {
                     >
                      Export
                     </Button>
+                    </div>)}
+                   
                 </div>
                 
             </section>

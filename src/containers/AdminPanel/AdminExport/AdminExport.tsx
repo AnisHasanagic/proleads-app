@@ -11,6 +11,9 @@ import { loadCompanies } from "../../../store/company/company.actions";
 
 import "./AdminExport.scss";
 
+import GetAppIcon from '@material-ui/icons/GetApp';
+import { Input } from "../../../components/Input/Input";
+
 function AdminExport() {
     const dispatch = useDispatch();
 
@@ -18,8 +21,10 @@ function AdminExport() {
 
     const [currentCompany, setCurrentCompany] = useState<any>(null);
     const [isAdd, setIsAdd] = useState<any>(false);
-    const user = useSelector((state:any)=> state.user)
+    const user = useSelector((state: any) => state.user)
     const company = useSelector((state: any) => state.company);
+    const [searchValue, setSearchValue] = useState("")
+
 
 
     useEffect(() => {
@@ -29,14 +34,14 @@ function AdminExport() {
     const showCompany = (Company: any) => {
         console.log(Company)
         setCurrentCompany(Company);
-        navigate('/dashboard/admin-panel/export/'+Company.id, Company.id)
+        navigate('/dashboard/admin-panel/export/' + Company.id, Company.id)
     };
 
     const actions = [
         {
-            name: "Edit",
+            name: "Export",
             row: "id",
-            text: "Export",
+            icon: <GetAppIcon />,
             action: showCompany,
         },
     ];
@@ -53,13 +58,29 @@ function AdminExport() {
         "overdue_time",
     ];
 
+    const keys = columnsToShow
+    const search = (data: any) => {
+        return data.filter(
+            (item: any) =>
+                keys.some(key => item[key].toString().toLowerCase().includes(searchValue)))
+    }
+
     return (
         <DashboardLayout>
             <section id="admin-company">
-                    <div className="mr-3">
-                        <h1>All company</h1>
-                        <p>List of all company.</p>
-                    </div>
+                <div className="mr-3">
+                    <h1>All company</h1>
+                    <p>List of all company.</p>
+                </div>
+                <div className="search-butt">
+                <Input
+                    id={"search"}
+                    type={"text"}
+                    className={"search"}
+                    onChange={(e: any): void => setSearchValue(e.target.value)}
+                    placeholder={"Search..."}
+                />
+                </div>
                 <Table
                     data={company.list}
                     actions={actions}

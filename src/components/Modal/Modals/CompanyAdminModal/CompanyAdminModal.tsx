@@ -10,6 +10,8 @@ import { Button, ButtonTypes } from "../../../Button/Button";
 import { Checkbox } from "../../../Checkbox/Checkbox";
 import { Form } from "../../../Form/Form";
 import { Input } from "../../../Input/Input";
+import CTBFields from "../../../../assets/CTBFields.svg"
+
 
 import "./CompanyAdminModal.scss";
 
@@ -17,7 +19,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const company_state = useSelector((state: any) => state.company);
-    const user = useSelector((state:any)=> state.user)
+    const user = useSelector((state: any) => state.user)
 
 
     const INITIAL_Company = {
@@ -46,7 +48,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
         address: {
             isRequired: true,
         },
-        email:{
+        email: {
             isRequired: true,
         },
         description: {
@@ -318,165 +320,191 @@ function CompanyAdminModal({ company, isAdd }: any) {
 
     };
     return (
-        <div id="Company-admin-modal">
-            <Form>
-                <Input
-                    id={"name"}
-                    type={"text"}
-                    name={"name"}
-                    value={newCompany["name"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["name"]}
-                    placeholder={"name"}
-                />
-                <Input
-                    id={"address"}
-                    type={"text"}
-                    name={"address"}
-                    value={newCompany["address"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["address"]}
-                    placeholder={"address"}
-                />
-                 <Input
-                    id={"email"}
-                    type={"text"}
-                    name={"email"}
-                    value={newCompany["email"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["email"]}
-                    placeholder={"email"}
-                />
-                <Input
-                    id={"description"}
-                    type={"text"}
-                    name={"description"}
-                    value={newCompany["description"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["description"]}
-                    placeholder={"Description"}
-                    isTextarea
-                />
-                <Input
-                    id={"company_info"}
-                    type={"text"}
-                    name={"company_info"}
-                    value={newCompany["company_info"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["company_info"]}
-                    placeholder={"Company info"}
-                    isTextarea
-                />
-                <Input
-                    id={"price_per_call"}
-                    type={"number"}
-                    name={"price_per_call"}
-                    value={newCompany["price_per_call"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["price_per_call"]}
-                    placeholder={"price_per_call in euros"}
-                />
-                <Input
-                    id={"initial_time"}
-                    type={"number"}
-                    name={"initial_time"}
-                    value={newCompany["initial_time"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["initial_time"]}
-                    placeholder={"initial_time in seconds"}
-                />
-                <Input
-                    id={"price_per_minutes_overdue"}
-                    type={"number"}
-                    name={"price_per_minutes_overdue"}
-                    value={newCompany["price_per_minutes_overdue"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["price_per_minutes_overdue"]}
-                    placeholder={"price_per_minutes_overdue in euros"}
-                />
-                <Input
-                    id={"overdue_time"}
-                    type={"number"}
-                    name={"overdue_time"}
-                    value={newCompany["overdue_time"]}
-                    onChange={(e: any): void => changeEvent(e)}
-                    onBlur={(e: any): void => blurEvent(e)}
-                    errors={newCompanyErrors["overdue_time"]}
-                    placeholder={"overdue_time in seconds"}
-                />
+        <div id="company-admin-modal">
+            <div className="tab">
+                <img src={CTBFields}
+                    className="add-image"
+                    alt="" />
+                <h2>Add Company</h2>
+            </div>
+            <div className="forma">
+                <Form className="form">
+                    <div>
+                        <Input
+                            id={"name"}
+                            type={"text"}
+                            name={"name"}
+                            value={newCompany["name"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newCompanyErrors["name"]}
+                            placeholder={"name"}
+                        />
+                        <Input
+                            id={"address"}
+                            type={"text"}
+                            name={"address"}
+                            value={newCompany["address"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newCompanyErrors["address"]}
+                            placeholder={"address"}
+                        />
+                        <Input
+                            id={"email"}
+                            type={"text"}
+                            name={"email"}
+                            value={newCompany["email"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newCompanyErrors["email"]}
+                            placeholder={"email"}
+                        />
+                        <Input
+                            id={"description"}
+                            type={"text"}
+                            name={"description"}
+                            value={newCompany["description"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newCompanyErrors["description"]}
+                            placeholder={"Description"}
+                            isTextarea
+                        />
+                    </div>
+                    <div>
+                        <Input
+                            id={"price_per_call"}
+                            type={"number"}
+                            name={"price_per_call"}
+                            value={newCompany["price_per_call"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newCompanyErrors["price_per_call"]}
+                            placeholder={"price_per_call in euros"}
+                        />
+                        <Input
+                            id={"initial_time"}
+                            type={"number"}
+                            name={"initial_time"}
+                            value={newCompany["initial_time"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newCompanyErrors["initial_time"]}
+                            placeholder={"initial_time in seconds"}
+                        />
+                        <Input
+                            id={"price_per_minutes_overdue"}
+                            type={"number"}
+                            name={"price_per_minutes_overdue"}
+                            value={newCompany["price_per_minutes_overdue"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newCompanyErrors["price_per_minutes_overdue"]}
+                            placeholder={"price_per_minutes_overdue in euros"}
+                        />
+                        <Input
+                            id={"company_info"}
+                            type={"text"}
+                            name={"company_info"}
+                            value={newCompany["company_info"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newCompanyErrors["company_info"]}
+                            placeholder={"Company info"}
+                            isTextarea
+                        />
+                    </div>
+                    <div>
+                        <Input
+                            id={"overdue_time"}
+                            type={"number"}
+                            name={"overdue_time"}
+                            value={newCompany["overdue_time"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newCompanyErrors["overdue_time"]}
+                            placeholder={"overdue_time in seconds"}
+                        />
+                        {!isAdd && (
+                            <Checkbox
+                                checkItem={(): void =>
+                                    setNewCompany({
+                                        ...newCompany,
+                                        isDeleted: !newCompany.isDeleted
+                                    })
+                                }
+                                isChecked={newCompany.isDeleted}
+                                disabled={false}
 
-                <Checkbox
-                    checkItem={(): void =>
-                        setNewCompany({
-                            ...newCompany,
-                            isDeleted: !newCompany.isDeleted
-                        })
-                    }
-                    isChecked={newCompany.isDeleted}
-                    disabled={false}
-
-                    label="Do you want to soft delete this?"
-                >
-                </Checkbox>
-                {isAdd && (
-                    inputList.map((field: any, i: any) => {
-                        return (<div key={i}>
-                            <Input
-                                id={"company_field" + i}
-                                name={"company_field" + i}
-                                type={"text"}
-                                value={beutifyString(Object.keys(field)[0])}
-                                onChange={(e: any): void => changeInputEvent(e, i)}
-                                onBlur={(e: any): void => blurInputEvent(e, i)}
-                                placeholder={"Company field"}
-                            />
-
-                            {inputList.length !== 0 && <Button
-                                className="mr10"
-                                onClick={() => handleRemoveClick(i)}>Remove</Button>}
-
-                        </div>)
-                    })
-                )}
-
-                {!isAdd && (
-                    inputList.map((field: any, i: any) => {
-                        return (<div key={i}>
-                            <Input
-                                id={"company_field" + i}
-                                name={"company_field" + i}
-                                type={"text"}
-                                value={beutifyString(Object.keys(field)[0])}
-                                onChange={(e: any): void => changeInputEvent(e, i)}
-                                onBlur={(e: any): void => blurInputEvent(e, i)}
-                                placeholder={"Company field"}
-                            />
-
-                            {inputList.length !== 1 && <Button
-                                className="mr10"
-                                onClick={() => handleRemoveClick(i)}>Remove</Button>}
-
-                        </div>)
-                    })
-                )}
+                                label="Do you want to soft delete this?"
+                            >
+                            </Checkbox>
+                        )}
 
 
+                        {isAdd && (
+                            inputList.map((field: any, i: any) => {
+                                return (<div key={i}>
+                                    <Input
+                                        id={"company_field" + i}
+                                        name={"company_field" + i}
+                                        type={"text"}
+                                        value={beutifyString(Object.keys(field)[0])}
+                                        onChange={(e: any): void => changeInputEvent(e, i)}
+                                        onBlur={(e: any): void => blurInputEvent(e, i)}
+                                        placeholder={"Company field"}
+                                    />
+
+                                    {inputList.length !== 0 && <Button
+                                        className="mr10"
+                                        onClick={() => handleRemoveClick(i)}>Remove</Button>}
+
+                                </div>)
+                            })
+                        )}
 
 
-                <Button onClick={handleAddClick}>Add</Button>
+                        {!isAdd && (
+                            inputList.map((field: any, i: any) => {
+                                return (<div key={i}>
+                                    <Input
+                                        id={"company_field" + i}
+                                        name={"company_field" + i}
+                                        type={"text"}
+                                        value={beutifyString(Object.keys(field)[0])}
+                                        onChange={(e: any): void => changeInputEvent(e, i)}
+                                        onBlur={(e: any): void => blurInputEvent(e, i)}
+                                        placeholder={"Company field"}
+                                    />
+
+                                    {inputList.length !== 1 && (<Button
+                                        className="btn"
+                                        onClick={() => handleRemoveClick(i)}
+                                        btnClass={ButtonTypes.primary}
+                                    >Remove</Button>)}
+
+                                </div>)
+                            })
+                        )}
+                        <div className="addBtn">
+                            <Button onClick={handleAddClick}
+                                btnClass={ButtonTypes.primary}
+
+                            >Add</Button>
+                        </div>
+                    </div>
+
+                </Form>
+            </div>
+
+
+            <div className="butt">
                 {!isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
                         onClick={() =>
-                            dispatch(updateCompany({...newCompany,company_fields: JSON.stringify(inputList)}, company.id,user.id, navigate))
+                            dispatch(updateCompany({ ...newCompany, company_fields: JSON.stringify(inputList) }, company.id, user.id, navigate))
                         }
                         loading={company_state.update.loading}
                         disabled={company_state.update.loading || hasSomeErrors()}
@@ -487,14 +515,15 @@ function CompanyAdminModal({ company, isAdd }: any) {
                 {isAdd && (
                     <Button
                         btnClass={ButtonTypes.primary}
-                        onClick={() => dispatch(addCompany({ ...newCompany, company_fields: JSON.stringify(inputList), isDeleted: isDeleted },user.id, navigate))}
+                        onClick={() => dispatch(addCompany({ ...newCompany, company_fields: JSON.stringify(inputList), isDeleted: isDeleted }, user.id, navigate))}
                         loading={company_state.add.loading}
                         disabled={company_state.add.loading || hasSomeErrors()}
                     >
                         Create
                     </Button>
                 )}
-            </Form>
+            </div>
+
         </div>
     );
 }
