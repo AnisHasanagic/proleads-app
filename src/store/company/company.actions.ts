@@ -82,7 +82,7 @@ export const updateCompany =
             if (response.ok) {
                 dispatch(updateSuccess());
                 dispatch(loadCompanies(user_id));
-                toast.success(data.message);
+                toast.success("COMPANY_UPDATED_SUCCESSFULLY");
                 navigate("/dashboard")
 
             } else {
@@ -123,7 +123,7 @@ export const addCompany =
             if (response.ok) {
                 dispatch(addSuccess());
                 dispatch(loadCompanies(user_id));
-                toast.success(data.message);
+                toast.success("COMPANY_ADDED_SUCCESSFULLY");
                 window.location.reload();
             } else {
                 const error: any = {

@@ -31,7 +31,7 @@ export const addCall =
 
                 if (response.ok) {
                     dispatch(addSuccess());
-                    toast.success(data.message);
+                    toast.success("CALL_MADE_SUCCESSFULLY");
                     navigate('/dashboard/company')
                 } else {
                     const error: any = {
@@ -91,7 +91,7 @@ export const mailSend = (
         }
 
         if (response.ok) {
-            toast.success(data.message);
+            toast.success("MAIL_SENT_SUCCESSFULLY");
         } else {
             dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
         }

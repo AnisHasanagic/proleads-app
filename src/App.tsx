@@ -114,6 +114,7 @@ function App() {
                     />
                 </Routes>
                 </BrowserRouter>
+                <ToastContainer/>
         </Provider>
     );
 }

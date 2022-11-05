@@ -146,7 +146,7 @@ function ExportPage() {
 
         utils.book_append_sheet(wb,ws,"List of calls");
 
-        writeFile(wb,detail.name+".xlsx")
+        writeFile(wb,"Export.xlsx")
         navigate("/dashboard/admin-panel/calls")
      }
 

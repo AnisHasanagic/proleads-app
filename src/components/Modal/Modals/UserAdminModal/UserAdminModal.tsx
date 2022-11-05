@@ -41,6 +41,7 @@ function UserAdminModal({ user, isAdd }: any) {
     const [isDeleted, setIsDeleted] = useState<any>(false)
     const [userRole, setUserRole] = useState<any>("");
     const [currentPassword, setCurrentPassword] = useState<any>(password)
+    const [selected,setSelected] = useState<any>("")
 
 
     const validations: any = {
@@ -170,6 +171,8 @@ function UserAdminModal({ user, isAdd }: any) {
 
     const handleRole = (e: any): void => {
         const value = e.target.value;
+        if(value === "admin") setSelected(true)
+        else setSelected(false)
         setUserRole(value);
     };
 
@@ -180,7 +183,7 @@ function UserAdminModal({ user, isAdd }: any) {
     };
 
     const updateUser=(): void => {
-        dispatch(updateAccount(newUser,user.id,navigate))
+        dispatch(updateAccount({...newUser,role:userRole},user.id,navigate))
     }
 
     return (
@@ -250,10 +253,12 @@ function UserAdminModal({ user, isAdd }: any) {
                                 value={userRole}
                                 aria-label="Is Admin?"
                                 color="success"
+                                exclusive={true}
+                                
                             >
 
-                                <ToggleButton className="tglbtn" value={"agent"} aria-label="false">FALSE</ToggleButton>
-                                <ToggleButton className="tglbtn" value={"admin"} aria-label="true">TRUE</ToggleButton>
+                                <ToggleButton className="tglbtn" value={"agent"} aria-label="false" >FALSE</ToggleButton>
+                                <ToggleButton className="tglbtn" value={"admin"} aria-label="true" >TRUE</ToggleButton>
                             </ToggleButtonGroup>
                             <h3 className="desc">By making an user admin he will get the full access to the app.</h3>
                         </div>
