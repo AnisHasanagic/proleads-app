@@ -39,9 +39,9 @@ function UserAdminModal({ user, isAdd }: any) {
     const [newUser, setNewUser] = useState<any>(INITIAL_User);
     const [newUserErrors, setNewUserErrors] = useState<any>({});
     const [isDeleted, setIsDeleted] = useState<any>(false)
-    const [userRole, setUserRole] = useState<any>("");
+    const [userRole, setUserRole] = useState<any>(false);
     const [currentPassword, setCurrentPassword] = useState<any>(password)
-    const [selected,setSelected] = useState<any>("")
+    const [selected,setSelected] = useState<any>(false)
 
 
     const validations: any = {
@@ -169,11 +169,9 @@ function UserAdminModal({ user, isAdd }: any) {
         }
     }, [users.add]);
 
-    const handleRole = (e: any): void => {
-        const value = e.target.value;
-        if(value === "admin") setSelected(true)
-        else setSelected(false)
-        setUserRole(value);
+    const handleRole = (e: any,value:any): void => {
+        console.log(typeof value)
+        setSelected(value)
     };
 
     const createUser = (): void => {
@@ -248,17 +246,15 @@ function UserAdminModal({ user, isAdd }: any) {
                         <div className="toggle">
                             <ToggleButtonGroup
                                 id="role"
-                                onChange={(e): void => handleRole(e)}
-                                onBlur={(e: any): void => handleRole(e)}
-                                value={userRole}
+                                onChange={handleRole}
+                                value={selected}
                                 aria-label="Is Admin?"
                                 color="success"
-                                exclusive={true}
+                                exclusive
                                 
                             >
-
-                                <ToggleButton className="tglbtn" value={"agent"} aria-label="false" >FALSE</ToggleButton>
-                                <ToggleButton className="tglbtn" value={"admin"} aria-label="true" >TRUE</ToggleButton>
+                                <ToggleButton className="tglbtn" value={false} aria-label="false" >FALSE</ToggleButton>
+                                <ToggleButton className="tglbtn" value={true} aria-label="true" >TRUE</ToggleButton>
                             </ToggleButtonGroup>
                             <h3 className="desc">By making an user admin he will get the full access to the app.</h3>
                         </div>

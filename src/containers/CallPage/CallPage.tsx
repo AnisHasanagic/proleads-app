@@ -461,7 +461,7 @@ function CallPage() {
                                             value={Object.values(field)[0]}
                                             onChange={(e: any): void => changeInputEvent(e, i)}
                                             onBlur={(e: any): void => blurInputEvent(e, i)}
-                                            placeholder={"Company field"}
+                                            placeholder={beutifyString(Object.keys(field)[0])}
                                             label={beutifyString(Object.keys(field)[0])}
                                         />
                                     </div>)

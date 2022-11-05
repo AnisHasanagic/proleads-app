@@ -70,7 +70,7 @@ const Table = ({ data, actions, columnsToShow }: any) => {
 
     const preparedData = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable({ columns, data });
+        useTable({ columns, data:preparedData });
 
     return (
         <div className="table100 ver1">
@@ -119,7 +119,7 @@ const Table = ({ data, actions, columnsToShow }: any) => {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={preparedData.length}
+                    count={data.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
