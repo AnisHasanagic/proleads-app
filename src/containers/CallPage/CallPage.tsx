@@ -344,31 +344,18 @@ function CallPage() {
                     <div className="form">
                         <Form>
                             <div>
-                                <div className="inpWidth">
-                                    <h2 className="adm">Firstname</h2>
-                                    <Input
-                                        id={"first_name"}
-                                        className="inputs"
-                                        type={"text"}
-                                        name={"first_name"}
-                                        value={newCall["first_name"]}
-                                        onChange={(e: any): void => changeEvent(e)}
-                                        onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["first_name"]}
-                                        placeholder={"first_name"}
-                                    />
-                                </div>
-                                <h2 className="adm">LastName</h2>
+
+                                <h2 className="adm">Name</h2>
                                 <Input
-                                    id={"last_name"}
+                                    id={"name"}
                                     className="inputs"
                                     type={"text"}
-                                    name={"last_name"}
-                                    value={newCall["last_name"]}
+                                    name={"name"}
+                                    value={newCall["name"]}
                                     onChange={(e: any): void => changeEvent(e)}
                                     onBlur={(e: any): void => blurEvent(e)}
-                                    errors={newCallErrors["last_name"]}
-                                    placeholder={"last_name"}
+                                    errors={newCallErrors["name"]}
+                                    placeholder={"name"}
                                 />
                                 <div className="toggle">
                                     <ToggleButtonGroup
@@ -437,21 +424,24 @@ function CallPage() {
                                     placeholder={"city"}
                                 />
 
-
-                                {inputList.map((field: any, i: any) => {
-                                    return (<div key={i}>
-                                        <h2 className="adm">{beutifyString(Object.keys(field)[0])}</h2>
-                                        <Input
-                                            id={"company_field" + i}
-                                            name={Object.keys(field)[0]}
-                                            type={"text"}
-                                            value={Object.values(field)[0]}
-                                            onChange={(e: any): void => changeInputEvent(e, i)}
-                                            onBlur={(e: any): void => blurInputEvent(e, i)}
-                                            placeholder={beutifyString(Object.keys(field)[0])}
-                                        />
-                                    </div>)
-                                })}
+                            </div>
+                            <div>
+                                <div className="custom">
+                                    {inputList.map((field: any, i: any) => {
+                                        return (<div key={i}>
+                                            <h2 className="adm">{beutifyString(Object.keys(field)[0])}</h2>
+                                            <Input
+                                                id={"company_field" + i}
+                                                name={Object.keys(field)[0]}
+                                                type={"text"}
+                                                value={Object.values(field)[0]}
+                                                onChange={(e: any): void => changeInputEvent(e, i)}
+                                                onBlur={(e: any): void => blurInputEvent(e, i)}
+                                                placeholder={beutifyString(Object.keys(field)[0])}
+                                            />
+                                        </div>)
+                                    })}
+                                </div>
                                 <Checkbox
                                     checkItem={(): void =>
                                         setSendMail(true)
@@ -459,18 +449,18 @@ function CallPage() {
                                     label="Do you want to send email"
                                 >
                                 </Checkbox>
-
-
                             </div>
+
+
                         </Form>
-                            <Button
-                                btnClass={ButtonTypes.primary}
-                                onClick={() => CreateCall()}
-                                loading={call.add.loading}
-                                disabled={call.add.loading || hasSomeErrors()}
-                            >
-                                Create
-                            </Button>
+                        <Button
+                            btnClass={ButtonTypes.primary}
+                            onClick={() => CreateCall()}
+                            loading={call.add.loading}
+                            disabled={call.add.loading || hasSomeErrors()}
+                        >
+                            Create
+                        </Button>
                     </div>
                 </div>
             </div>

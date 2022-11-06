@@ -442,7 +442,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                             </Checkbox>
                         )}
 
-
+                        <div className="custom">
                         {isAdd && (
                             inputList.map((field: any, i: any) => {
                                 return (<div key={i}>
@@ -478,7 +478,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                         placeholder={"Company field"}
                                     />
 
-                                    {inputList.length !== 1 && (<Button
+                                    {inputList.length !== 0 && (<Button
                                         className="btn"
                                         onClick={() => handleRemoveClick(i)}
                                         btnClass={ButtonTypes.primary}
@@ -487,11 +487,12 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 </div>)
                             })
                         )}
+                        </div>
                         <div className="addBtn">
                             <Button onClick={handleAddClick}
                                 btnClass={ButtonTypes.primary}
 
-                            >Add</Button>
+                            >Add Custom Field</Button>
                         </div>
                     </div>
 

@@ -55,7 +55,7 @@ function Dashboard() {
                 <h1>Welcome to Proleads</h1>
                 
             </div>
-            <BarChart chartData={userData}/>
+        {/* <BarChart chartData={userData}/> */}
         </DashboardLayout>
     );
 }

@@ -32,6 +32,11 @@
     .form {
         display: flex;
         justify-content: space-between;
+
+        .custom{
+          height: 301px;
+          overflow: scroll;
+        }
       
         .inp{
             width: 440px;

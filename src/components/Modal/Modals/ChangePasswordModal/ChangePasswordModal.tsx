@@ -29,7 +29,7 @@ function ChangePasswordModal({ user }: any) {
 
 
     const INITIAL_USER = {
-        password: "",
+        new_password: "",
     };
 
     const [newUserPassword, setNewUserPassword] = useState<any>(INITIAL_USER);
@@ -37,12 +37,12 @@ function ChangePasswordModal({ user }: any) {
 
 
     const validations: any = {
-        password: {
+        new_password: {
             isRequired: true,
         },
-        passwordRepeat: {
+        Repeatpassword: {
             isRequired: true,
-            sameAs: "password",
+            sameAs: "new_password",
         },
     };
 
@@ -103,13 +103,10 @@ function ChangePasswordModal({ user }: any) {
                     }
                 }
 
-                if (validator.isStrongPassword && id === "userNewPassword") {
-                    if (!strongPassword(value)) {
-                        errors.push("REQUIRED_PASSWORD_STRONG");
-                    }
-                }
+                
 
-                if (validator.sameAs && id === "joinRepeatPassword") {
+                if (validator.sameAs && id === "Repeatpassword") {
+                    console.log(value)
                     if (value !== newUserPassword[validator.sameAs]) {
                         errors.push("PASSWORD_DO_NOT_MATCH");
                     }
@@ -157,7 +154,7 @@ function ChangePasswordModal({ user }: any) {
                         <div>
                             <h2 className="adm">New Password</h2>
                             <Input
-                                id={"Newpassword"}
+                                id={"new_password"}
                                 type={"password"}
                                 name={"new_password"}
                                 value={newUserPassword["new_password"]}
@@ -166,15 +163,15 @@ function ChangePasswordModal({ user }: any) {
                                 errors={newUserPasswordErrors["new_password"]}
                                 placeholder={"New Password"}
                             />
-                            <h2 className="adm">Repeat Password</h2>
+                            <h2 className="adm">RepeatPassword</h2>
                             <Input
                                 id={"Repeatpassword"}
                                 type={"password"}
-                                name={"repeat_password"}
-                                value={newUserPassword["repeat_password"]}
+                                name={"Repeatpassword"}
+                                value={newUserPassword["Repeatpassword"]}
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
-                                errors={newUserPasswordErrors["repeat_password"]}
+                                errors={newUserPasswordErrors["Repeatpassword"]}
                                 placeholder={"Repeat Password"}
                             />
                         </div>
