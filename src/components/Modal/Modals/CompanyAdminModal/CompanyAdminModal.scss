@@ -32,6 +32,10 @@
     .form {
         display: flex;
         justify-content: space-between;
+      
+        .inp{
+            width: 440px;
+        }
 
         .btn{
             border: none;

@@ -344,35 +344,21 @@ function CallPage() {
                     <div className="form">
                         <Form>
                             <div>
-                                <h1>Call form</h1>
-                                <h2>Mr/Mrs</h2>
-                                <div className="toggle">
-                                    <ToggleButtonGroup
-                                        id="Mr/Mrs"
-                                        onChange={(e): void => handleMr(e)}
-                                        onBlur={(e: any): void => handleMr(e)}
-                                        value={gender}
-                                        aria-label="Mr/Mrs"
-                                        color="success"
-                                    >
-
-                                        <ToggleButton className="tglbtn" value={"Mr"} aria-label="Mr">Mr</ToggleButton>
-                                        <ToggleButton className="tglbtn" value={"Mrs"} aria-label="Mrs">Mrs</ToggleButton>
-                                    </ToggleButtonGroup>
+                                <div className="inpWidth">
+                                    <h2 className="adm">Firstname</h2>
+                                    <Input
+                                        id={"first_name"}
+                                        className="inputs"
+                                        type={"text"}
+                                        name={"first_name"}
+                                        value={newCall["first_name"]}
+                                        onChange={(e: any): void => changeEvent(e)}
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newCallErrors["first_name"]}
+                                        placeholder={"first_name"}
+                                    />
                                 </div>
-
-                                <Input
-                                    id={"first_name"}
-                                    className="inputs"
-                                    type={"text"}
-                                    name={"first_name"}
-                                    value={newCall["first_name"]}
-                                    onChange={(e: any): void => changeEvent(e)}
-                                    onBlur={(e: any): void => blurEvent(e)}
-                                    errors={newCallErrors["first_name"]}
-                                    placeholder={"first_name"}
-                                    label="First name"
-                                />
+                                <h2 className="adm">LastName</h2>
                                 <Input
                                     id={"last_name"}
                                     className="inputs"
@@ -383,9 +369,7 @@ function CallPage() {
                                     onBlur={(e: any): void => blurEvent(e)}
                                     errors={newCallErrors["last_name"]}
                                     placeholder={"last_name"}
-                                    label="Last name"
                                 />
-                                <h2>Gender</h2>
                                 <div className="toggle">
                                     <ToggleButtonGroup
                                         id="gender"
@@ -400,6 +384,7 @@ function CallPage() {
                                         <ToggleButton className="tglbtn" value={"female"} aria-label="female">Female</ToggleButton>
                                     </ToggleButtonGroup>
                                 </div>
+                                <h2 className="adm">Email</h2>
                                 <Input
                                     id={"email"}
                                     className="inputs"
@@ -410,8 +395,10 @@ function CallPage() {
                                     onBlur={(e: any): void => blurEvent(e)}
                                     errors={newCallErrors["email"]}
                                     placeholder={"email"}
-                                    label="Email"
                                 />
+                            </div>
+                            <div>
+                                <h2 className="adm">Phone</h2>
                                 <Input
                                     id={"phone"}
                                     className="inputs"
@@ -422,10 +409,9 @@ function CallPage() {
                                     onBlur={(e: any): void => blurEvent(e)}
                                     errors={newCallErrors["phone"]}
                                     placeholder={"phone"}
-                                    label="Phone"
                                 />
-                            </div>
-                            <div>
+
+                                <h2 className="adm">Country</h2>
                                 <Input
                                     id={"country"}
                                     className="inputs"
@@ -436,8 +422,9 @@ function CallPage() {
                                     onBlur={(e: any): void => blurEvent(e)}
                                     errors={newCallErrors["country"]}
                                     placeholder={"country"}
-                                    label="Country"
                                 />
+                                <h2 className="adm">City</h2>
+
                                 <Input
                                     id={"city"}
                                     className="inputs"
@@ -448,12 +435,12 @@ function CallPage() {
                                     onBlur={(e: any): void => blurEvent(e)}
                                     errors={newCallErrors["city"]}
                                     placeholder={"city"}
-                                    label="City"
                                 />
 
 
                                 {inputList.map((field: any, i: any) => {
                                     return (<div key={i}>
+                                        <h2 className="adm">{beutifyString(Object.keys(field)[0])}</h2>
                                         <Input
                                             id={"company_field" + i}
                                             name={Object.keys(field)[0]}
@@ -462,7 +449,6 @@ function CallPage() {
                                             onChange={(e: any): void => changeInputEvent(e, i)}
                                             onBlur={(e: any): void => blurInputEvent(e, i)}
                                             placeholder={beutifyString(Object.keys(field)[0])}
-                                            label={beutifyString(Object.keys(field)[0])}
                                         />
                                     </div>)
                                 })}
@@ -474,16 +460,17 @@ function CallPage() {
                                 >
                                 </Checkbox>
 
-                                <Button
-                                    btnClass={ButtonTypes.primary}
-                                    onClick={() => CreateCall()}
-                                    loading={call.add.loading}
-                                    disabled={call.add.loading || hasSomeErrors()}
-                                >
-                                    Create
-                                </Button>
+
                             </div>
                         </Form>
+                            <Button
+                                btnClass={ButtonTypes.primary}
+                                onClick={() => CreateCall()}
+                                loading={call.add.loading}
+                                disabled={call.add.loading || hasSomeErrors()}
+                            >
+                                Create
+                            </Button>
                     </div>
                 </div>
             </div>

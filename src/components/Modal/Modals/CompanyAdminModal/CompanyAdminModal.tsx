@@ -329,7 +329,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
             </div>
             <div className="forma">
                 <Form className="form">
-                    <div>
+                    <div className="inp">
                         <Input
                             id={"name"}
                             type={"text"}
@@ -372,7 +372,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                             isTextarea
                         />
                     </div>
-                    <div>
+                    <div className="inp">
                         <Input
                             id={"price_per_call"}
                             type={"number"}
@@ -415,7 +415,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                             isTextarea
                         />
                     </div>
-                    <div>
+                    <div className="inp">
                         <Input
                             id={"overdue_time"}
                             type={"number"}
