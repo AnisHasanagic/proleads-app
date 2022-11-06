@@ -16,32 +16,34 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import CTBFields from "../../../../assets/CTBFields.svg"
 
+
+
 import "./UserAdminModal.scss";
+import Modal from "../../Modal";
+import ChangePasswordModal from "../ChangePasswordModal/ChangePasswordModal";
 
 function UserAdminModal({ user, isAdd }: any) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const users = useSelector((state: any) => state.users);
+    const [currentUser, setCurrentUser] = useState<any>(null);
+
 
     const INITIAL_User = {
         username: "",
-        password: "",
         first_name: "",
         last_name: "",
         role: "",
         isDeleted: ""
     };
 
-    const password ={
-        password:"",
-    }
+   
 
     const [newUser, setNewUser] = useState<any>(INITIAL_User);
     const [newUserErrors, setNewUserErrors] = useState<any>({});
     const [isDeleted, setIsDeleted] = useState<any>(false)
     const [userRole, setUserRole] = useState<any>(false);
-    const [currentPassword, setCurrentPassword] = useState<any>(password)
-    const [selected,setSelected] = useState<any>(false)
+    const [selected, setSelected] = useState<any>(false)
 
 
     const validations: any = {
@@ -142,9 +144,6 @@ function UserAdminModal({ user, isAdd }: any) {
 
     useEffect(() => {
         if (user) {
-            setCurrentPassword({
-                password: user.password,
-            })
             setNewUser({
                 username: user.username,
                 first_name: user.first_name,
@@ -169,9 +168,10 @@ function UserAdminModal({ user, isAdd }: any) {
         }
     }, [users.add]);
 
-    const handleRole = (e: any,value:any): void => {
-        console.log(typeof value)
+    const handleRole = (e: any, value: any): void => {
         setSelected(value)
+        if(selected) setUserRole("admin")
+        else setUserRole("agent")
     };
 
     const createUser = (): void => {
@@ -180,8 +180,8 @@ function UserAdminModal({ user, isAdd }: any) {
         );
     };
 
-    const updateUser=(): void => {
-        dispatch(updateAccount({...newUser,role:userRole},user.id,navigate))
+    const updateUser = (): void => {
+        dispatch(updateAccount({ ...newUser, role: userRole }, user.id, navigate))
     }
 
     return (
@@ -231,17 +231,35 @@ function UserAdminModal({ user, isAdd }: any) {
 
                     </div>
                     <div className="inp">
-                        <h2 className="adm">Password</h2>
-                        <Input
-                            id={"password"}
-                            type={"password"}
-                            name={"password"}
-                            value={newUser["password"]}
-                            onChange={(e: any): void => changeEvent(e)}
-                            onBlur={(e: any): void => blurEvent(e)}
-                            errors={newUserErrors["password"]}
-                            placeholder={"Password"}
-                        />
+                        {isAdd && (
+                            <div>
+                                <h2 className="adm">Password</h2>
+                                <Input
+                                    id={"password"}
+                                    type={"password"}
+                                    name={"password"}
+                                    value={newUser["password"]}
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={newUserErrors["password"]}
+                                    placeholder={"Password"}
+                                />
+                            </div>
+                        )}
+                        {!isAdd && (
+                            <div className="change">
+                                <Button
+                                    btnClass={ButtonTypes.primary}
+                                    onClick={() => setCurrentUser(user)}
+                                    loading={users.add.loading}
+                                    disabled={users.add.loading || hasSomeErrors()}
+                                >
+                                    Change password
+                                </Button>
+                            </div>
+                        )}
+
+
                         <h2 className="adm">Admin?</h2>
                         <div className="toggle">
                             <ToggleButtonGroup
@@ -251,14 +269,14 @@ function UserAdminModal({ user, isAdd }: any) {
                                 aria-label="Is Admin?"
                                 color="success"
                                 exclusive
-                                
+
                             >
                                 <ToggleButton className="tglbtn" value={false} aria-label="false" >FALSE</ToggleButton>
                                 <ToggleButton className="tglbtn" value={true} aria-label="true" >TRUE</ToggleButton>
                             </ToggleButtonGroup>
                             <h3 className="desc">By making an user admin he will get the full access to the app.</h3>
                         </div>
-                        <br/>
+                        <br />
                         {!isAdd && (
                             <Checkbox
                                 checkItem={() =>
@@ -297,6 +315,12 @@ function UserAdminModal({ user, isAdd }: any) {
                     </Button>
                 )}
             </div>
+            <Modal
+                    show={currentUser}
+                    closeModal={() => setCurrentUser(null)}
+                >
+                    <ChangePasswordModal user={currentUser}/>
+                </Modal>
         </div>
 
     );

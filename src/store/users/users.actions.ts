@@ -128,3 +128,42 @@ export const createAccount =
             );
         }
     };
+
+    export const updatePassword =
+    (user: any, user_id: string,navigate:any): any =>
+    async (dispatch: any) => {
+        try {
+            dispatch(updateLoading());
+
+            const response = await UsersService.updatePassword(user, user_id);
+
+            let data: any = null;
+
+            try {
+                data = await response.clone().json();
+            } catch {
+                data = await response.clone().text();
+            }
+
+            if (response.ok) {
+                dispatch(updateSuccess());
+                dispatch(loadUsers());
+                toast.success("PASSWORD_CHANGED_SUCCESSFULLY");
+                navigate('/dashboard')
+
+            } else {
+                const error: any = {
+                    message: data.message ? data.message : null,
+                    errors: data.errors ? data.errors : null,
+                };
+
+                if (error.message) toast.error(error.message);
+                return dispatch(updateError(error));
+            }
+        } catch (e: any) {
+            toast.error("SOMETHING_WENT_WRONG");
+            return dispatch(
+                updateError({ message: "SOMETHING_WENT_WRONG", errors: null })
+            );
+        }
+    };

@@ -15,4 +15,8 @@ export default class UsersService {
         return apiCall(API_URI + "/user/" + user_id, user, "PUT", true, true);
     };
 
+    static updatePassword(user:any, user_id:string) : Promise<Response> {
+        return apiCall(API_URI + "/user/updatePassword/"+ user_id,user,"PUT",true,true)
+    }
+
 }
