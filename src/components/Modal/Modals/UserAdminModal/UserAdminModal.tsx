@@ -271,8 +271,8 @@ function UserAdminModal({ user, isAdd }: any) {
                                 exclusive
 
                             >
-                                <ToggleButton className="tglbtn" value={false} aria-label="false" >FALSE</ToggleButton>
-                                <ToggleButton className="tglbtn" value={true} aria-label="true" >TRUE</ToggleButton>
+                                <ToggleButton className="tglbtn" color='success' value={false} aria-label="false" >FALSE</ToggleButton>
+                                <ToggleButton className="tglbtn" color='success' value={true} aria-label="true" >TRUE</ToggleButton>
                             </ToggleButtonGroup>
                             <h3 className="desc">By making an user admin he will get the full access to the app.</h3>
                         </div>

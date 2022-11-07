@@ -1,30 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-type StatisticsSlice = {
-    loading: boolean,
-    list:Statistics[],
-    error: string,
-    add: {
-        loading: boolean;
-        errors: any[];
-        message: string;
-    };
-};
+
+type StatisticSlice = {
+    loading:boolean,
+    list: Statistics[],
+    errors:string
+}
 
 type Statistics = {
-    day:string;
+    day:string,
     count:number
+
 };
 
-const INITIAL_STATE: StatisticsSlice = {
+const INITIAL_STATE: StatisticSlice= {
     list: [],
-    loading:false,
-    error: "",
-    add: {
-        loading: false,
-        errors: [],
-        message: "",
-    },
+    loading: false,
+    errors: "",
 };
 
 const statisticsSlice = createSlice({
@@ -36,18 +28,18 @@ const statisticsSlice = createSlice({
         },
         loadPending: (state) => {
             state.loading = true;
-            state.list = [];
-            state.error = "";
+            state.list=[];
+            state.errors = "";
         },
         loadSuccess: (state, action) => {
             state.loading = false;
-            state.list = action.payload.list;
-            state.error = "";
+            state.list = action.payload.numberOfDay;
+            state.errors = "";
         },
         loadFailed: (state, action) => {
             state.loading = false;
             state.list = [];
-            state.error = action.payload.message;
+            state.errors = action.payload.message;
         },
     },
 });

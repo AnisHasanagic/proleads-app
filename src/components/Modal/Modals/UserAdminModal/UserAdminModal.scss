@@ -101,8 +101,12 @@
                     margin: 4px;
 
                 }
-                .tglbtn:after{
+                .tglbtn:active{
                     color:#6BE29A
+                }
+                .tglbtn::after{
+                    color:#6BE29A
+
                 }
             }
         }

@@ -10,12 +10,11 @@ const {
 
 
 
-export const loadCalls = (
-    exportData: any
+export const loadStat = (
 ): any => async (dispatch: any) => {
     try {
         dispatch(loadPending());
-        const response = await StatisticService.getAll(exportData);
+        const response = await StatisticService.getAll();
 
         let data: any = null;
 
@@ -25,9 +24,11 @@ export const loadCalls = (
             data = await response.clone().text();
         }
 
+        console.log(data.data.numberOfCalls)
         if (response.ok) {
-            dispatch(loadSuccess({ list: data.calls }));
-            console.log(data.calls)
+            dispatch(loadSuccess({ numberOfDay: data.data.numberOfCalls }));
+            console.log("sss")
+            console.log(data.data.numberOfCalls)
         } else {
             dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
         }

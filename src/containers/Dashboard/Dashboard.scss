@@ -1,0 +1,31 @@
+.Dashboard {
+    
+
+    .design {
+        background-color: white;
+        padding: 35px;
+        height: 366px;
+        width: 713px;
+        border-radius: 20px;
+        .headChart{
+            display: flex;
+            text-align: center;
+        }
+        .adm {
+            
+            margin-left: 10px;
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 16px;
+            /* identical to box height, or 133% */
+
+
+            /* Light mode/Neutral800 */
+            margin-bottom: -20px;
+            color: #32324D;
+        }
+
+    }
+}

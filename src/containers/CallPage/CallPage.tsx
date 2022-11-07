@@ -62,6 +62,7 @@ function CallPage() {
         phone: "",
         country: "",
         city: "",
+        description: "",
         start_timer: "",
         end_timer: ""
     };
@@ -333,13 +334,13 @@ function CallPage() {
                 <div id="info">
                 </div>
                 <div className="company_information">
-                    <div><strong>Company name:</strong>{newInfo.company_name}</div>
-                    <div><strong>Company address:</strong>{newInfo.call_address}</div>
-                    <div><strong>Company description:</strong>{newInfo.call_description}</div>
+                    <div><strong>Call information:</strong>{newInfo.call_info}</div>
                 </div>
                 <div className="secDiv">
                     <div className="call_information">
-                        <div><strong>Call information:</strong>{newInfo.call_info}</div>
+                        <div><strong>Company name:</strong>{newInfo.company_name}</div>
+                        <div><strong>Company address:</strong>{newInfo.call_address}</div>
+                        <div><strong>Company description:</strong>{newInfo.call_description}</div>
                     </div>
                     <div className="form">
                         <Form>
@@ -383,8 +384,8 @@ function CallPage() {
                                     errors={newCallErrors["email"]}
                                     placeholder={"email"}
                                 />
-                            </div>
-                            <div>
+
+
                                 <h2 className="adm">Phone</h2>
                                 <Input
                                     id={"phone"}
@@ -425,7 +426,20 @@ function CallPage() {
                                 />
 
                             </div>
+
                             <div>
+                                <Input
+                                    id={"description"}
+                                    type={"text"}
+                                    name={"description"}
+                                    value={newCall["description"]}
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={newCallErrors["description"]}
+                                    placeholder={"Description"}
+                                    isTextarea
+                                />
+
                                 <div className="custom">
                                     {inputList.map((field: any, i: any) => {
                                         return (<div key={i}>
@@ -450,18 +464,19 @@ function CallPage() {
                                 >
                                 </Checkbox>
                             </div>
-
+                                <Button
+                                    btnClass={ButtonTypes.primary}
+                                    onClick={() => CreateCall()}
+                                    loading={call.add.loading}
+                                    disabled={call.add.loading || hasSomeErrors()}
+                                >
+                                    Create
+                                </Button>
 
                         </Form>
-                        <Button
-                            btnClass={ButtonTypes.primary}
-                            onClick={() => CreateCall()}
-                            loading={call.add.loading}
-                            disabled={call.add.loading || hasSomeErrors()}
-                        >
-                            Create
-                        </Button>
+
                     </div>
+
                 </div>
             </div>
         </DashboardLayout>

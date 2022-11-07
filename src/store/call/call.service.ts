@@ -8,7 +8,7 @@ export default class CallService {
     };
 
     static getAll(data:any) : Promise<Response> {
-        return apiCall(API_URI + `/call/${data.company_id}?startDate=${data.startDate}&endDate=${data.endDate}`, null ,"GET",true,true)
+        return apiCall(API_URI + `/call/list/${data.company_id}?startDate=${data.startDate}&endDate=${data.endDate}`, null ,"GET",true,true)
     };
 
     static sendMail(data:any) : Promise<Response>{
