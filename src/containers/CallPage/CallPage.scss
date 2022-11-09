@@ -1,117 +1,155 @@
-#call-admin-modal{
-    display: flex;
-    justify-content: space-around;
-  
+#call-admin-modal {
 
-    .secDiv{
-     display: flex;
-     flex-direction: column;
-     justify-content: space-around;
-    .form{
+    .posDiv {
         display: flex;
-        flex-direction: row;
-        text-align: center;
-        align-items: center;
-        padding: 20px;
-        border-radius: 10px;
-        background-color: #FFFFFF;
-        margin-top: 20px;
-        width:800px;
-        overflow: hidden;
-       
-        .toggle{
-            height:32px;
-            #gender{
-                height: 32px;
-                margin-top: 10px;
-                margin-bottom: 10px;
+        justify-content: space-around;
+
+        #info {
+            background: #FFFFFF;
+
+            border: 0.5px solid #EAEAEF;
+
+            box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1);
+            border-radius: 20px;
+            width: 37vw;
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            padding:8px;
+
+            .call_information{
+                margin-bottom: 35vh;
+            }
+            
+            .company_information{
+                border-top: 1px solid #EAEAEF;;
+                padding-top: 10px;
             }
         }
 
-        .custom{
-            height: 208px;
-            overflow: scroll;
-          }
+        .secDiv {
+            background: #FFFFFF;
 
-        .header{
-            font-size: 20px;
-        }
+            border: 0.5px solid #EAEAEF;
 
-        .adm {
-            width: 56px;
-            height: 16px;
-
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 12px;
-            line-height: 16px;
-            /* identical to box height, or 133% */
+            box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1);
+            border-radius: 20px;
+            height: 85vh;
+            padding:8px;
+            text-align: center;
+            align-items: center;
 
 
-            /* Light mode/Neutral800 */
-            margin-bottom: -20px;
-            color: #32324D;
-        }
-        .inpWidth{
-            width:100px;
-        }
-        Form{
-        background-color: grey;
-        box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.15);
-        display: flex;
-        width: 100%;
 
-        }
+            
 
-        .inputs{
-            label{
-            margin-bottom:-14px ;
+
+
+            .form {
+                display: flex;
+                text-align: center;
+                align-items: center;
+                padding: 20px;
+                border-radius: 20px;
+                background-color: #FFFFFF;
+                width: 37vw;
+                height: 85vh;
+
+
+
+                .inputFields{
+                    width: 30vw;
+                    height: 7vh;
+                    text-align: center;
+                    align-items: center;
+                    justify-content: center;
+                    margin-left: 20%;
+                    margin-top: -20px;
+                }
+
+                .inputDesc{
+                    width: 30vw;
+                    height: 2vh;
+                    text-align: center;
+                    align-items: center;
+                    justify-content: center;
+                    margin-left: 20%;
+                    margin-top: -20px;
+                    margin-bottom: 50px;
+                }
+
+
+                .toggle {
+                    height: 32px;
+                    margin-top: -20px;
+
+
+                    #gender {
+                        height: 32px;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                    }
+                }
+
+                .custom {
+                    height: 220px;
+                    width: 25vw;
+                    margin-top: 10%;
+                    margin-left: 6%;
+
+                }
+
+                .header {
+                    font-size: 20px;
+                }
+
+                .adm {
+                    width: 56px;
+                    height: 16px;
+
+                    font-family: 'Inter';
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 12px;
+                    line-height: 16px;
+                    /* identical to box height, or 133% */
+
+
+                    /* Light mode/Neutral800 */
+                    margin-bottom: -20px;
+                    color: #32324D;
+                }
+
+                .inpWidth {
+                    width: 240px;
+                }
+
+                Form {
+                    background-color: grey;
+                    box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.15);
+                    display: flex;
+                    width: 100%;
+                    .custom {
+                        height: 15vh;
+                        overflow: scroll;
+                    }
+
+                }
+
+                .inputs {
+                    label {
+                        margin-bottom: -14px;
+                    }
+                }
+
+                h2 {
+                    font-size: 12px;
+                }
             }
+
+
         }
 
-        h2{
-            font-size: 12px;
-        }
-    }
-
-    .call_information{
-        margin-right: 10px;
-        border:none;
-        background-color: white;
-        border-radius: 10px;
-        padding: 20px;
-        top: 40px;
-        bottom:40px;
-        right: 40px;
-        overflow-y:hidden;
-        overflow-x:hidden;
-        box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.15);
-        height: 40%;
-        width:800px;
-    }
-    }
-    .company_information{
-        width: 25%;
-        margin-left: 10px;
-        border:none;
-        background-color: white;
-        border-radius: 10px;
-        padding: 30px;
-        top: 40px;
-        bottom:40px;
-        left: 342px;
-        overflow-y:hidden;
-        overflow-x:hidden;
-        height: 720px;
-        box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.15);
-
-    }
-    .butt {
-        height: 64px;
-        margin-top: 30px;
-        margin-left: 850px;
-        align-items: center;
 
     }
 }

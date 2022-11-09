@@ -71,7 +71,8 @@ function CallPage() {
         call_address: "",
         call_description: "",
         company_name: "",
-        email: ""
+        email: "",
+        phone: "",
     }
 
     const INITIAL_MAIL = {
@@ -274,6 +275,7 @@ function CallPage() {
                 call_description: detail.description,
                 company_name: detail.name,
                 email: detail.email,
+                phone: detail.phone
             });
             setNewCall({
                 user_id: users.id,
@@ -331,33 +333,40 @@ function CallPage() {
     return (
         <DashboardLayout>
             <div id="call-admin-modal">
-                <div id="info">
-                </div>
-                <div className="company_information">
-                    <div><strong>Call information:</strong>{newInfo.call_info}</div>
-                </div>
-                <div className="secDiv">
-                    <div className="call_information">
-                        <div><strong>Company name:</strong>{newInfo.company_name}</div>
-                        <div><strong>Company address:</strong>{newInfo.call_address}</div>
-                        <div><strong>Company description:</strong>{newInfo.call_description}</div>
-                    </div>
-                    <div className="form">
-                        <Form>
-                            <div>
+                <h1>{newInfo.company_name}</h1>
+                <div className="posDiv">
+                    <div id="info">
+                        <div className="call_information">
+                            <div><strong>Company address:</strong>{newInfo.call_address}</div>
+                            <div><strong>Company email:</strong>{newInfo.email}</div>
+                            <div><strong>Company phone:</strong>{newInfo.phone}</div>
+                            <div><strong>Company information:</strong>{newInfo.call_description}</div>
+                        </div>
 
-                                <h2 className="adm">Name</h2>
-                                <Input
-                                    id={"name"}
-                                    className="inputs"
-                                    type={"text"}
-                                    name={"name"}
-                                    value={newCall["name"]}
-                                    onChange={(e: any): void => changeEvent(e)}
-                                    onBlur={(e: any): void => blurEvent(e)}
-                                    errors={newCallErrors["name"]}
-                                    placeholder={"name"}
-                                />
+                        <div className="company_information">
+                            <div><strong>Call information:</strong>{newInfo.call_info}</div>
+                        </div>
+                    </div>
+                    <div className="secDiv">
+                        <div className="form">
+                            <Form>
+                                <div className="inputFields">
+
+                                    <h2 className="adm">Name</h2>
+                                    <Input
+                                        id={"name"}
+                                        className="inputs"
+                                        type={"text"}
+                                        name={"name"}
+                                        value={newCall["name"]}
+                                        onChange={(e: any): void => changeEvent(e)}
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newCallErrors["name"]}
+                                        placeholder={"name"}
+                                    />
+                                </div>
+
+
                                 <div className="toggle">
                                     <ToggleButtonGroup
                                         id="gender"
@@ -372,73 +381,85 @@ function CallPage() {
                                         <ToggleButton className="tglbtn" value={"female"} aria-label="female">Female</ToggleButton>
                                     </ToggleButtonGroup>
                                 </div>
-                                <h2 className="adm">Email</h2>
-                                <Input
-                                    id={"email"}
-                                    className="inputs"
-                                    type={"text"}
-                                    name={"email"}
-                                    value={newCall["email"]}
-                                    onChange={(e: any): void => changeEvent(e)}
-                                    onBlur={(e: any): void => blurEvent(e)}
-                                    errors={newCallErrors["email"]}
-                                    placeholder={"email"}
-                                />
+                                <div className="inputFields">
+
+                                    <h2 className="adm">Email</h2>
+                                    <Input
+                                        id={"email"}
+                                        className="inputs"
+                                        type={"text"}
+                                        name={"email"}
+                                        value={newCall["email"]}
+                                        onChange={(e: any): void => changeEvent(e)}
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newCallErrors["email"]}
+                                        placeholder={"email"}
+                                    />
+
+                                </div>
+                                <div className="inputFields">
+
+                                    <h2 className="adm">Phone</h2>
+                                    <Input
+                                        id={"phone"}
+                                        className="inputs"
+                                        type={"text"}
+                                        name={"phone"}
+                                        value={newCall["phone"]}
+                                        onChange={(e: any): void => changeEvent(e)}
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newCallErrors["phone"]}
+                                        placeholder={"phone"}
+                                    />
+                                </div>
+                                <div className="inputFields">
+
+                                    <h2 className="adm">Country</h2>
+                                    <Input
+                                        id={"country"}
+                                        className="inputs"
+                                        type={"text"}
+                                        name={"country"}
+                                        value={newCall["country"]}
+                                        onChange={(e: any): void => changeEvent(e)}
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newCallErrors["country"]}
+                                        placeholder={"country"}
+                                    />
+                                </div>
+                                <div className="inputFields">
+
+                                    <h2 className="adm">City</h2>
+
+                                    <Input
+                                        id={"city"}
+                                        className="inputs"
+                                        type={"text"}
+                                        name={"city"}
+                                        value={newCall["city"]}
+                                        onChange={(e: any): void => changeEvent(e)}
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newCallErrors["city"]}
+                                        placeholder={"city"}
+                                    />
 
 
-                                <h2 className="adm">Phone</h2>
-                                <Input
-                                    id={"phone"}
-                                    className="inputs"
-                                    type={"text"}
-                                    name={"phone"}
-                                    value={newCall["phone"]}
-                                    onChange={(e: any): void => changeEvent(e)}
-                                    onBlur={(e: any): void => blurEvent(e)}
-                                    errors={newCallErrors["phone"]}
-                                    placeholder={"phone"}
-                                />
+                                </div>
 
-                                <h2 className="adm">Country</h2>
-                                <Input
-                                    id={"country"}
-                                    className="inputs"
-                                    type={"text"}
-                                    name={"country"}
-                                    value={newCall["country"]}
-                                    onChange={(e: any): void => changeEvent(e)}
-                                    onBlur={(e: any): void => blurEvent(e)}
-                                    errors={newCallErrors["country"]}
-                                    placeholder={"country"}
-                                />
-                                <h2 className="adm">City</h2>
-
-                                <Input
-                                    id={"city"}
-                                    className="inputs"
-                                    type={"text"}
-                                    name={"city"}
-                                    value={newCall["city"]}
-                                    onChange={(e: any): void => changeEvent(e)}
-                                    onBlur={(e: any): void => blurEvent(e)}
-                                    errors={newCallErrors["city"]}
-                                    placeholder={"city"}
-                                />
-
-                            </div>
-
-                            <div>
-                                <Input
-                                    id={"description"}
-                                    type={"text"}
-                                    name={"description"}
-                                    value={newCall["description"]}
-                                    onChange={(e: any): void => changeEvent(e)}
-                                    onBlur={(e: any): void => blurEvent(e)}
-                                    errors={newCallErrors["description"]}
-                                    placeholder={"Description"}
-                                    isTextarea
-                                />
+                                <div className="inputDesc">
+                                <h2 className="adm">Description</h2>
+                                    <Input
+                                        id={"description"}
+                                        type={"text"}
+                                        name={"description"}
+                                        value={newCall["description"]}
+                                        onChange={(e: any): void => changeEvent(e)}
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newCallErrors["description"]}
+                                        placeholder={"Description"}
+                                        isTextarea
+                                    />
+                                </div>
 
                                 <div className="custom">
                                     {inputList.map((field: any, i: any) => {
@@ -463,23 +484,24 @@ function CallPage() {
                                     label="Do you want to send email"
                                 >
                                 </Checkbox>
-                            </div>
-                                <Button
-                                    btnClass={ButtonTypes.primary}
-                                    onClick={() => CreateCall()}
-                                    loading={call.add.loading}
-                                    disabled={call.add.loading || hasSomeErrors()}
-                                >
-                                    Create
-                                </Button>
+                        
+                        <Button
+                            btnClass={ButtonTypes.primary}
+                            onClick={() => CreateCall()}
+                            loading={call.add.loading}
+                            disabled={call.add.loading || hasSomeErrors()}
+                        >
+                            Create
+                        </Button>
 
-                        </Form>
-
-                    </div>
+                    </Form>
 
                 </div>
+
             </div>
-        </DashboardLayout>
+        </div>
+            </div >
+        </DashboardLayout >
     );
 }
 
