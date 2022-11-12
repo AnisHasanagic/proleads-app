@@ -76,7 +76,7 @@ function AdminCompanies() {
     const columnsToShow = [
         "name",
         "address",
-        "company_fields",
+        "email",
         "price_per_call",
         "price_per_minutes_overdue",
         "initial_time",

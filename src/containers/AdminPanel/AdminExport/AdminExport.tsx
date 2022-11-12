@@ -49,13 +49,7 @@ function AdminExport() {
     const columnsToShow = [
         "name",
         "address",
-        "description",
-        "company_info",
-        "company_fields",
-        "price_per_call",
-        "price_per_minutes_overdue",
-        "initial_time",
-        "overdue_time",
+        "email"
     ];
 
     const keys = columnsToShow

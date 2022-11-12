@@ -47,16 +47,20 @@
 
             .form {
                 display: flex;
+                flex-direction: column;
                 text-align: center;
                 align-items: center;
                 padding: 20px;
                 border-radius: 20px;
                 background-color: #FFFFFF;
                 width: 37vw;
-                height: 85vh;
+                height: 75vh;
+                overflow: hidden;
 
 
 
+
+                
                 .inputFields{
                     width: 30vw;
                     height: 7vh;
@@ -74,16 +78,21 @@
                     align-items: center;
                     justify-content: center;
                     margin-left: 20%;
-                    margin-top: -20px;
+                    margin-top: -17px;
                     margin-bottom: 50px;
                 }
 
 
                 .toggle {
                     height: 32px;
-                    margin-top: -20px;
+                    margin-top: -10px;
 
 
+                    .Mui-selected{
+                        color: #6BE29A;
+                        background-color: white;
+                    }
+                    
                     #gender {
                         height: 32px;
                         margin-top: 10px;

@@ -51,7 +51,7 @@ function AgentList() {
     const columnsToShow = [
         "name",
         "address",
-        "company_fields"
+        "email"
     ];
 
     const keys = [

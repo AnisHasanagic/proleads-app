@@ -35,6 +35,7 @@ function ExportPage() {
     const company = useSelector((state: any)=> state.company)
     const [exportData, setexportData] = useState<any>(INITIAL_STATE)
     const detail = useSelector((state:any) => state.detail)
+    const [excel,setExcel] = useState(call.list)
 
     const [exist,setExist]=useState<any>(false)
     
@@ -50,7 +51,6 @@ function ExportPage() {
         }
     }
     const columnsToShow = [
-        "call_fields",
         "price_per_call",
         "price_per_minutes_overdue",
         "initial_time",

@@ -29,7 +29,8 @@ function CallPage() {
     const call = useSelector((state: any) => state.call)
     const users = useSelector((state: any) => state.user)
     const [sendMail, setSendMail] = useState(false)
-    const [gender, setGender] = useState("")
+    const [gender, setGender] = useState<any>(false)
+    const [selected, setSelected] = useState<any>(false)
     const [mr, setMr] = useState("")
 
 
@@ -76,6 +77,7 @@ function CallPage() {
     }
 
     const INITIAL_MAIL = {
+        companyName: "",
         emailCompany: "",
         fields: "",
         first_name: "",
@@ -309,7 +311,7 @@ function CallPage() {
         console.log(endTime)
         console.log(newInfo.email)
         dispatch(addCall({ ...newCall, call_fields: JSON.stringify(inputList), end_timer: endTime, gender: gender }, navigate))
-        if (sendMail) dispatch(mailSend({ ...mailData, fields: JSON.stringify(inputList), emailCompany: newInfo.email, first_name: newCall.first_name, last_name: newCall.last_name, gender: newCall.gender, email: newCall.email, city: newCall.city, country: newCall.country, phone: newCall.phone }))
+        if (sendMail) dispatch(mailSend({ ...mailData, fields: JSON.stringify(inputList), emailCompany: newInfo.email, first_name: newCall.first_name, last_name: newCall.last_name, gender: gender, email: newCall.email, city: newCall.city, country: newCall.country, phone: newCall.phone, companyName: newInfo.company_name, description: newCall.description }))
     };
 
 
@@ -320,15 +322,15 @@ function CallPage() {
         return temp
     }
 
-    const handleGender = (e: any): void => {
-        const value = e.target.value;
-        setGender(value);
+    const handleGender = (e: any, value:any): void => {
+        setSelected(value);
+        if(!selected) setGender("male")
+        else setGender("female")
+        console.log(selected)
+        console.log(gender)
+
     };
 
-    const handleMr = (e: any): void => {
-        const value = e.target.value;
-        setMr(value)
-    }
 
     return (
         <DashboardLayout>
@@ -352,33 +354,47 @@ function CallPage() {
                             <Form>
                                 <div className="inputFields">
 
-                                    <h2 className="adm">Name</h2>
+                                    <h2 className="adm">FirstName</h2>
                                     <Input
-                                        id={"name"}
+                                        id={"first_name"}
                                         className="inputs"
                                         type={"text"}
-                                        name={"name"}
-                                        value={newCall["name"]}
+                                        name={"first_name"}
+                                        value={newCall["first_name"]}
                                         onChange={(e: any): void => changeEvent(e)}
                                         onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["name"]}
-                                        placeholder={"name"}
+                                        errors={newCallErrors["first_name"]}
+                                        placeholder={"Firstname"}
                                     />
                                 </div>
+                                <div className="inputFields">
 
+                                    <h2 className="adm">LastName</h2>
+                                    <Input
+                                        id={"last_name"}
+                                        className="inputs"
+                                        type={"text"}
+                                        name={"last_name"}
+                                        value={newCall["last_name"]}
+                                        onChange={(e: any): void => changeEvent(e)}
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newCallErrors["last_name"]}
+                                        placeholder={"Lastname"}
+                                    />
+                                </div>
 
                                 <div className="toggle">
                                     <ToggleButtonGroup
                                         id="gender"
-                                        onChange={(e): void => handleGender(e)}
-                                        onBlur={(e: any): void => handleGender(e)}
-                                        value={gender}
+                                        onChange={handleGender}
+                                        value={selected}
                                         aria-label="Gender"
                                         color="success"
+                                        exclusive
                                     >
 
-                                        <ToggleButton className="tglbtn" value={"male"} aria-label="male">Male</ToggleButton>
-                                        <ToggleButton className="tglbtn" value={"female"} aria-label="female">Female</ToggleButton>
+                                        <ToggleButton className="tglbtn" value={true} aria-label="male">Male</ToggleButton>
+                                        <ToggleButton className="tglbtn" value={false} aria-label="female">Female</ToggleButton>
                                     </ToggleButtonGroup>
                                 </div>
                                 <div className="inputFields">
@@ -447,7 +463,7 @@ function CallPage() {
                                 </div>
 
                                 <div className="inputDesc">
-                                <h2 className="adm">Description</h2>
+                                    <h2 className="adm">Description</h2>
                                     <Input
                                         id={"description"}
                                         type={"text"}
@@ -484,22 +500,22 @@ function CallPage() {
                                     label="Do you want to send email"
                                 >
                                 </Checkbox>
-                        
-                        <Button
-                            btnClass={ButtonTypes.primary}
-                            onClick={() => CreateCall()}
-                            loading={call.add.loading}
-                            disabled={call.add.loading || hasSomeErrors()}
-                        >
-                            Create
-                        </Button>
 
-                    </Form>
+                                <Button
+                                    btnClass={ButtonTypes.primary}
+                                    onClick={() => CreateCall()}
+                                    loading={call.add.loading}
+                                    disabled={call.add.loading || hasSomeErrors()}
+                                >
+                                    Create
+                                </Button>
 
+                            </Form>
+
+                        </div>
+
+                    </div>
                 </div>
-
-            </div>
-        </div>
             </div >
         </DashboardLayout >
     );
