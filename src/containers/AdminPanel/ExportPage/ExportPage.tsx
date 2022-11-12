@@ -70,6 +70,8 @@ function ExportPage() {
         const name = e.target.name;
         const value = e.target.value;
 
+        
+
         const validator = validations[name];
         const errors = [];
 
@@ -97,6 +99,7 @@ function ExportPage() {
     const blurEvent = (e: any): void => {
         const name = e.target.name;
         const value = e.target.value;
+        
 
         const validator = validations[name];
         const errors = [];
@@ -122,12 +125,20 @@ function ExportPage() {
 
     };
 
+    let sum :any = 0;
     
 
     const CreateCallList = ():void => {
         console.log(exportData)
-        dispatch((loadCalls(exportData))
-        )
+        dispatch((loadCalls(exportData)))
+        for(var key in call.list){
+            sum+=call.list.price(key)
+        }
+        setExcel(call.list)
+        setExcel({
+            ...excel,
+            ["sum"]:sum
+        })
         setExist(true);
         }
 
@@ -142,7 +153,7 @@ function ExportPage() {
 
      const handleExport = () => {
         var wb = utils.book_new(),
-        ws = utils.json_to_sheet(call.list);
+        ws = utils.json_to_sheet(excel);
 
         utils.book_append_sheet(wb,ws,"List of calls");
 
@@ -171,6 +182,7 @@ function ExportPage() {
                         placeholder={"from"}
                         label="Date from:"
                     />
+                    
 
                     <Input
                         id={"endDate"}

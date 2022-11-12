@@ -323,7 +323,9 @@ function CallPage() {
     }
 
     const handleGender = (e: any, value:any): void => {
+       
         setSelected(value);
+        
         if(!selected) setGender("male")
         else setGender("female")
         console.log(selected)
