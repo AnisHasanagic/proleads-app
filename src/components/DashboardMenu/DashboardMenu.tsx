@@ -11,14 +11,16 @@ import { Link, useLocation } from "react-router-dom";
 import { logout } from "../../store/user/user.actions";
 import { onlyCapitalLetters } from "../../utils/helpers";
 
-import DashboardIcon from "../../assets/dash.svg"
-import Users from '@material-ui/icons/PeopleAlt';
+import DashboardIcon from "../../assets/icon.svg"
+import Users from "../../assets/users.svg";
 import Export from "../../assets/export.svg"
 import Companies from "../../assets/Vector.svg"
+import CallIcon from "../../assets/call.svg"
 
 import logo from "../../assets/logo.svg"
 import "./DashboardMenu.scss";
 import { iteratorSymbol } from "immer/dist/internal";
+import Call from "@material-ui/icons/Call";
 
 
 
@@ -37,14 +39,13 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
     const menuItems = [
 
         {
-            
+
             sub: [
                 {
-                name: "Dashboard",
-                link: "/dashboard",
-                icon: DashboardIcon,
-                isActive: route.pathname === "/dashboard",
-
+                    name: "Dashboard",
+                    link: "/dashboard",
+                    icon: DashboardIcon,
+                    isActive: route.pathname === "/dashboard",
                 }
             ]
         },
@@ -57,13 +58,13 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
             adminOnly: true,
             sub: [
                 {
-                    name: "Users",
+                    name: "Users List",
                     icon: Users,
                     link: "/dashboard/admin-panel/users",
                     isActive: route.pathname === "/dashboard/admin-panel/users",
                 },
                 {
-                    name: "Company",
+                    name: "Companies List",
                     icon: Companies,
                     link: "/dashboard/admin-panel/company",
                     isActive:
@@ -85,6 +86,7 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
             sub: [
                 {
                     name: "Calls",
+                    icon: CallIcon,
                     link: "/dashboard/company",
                     isActive: route.pathname === "/dashboard/company",
                 },
@@ -128,7 +130,7 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                         return (
                             <div key={index} className="menu-item">
                                 <div className="top-menu-item flex">
-                                    
+
                                     <div>
                                         <p className="title">{menu.name}</p>
                                     </div>
@@ -138,13 +140,13 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                                         <Link key={index} to={item.link} className="links">
                                             <li
                                                 className={`flex ${item.isActive
-                                                        ? "active"
-                                                        : ""
+                                                    ? "active"
+                                                    : ""
                                                     }`}
                                             >
-                                                 {/* <div className="icon"></div> */}
+                                                <div className="icon"><img src={item.icon} alt="" /></div>
                                                 <div>
-                                                    <p className="title">
+                                                    <p className="title2">
                                                         {item.name}
                                                     </p>
                                                 </div>
@@ -156,14 +158,20 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                         );
                     })}
                 </div>
-                <div
-                    onClick={(e: any) => {
-                        e.stopPropagation();
-                        dispatch(logout());
-                    }}
-                    className="logout"
-                >
-                    <FontAwesomeIcon icon={faRightFromBracket} />
+                <div className="logoutBar">
+                    <div>
+                        <h2 className="userInfo">{user.username}</h2>
+                        <h3 className="userRole">{user.role}</h3>
+                    </div>
+                    <div
+                        onClick={(e: any) => {
+                            e.stopPropagation();
+                            dispatch(logout());
+                        }}
+                        className="logout"
+                    >
+                        <FontAwesomeIcon icon={faRightFromBracket} />
+                    </div>
                 </div>
             </div>
         </section>

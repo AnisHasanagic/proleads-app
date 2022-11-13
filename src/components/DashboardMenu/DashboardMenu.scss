@@ -49,11 +49,12 @@
                 margin-bottom: 20px;
                 display: flex;
                 align-items: center;
+
                 .logo-image {
                     width: 32px;
                     height: 32px;
-                    
-                   
+
+
                 }
 
                 .proleads {
@@ -95,6 +96,7 @@
             border-radius: 0.3;
 
             .menu-item {
+                margin-top: -20px;
                 margin-bottom: 10px;
 
                 .top-menu-item {
@@ -121,15 +123,27 @@
                     }
 
                     .title {
-                        line-height: 1em;
+                        font-family: 'Inter';
+                        font-style: normal;
                         font-weight: 700;
                         font-size: 11px;
+                        line-height: 16px;
                         text-transform: uppercase;
-                        text-decoration: none;
+                    }
+
+                    .title2 {
+                        width: 148px;
+                        height: 16px;
+
+                        font-family: 'Inter';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 20px;
                     }
                 }
-                 
-                .links{
+
+                .links {
                     text-decoration: none;
                 }
 
@@ -144,7 +158,9 @@
 
                     li {
                         margin-left: 30px;
-                        padding: 10px 15px;
+                        display: flex;
+                        flex-direction: row;
+                        padding: 4px 15px;
                         position: relative;
                         border-radius: 10px;
                         font-family: 'Inter';
@@ -156,24 +172,32 @@
                         transition: 200ms;
                         list-style: none;
                         text-decoration: none;
+                        text-align: center;
+
+                        .flex {
+                            display: flex;
+                        }
 
                         .icon {
                             width: 12px;
                             height: 12px;
-                            background-color: $blue-color;
                             margin-right: 10px;
                             border-radius: 3px;
                             display: flex;
                             align-items: center;
+                            text-align: center;
                             justify-content: center;
                             font-weight: 500;
                             font-size: 1em;
                             margin-top: 3px;
+                            margin-top: 17px;
                         }
 
+
+
                         &.active {
-                            background-color:#6BE29A;
-                            color: white;
+                            font-weight: bold;
+                            color: #6BE29A;
                         }
 
                         .title {
@@ -190,18 +214,41 @@
             }
         }
 
+        .logoutBar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            .userInfo {
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 14px;
+                line-height: 20px;
+                margin-bottom: -20px;
+            }
 
-        .logout {
-            margin-left: auto;
-            cursor: pointer;
-            transition: 200ms;
-            color: $light-text-color;
-            margin-bottom: 30px;
+            .userRole {
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 20px;
+            }
 
-            &:hover {
-                color: #6BE29A;
+            .logout {
+                margin-left: auto;
+                cursor: pointer;
+                transition: 200ms;
+                color: $light-text-color;
+                
+
+                &:hover {
+                    color: #6BE29A;
+                }
             }
         }
+
+
     }
 
 

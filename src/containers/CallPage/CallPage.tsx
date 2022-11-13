@@ -385,6 +385,21 @@ function CallPage() {
                                     />
                                 </div>
 
+                                <div className="inputDesc">
+                                    <h2 className="adm">Description</h2>
+                                    <Input
+                                        id={"description"}
+                                        type={"text"}
+                                        name={"description"}
+                                        value={newCall["description"]}
+                                        onChange={(e: any): void => changeEvent(e)}
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newCallErrors["description"]}
+                                        placeholder={"Description"}
+                                        isTextarea
+                                    />
+                                </div>
+
                                 <div className="toggle">
                                     <ToggleButtonGroup
                                         id="gender"
@@ -464,20 +479,7 @@ function CallPage() {
 
                                 </div>
 
-                                <div className="inputDesc">
-                                    <h2 className="adm">Description</h2>
-                                    <Input
-                                        id={"description"}
-                                        type={"text"}
-                                        name={"description"}
-                                        value={newCall["description"]}
-                                        onChange={(e: any): void => changeEvent(e)}
-                                        onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["description"]}
-                                        placeholder={"Description"}
-                                        isTextarea
-                                    />
-                                </div>
+                               
 
                                 <div className="custom">
                                     {inputList.map((field: any, i: any) => {
