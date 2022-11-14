@@ -10,18 +10,40 @@ import phoneImage from "../../assets/FeatherSquare.svg"
 import "./Dashboard.scss";
 
 function Dashboard() {
+    const statistic = useSelector((state: any) => state.statistic)
+
+    const[statData,setStatData]=useState<any>("")
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(loadStat())
     }, [])
 
-    const statistic = useSelector((state: any) => state.statistic)
-
+    const INITIAL_GRAPH = {
+        labels:"",
+        datasets:""
+    }
 
 
     const ref = useRef()
 
+    useEffect(()=>{
+        setUserData({
+            labels: statistic.list.map((data: { count: any; }) => data.count),
+            datasets: [
+                {
+                    label: "Number of Calls",
+                    data: statistic.list.map((data: { count: any; }) => data.count),
+                    backgroundColor: [
+                        "#9736E8",
+                    ],
+                    borderWidth: 2,
+                    barThickness: 20,
+                    borderRadius: 5,
+                },
+            ],
+        });
+    },[statistic.list])
 
     const [userData, setUserData] = useState({
         labels: statistic.list.map((data: { count: any; }) => data.count),
@@ -38,6 +60,7 @@ function Dashboard() {
             },
         ],
     });
+    
     return (
         <DashboardLayout>
             <div className="Dashboard">

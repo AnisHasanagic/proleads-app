@@ -322,11 +322,11 @@ function CallPage() {
         return temp
     }
 
-    const handleGender = (e: any, value:any): void => {
-       
+    const handleGender = (e: any, value: any): void => {
+
         setSelected(value);
-        
-        if(!selected) setGender("male")
+
+        if (!selected) setGender("male")
         else setGender("female")
         console.log(selected)
         console.log(gender)
@@ -354,66 +354,40 @@ function CallPage() {
                     <div className="secDiv">
                         <div className="form">
                             <Form>
-                                <div className="inputFields">
+                                <div className="divi">
+                                    <div className="inputFields">
 
-                                    <h2 className="adm">FirstName</h2>
-                                    <Input
-                                        id={"first_name"}
-                                        className="inputs"
-                                        type={"text"}
-                                        name={"first_name"}
-                                        value={newCall["first_name"]}
-                                        onChange={(e: any): void => changeEvent(e)}
-                                        onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["first_name"]}
-                                        placeholder={"Firstname"}
-                                    />
-                                </div>
-                                <div className="inputFields">
+                                        <h2 className="adm">FirstName</h2>
+                                        <Input
+                                            id={"first_name"}
+                                            className="inputs"
+                                            type={"text"}
+                                            name={"first_name"}
+                                            value={newCall["first_name"]}
+                                            onChange={(e: any): void => changeEvent(e)}
+                                            onBlur={(e: any): void => blurEvent(e)}
+                                            errors={newCallErrors["first_name"]}
+                                            placeholder={"Firstname"}
+                                        />
+                                    </div>
+                                    <div className="inputFields">
 
-                                    <h2 className="adm">LastName</h2>
-                                    <Input
-                                        id={"last_name"}
-                                        className="inputs"
-                                        type={"text"}
-                                        name={"last_name"}
-                                        value={newCall["last_name"]}
-                                        onChange={(e: any): void => changeEvent(e)}
-                                        onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["last_name"]}
-                                        placeholder={"Lastname"}
-                                    />
-                                </div>
-
-                                <div className="inputDesc">
-                                    <h2 className="adm">Description</h2>
-                                    <Input
-                                        id={"description"}
-                                        type={"text"}
-                                        name={"description"}
-                                        value={newCall["description"]}
-                                        onChange={(e: any): void => changeEvent(e)}
-                                        onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["description"]}
-                                        placeholder={"Description"}
-                                        isTextarea
-                                    />
+                                        <h2 className="adm">LastName</h2>
+                                        <Input
+                                            id={"last_name"}
+                                            className="inputs"
+                                            type={"text"}
+                                            name={"last_name"}
+                                            value={newCall["last_name"]}
+                                            onChange={(e: any): void => changeEvent(e)}
+                                            onBlur={(e: any): void => blurEvent(e)}
+                                            errors={newCallErrors["last_name"]}
+                                            placeholder={"Lastname"}
+                                        />
+                                    </div>
                                 </div>
 
-                                <div className="toggle">
-                                    <ToggleButtonGroup
-                                        id="gender"
-                                        onChange={handleGender}
-                                        value={selected}
-                                        aria-label="Gender"
-                                        color="success"
-                                        exclusive
-                                    >
-
-                                        <ToggleButton className="tglbtn" value={true} aria-label="male">Male</ToggleButton>
-                                        <ToggleButton className="tglbtn" value={false} aria-label="female">Female</ToggleButton>
-                                    </ToggleButtonGroup>
-                                </div>
+                                <div className="divi">
                                 <div className="inputFields">
 
                                     <h2 className="adm">Email</h2>
@@ -445,6 +419,8 @@ function CallPage() {
                                         placeholder={"phone"}
                                     />
                                 </div>
+                                </div>
+                                <div className="divi">
                                 <div className="inputFields">
 
                                     <h2 className="adm">Country</h2>
@@ -478,8 +454,40 @@ function CallPage() {
 
 
                                 </div>
+                                </div>
 
-                               
+                                <div className="toggle">
+                                    <ToggleButtonGroup
+                                        id="gender"
+                                        onChange={handleGender}
+                                        value={selected}
+                                        aria-label="Gender"
+                                        color="success"
+                                        exclusive
+                                    >
+
+                                        <ToggleButton className="tglbtn" value={true} aria-label="male">Male</ToggleButton>
+                                        <ToggleButton className="tglbtn" value={false} aria-label="female">Female</ToggleButton>
+                                    </ToggleButtonGroup>
+                                </div>
+
+                                <div className="inputDesc">
+                                    <h2 className="adm">Description</h2>
+                                    <Input
+                                        id={"description"}
+                                        type={"text"}
+                                        name={"description"}
+                                        value={newCall["description"]}
+                                        onChange={(e: any): void => changeEvent(e)}
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newCallErrors["description"]}
+                                        placeholder={"Description"}
+                                        isTextarea
+                                    />
+                                </div>
+
+
+
 
                                 <div className="custom">
                                     {inputList.map((field: any, i: any) => {
