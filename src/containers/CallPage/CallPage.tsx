@@ -489,9 +489,9 @@ function CallPage() {
 
 
 
-                                <div className="custom">
+                                <div className="custom wrapper">
                                     {inputList.map((field: any, i: any) => {
-                                        return (<div key={i}>
+                                        return (<div key={i} className="inputFields2">
                                             <h2 className="adm">{beutifyString(Object.keys(field)[0])}</h2>
                                             <Input
                                                 id={"company_field" + i}
