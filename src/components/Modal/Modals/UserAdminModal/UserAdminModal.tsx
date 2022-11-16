@@ -37,7 +37,7 @@ function UserAdminModal({ user, isAdd }: any) {
         isDeleted: ""
     };
 
-   
+
 
     const [newUser, setNewUser] = useState<any>(INITIAL_User);
     const [newUserErrors, setNewUserErrors] = useState<any>({});
@@ -56,6 +56,7 @@ function UserAdminModal({ user, isAdd }: any) {
         last_name: {
             isRequired: true,
         },
+
 
     };
 
@@ -170,11 +171,14 @@ function UserAdminModal({ user, isAdd }: any) {
 
     const handleRole = (e: any, value: any): void => {
         setSelected(value)
-        if(selected) setUserRole("admin")
+        if (!selected) setUserRole("admin")
         else setUserRole("agent")
     };
 
     const createUser = (): void => {
+        if(userRole == 0) setUserRole("agent")
+        if(userRole == 'false') setUserRole("agent")
+
         dispatch(
             createAccount(newUser.username, newUser.password, newUser.first_name, newUser.last_name, userRole, isDeleted, navigate)
         );
@@ -316,11 +320,11 @@ function UserAdminModal({ user, isAdd }: any) {
                 )}
             </div>
             <Modal
-                    show={currentUser}
-                    closeModal={() => setCurrentUser(null)}
-                >
-                    <ChangePasswordModal user={currentUser}/>
-                </Modal>
+                show={currentUser}
+                closeModal={() => setCurrentUser(null)}
+            >
+                <ChangePasswordModal user={currentUser} />
+            </Modal>
         </div>
 
     );

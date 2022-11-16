@@ -8,11 +8,11 @@ const {
     loadFailed,
 } = usersSlice.actions;
 
-export const loadAssignedUsers = (): any => async (dispatch: any) => {
+export const loadUnAssignedUsers = (company_id:any): any => async (dispatch: any) => {
     try {
         dispatch(loading());
 
-        const response = await UsersService.getAllUnAssigned();
+        const response = await UsersService.getAllUnAssigned(company_id);
 
         let data: any = null;
 

@@ -25,8 +25,9 @@ function CompanyAdminModal({ company, isAdd }: any) {
     const INITIAL_Company = {
         name: "",
         address: "",
-        emial: "",
+        email: "",
         description: "",
+        phone: "",
         company_info: "",
         price_per_call: "",
         initial_time: "",
@@ -70,6 +71,9 @@ function CompanyAdminModal({ company, isAdd }: any) {
             isRequired: true,
         },
         company_fields: {
+            isRequired: true,
+        },
+        phone:{
             isRequired: true,
         }
     };
@@ -289,6 +293,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                 overdue_time: company.overdue_time,
                 company_fields: company.company_fields,
                 isDeleted: company.isDeleted,
+                phone: company.phone
             });
             setNewCompanyErrors({});
             setInputList(JSON.parse(company.company_fields))
@@ -425,6 +430,16 @@ function CompanyAdminModal({ company, isAdd }: any) {
                             onBlur={(e: any): void => blurEvent(e)}
                             errors={newCompanyErrors["overdue_time"]}
                             placeholder={"overdue_time in seconds"}
+                        />
+                           <Input
+                            id={"phone"}
+                            type={"text"}
+                            name={"phone"}
+                            value={newCompany["phone"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            errors={newCompanyErrors["phone"]}
+                            placeholder={"phone"}
                         />
                         {!isAdd && (
                             <Checkbox

@@ -344,11 +344,11 @@ function CallPage() {
                             <div><strong>Company address:</strong>{newInfo.call_address}</div>
                             <div><strong>Company email:</strong>{newInfo.email}</div>
                             <div><strong>Company phone:</strong>{newInfo.phone}</div>
-                            <div><strong>Company information:</strong>{newInfo.call_description}</div>
+                            <div className="scrollInfo"><strong>Company information:</strong>{newInfo.call_description}</div>
                         </div>
 
                         <div className="company_information">
-                            <div><strong>Call information:</strong>{newInfo.call_info}</div>
+                            <div className="scrollInfo"><strong>Call information:</strong>{newInfo.call_info}</div>
                         </div>
                     </div>
                     <div className="secDiv">
@@ -472,8 +472,9 @@ function CallPage() {
                                 </div>
 
                                 <div className="inputDesc">
-                                    <h2 className="adm">Description</h2>
+                                    <h2 className="adm2">Description</h2>
                                     <Input
+                                        className="desc"
                                         id={"description"}
                                         type={"text"}
                                         name={"description"}
@@ -492,7 +493,7 @@ function CallPage() {
                                 <div className="custom wrapper">
                                     {inputList.map((field: any, i: any) => {
                                         return (<div key={i} className="inputFields2">
-                                            <h2 className="adm">{beutifyString(Object.keys(field)[0])}</h2>
+                                            <h2 className="adm2">{beutifyString(Object.keys(field)[0])}</h2>
                                             <Input
                                                 id={"company_field" + i}
                                                 name={Object.keys(field)[0]}

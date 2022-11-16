@@ -18,13 +18,19 @@
             padding: 8px;
 
             .call_information {
-                margin-bottom: 35vh;
+                .scrollInfo{
+                    height: 35vh;
+                    overflow-y: scroll;
+                }
             }
 
             .company_information {
-                border-top: 1px solid #EAEAEF;
-                ;
+                border-top: 1px solid #EAEAEF;;
                 padding-top: 10px;
+                .scrollInfo{
+                    height: 40vh;
+                    overflow-y: scroll;
+                }
             }
         }
 
@@ -69,18 +75,32 @@
                 .inputFields {
                     width: 15vw;
                     height: 7vh;
-                    text-align: center;
-                    align-items: center;
-                    justify-content: center;
-                    margin-top: -20px;
+                    margin-top: -10px;
                     margin-right: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: start;
                 }
                 .inputFields2 {
                     width: 15vw;
                     height: 7vh;
                     text-align: center;
                     align-items: center;
-                    justify-content: center;
+                    .adm2 {
+                        height: 14px;
+                        float:left;
+                        display: flex;
+                        align-items: flex-end;
+                        font-family: 'Inter';
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 12px;
+                        line-height: 16px;
+                        /* identical to box height, or 133% */
+                        /* Light mode/Neutral800 */
+                        margin-bottom: -15px;
+                        color: #32324D;
+                    }
                 }
 
                 .inputDesc {
@@ -91,8 +111,26 @@
                     align-items: center;
                     justify-content: center;
                     margin-left: 20%;
-                    margin-top: -17px;
+                    margin-top: -13px;
                     margin-bottom: 70px;
+                    .desc{
+                        margin-top: 5px;
+                    }
+                    .adm2 {
+                        height: 14px;
+                        float:left;
+                        display: flex;
+                        align-items: flex-end;
+                        font-family: 'Inter';
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 12px;
+                        line-height: 16px;
+                        /* identical to box height, or 133% */
+                        /* Light mode/Neutral800 */
+                        margin-bottom: -15px;
+                        color: #32324D;
+                    }
                 }
 
 
@@ -135,18 +173,18 @@
                     font-size: 20px;
                 }
 
+              
                 .adm {
-                    width: 56px;
-                    height: 16px;
-
+                    height: 14px;
+                    float:left;
+                    display: flex;
+                    align-items: flex-start;
                     font-family: 'Inter';
                     font-style: normal;
                     font-weight: 700;
                     font-size: 12px;
                     line-height: 16px;
                     /* identical to box height, or 133% */
-
-
                     /* Light mode/Neutral800 */
                     margin-bottom: -20px;
                     color: #32324D;

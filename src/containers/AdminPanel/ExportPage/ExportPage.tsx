@@ -153,7 +153,7 @@ function ExportPage() {
 
      const handleExport = () => {
         var wb = utils.book_new(),
-        ws = utils.json_to_sheet(excel);
+        ws = utils.json_to_sheet(call.list);
 
         utils.book_append_sheet(wb,ws,"List of calls");
 

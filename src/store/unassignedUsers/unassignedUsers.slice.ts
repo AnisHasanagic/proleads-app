@@ -41,7 +41,7 @@ const INITIAL_STATE :UsersSlice = {
     },
 };
 
-const usersSlice = createSlice({
+const unAssignedSlice = createSlice({
     name: "users",
     initialState: INITIAL_STATE,
     reducers: {
@@ -100,4 +100,4 @@ const usersSlice = createSlice({
     },
 });
 
-export default usersSlice;
+export default unAssignedSlice;

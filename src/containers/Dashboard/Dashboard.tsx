@@ -29,7 +29,7 @@ function Dashboard() {
 
     useEffect(()=>{
         setUserData({
-            labels: statistic.list.map((data: { count: any; }) => data.count),
+            labels: statistic.list.map((data: { dan: any; }) => data.dan),
             datasets: [
                 {
                     label: "Number of Calls",
@@ -46,7 +46,7 @@ function Dashboard() {
     },[statistic.list])
 
     const [userData, setUserData] = useState({
-        labels: statistic.list.map((data: { count: any; }) => data.count),
+        labels: statistic.list.map((data: { dan: any; }) => data.dan),
         datasets: [
             {
                 label: "Number of Calls",
