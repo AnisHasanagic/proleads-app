@@ -46,6 +46,11 @@ function AdminCompanies() {
         dispatch(loadCompanies(user.id));
     }, []);
 
+    useEffect(() => {
+        setCurrentCompany(null)
+    }, [company.list]);
+    
+
     const showCompany = (Company: any) => {
         setIsAdd(false);
         setIsAssign(false)

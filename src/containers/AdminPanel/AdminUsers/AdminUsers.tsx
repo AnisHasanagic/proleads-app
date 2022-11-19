@@ -25,6 +25,10 @@ function AdminUsers() {
         dispatch(loadUsers());
     }, []);
 
+    useEffect(()=>{
+        setCurrentUser(null)
+    },[users.list])
+
     const showUser = (user: any) => {
         setIsAdd(false);
         setCurrentUser(user);

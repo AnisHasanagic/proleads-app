@@ -128,7 +128,7 @@ export const createAccount =
                 }
 
                 if (response.ok) {
-                    toast.success(data.message);
+                    toast.success("NEW_USER_CREATED");
 
 
                     return dispatch(createAccountSuccess());

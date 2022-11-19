@@ -64,9 +64,6 @@ function AssignModal({ company, isAdd }: any) {
 
     const columnsToShow = [
         "username",
-        "first_name",
-        "last_name",
-        "role"
     ];
 
     const keys = columnsToShow

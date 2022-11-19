@@ -37,133 +37,132 @@ export const loadUsers = (): any => async (dispatch: any) => {
     }
 };
 export const createAccount =
-    (username:string,
-        password:string,
-        first_name:string,
-        last_name:string,
-        role:string,
-        isDeleted:boolean,
-        navigate:any): any =>
-    async (dispatch: any) => {
-        try {
-            dispatch(loading());
-
-            const response = await UsersService.createUser({
-                username,
-                password,
-                first_name,
-                last_name,
-                role,
-                isDeleted
-            });
-
-            let data: any = null;
-
+    (username: string,
+        password: string,
+        first_name: string,
+        last_name: string,
+        role: string,
+        isDeleted: boolean,
+        navigate: any): any =>
+        async (dispatch: any) => {
             try {
-                data = await response.clone().json();
-            } catch {
-                data = await response.clone().text();
+                dispatch(loading());
+
+                const response = await UsersService.createUser({
+                    username,
+                    password,
+                    first_name,
+                    last_name,
+                    role,
+                    isDeleted
+                });
+
+                let data: any = null;
+
+                try {
+                    data = await response.clone().json();
+                } catch {
+                    data = await response.clone().text();
+                }
+
+                if (response.ok) {
+
+                    dispatch(createAccountSuccess())
+                    dispatch(loadUsers())
+                    toast.success("USER_CREATED_SUCCESSFULLY")
+                } else {
+                    const error: any = {
+                        message: data.message ? data.message : null,
+                        errors: data.errors ? data.errors : null,
+                    };
+
+                    if (error.message) toast.error(error.message);
+                    return dispatch(createAccountError(error));
+                }
+            } catch (e: any) {
+                toast.error("REGISTRATION_ERROR");
+                return dispatch(
+                    createAccountError({
+                        message: "REGISTRATION_ERROR",
+                        errors: null,
+                    })
+                );
             }
+        };
 
-            if (response.ok) {
-                toast.success(data.message);
-                window.location.reload();
-
-                return dispatch(createAccountSuccess());
-            } else {
-                const error: any = {
-                    message: data.message ? data.message : null,
-                    errors: data.errors ? data.errors : null,
-                };
-
-                if (error.message) toast.error(error.message);
-                return dispatch(createAccountError(error));
-            }
-        } catch (e: any) {
-            toast.error("REGISTRATION_ERROR");
-            return dispatch(
-                createAccountError({
-                    message: "REGISTRATION_ERROR",
-                    errors: null,
-                })
-            );
-        }
-    };
-
-    export const updateAccount =
-    (user: any, user_id: string,navigate:any): any =>
-    async (dispatch: any) => {
-        try {
-            dispatch(updateLoading());
-
-            const response = await UsersService.update(user, user_id);
-
-            let data: any = null;
-
+export const updateAccount =
+    (user: any, user_id: string, navigate: any): any =>
+        async (dispatch: any) => {
             try {
-                data = await response.clone().json();
-            } catch {
-                data = await response.clone().text();
+                dispatch(updateLoading());
+
+                const response = await UsersService.update(user, user_id);
+
+                let data: any = null;
+
+                try {
+                    data = await response.clone().json();
+                } catch {
+                    data = await response.clone().text();
+                }
+
+                if (response.ok) {
+                    dispatch(updateSuccess());
+                    dispatch(loadUsers())
+                    toast.success("USER_UPDATED_SUCCESSFULLY")
+
+                } else {
+                    const error: any = {
+                        message: data.message ? data.message : null,
+                        errors: data.errors ? data.errors : null,
+                    };
+
+                    if (error.message) toast.error(error.message);
+                    return dispatch(updateError(error));
+                }
+            } catch (e: any) {
+                toast.error("SOMETHING_WENT_WRONG");
+                return dispatch(
+                    updateError({ message: "SOMETHING_WENT_WRONG", errors: null })
+                );
             }
+        };
 
-            if (response.ok) {
-                dispatch(updateSuccess());
-                dispatch(loadUsers());
-                toast.success(data.message);
-                navigate('/dashboard')
-
-            } else {
-                const error: any = {
-                    message: data.message ? data.message : null,
-                    errors: data.errors ? data.errors : null,
-                };
-
-                if (error.message) toast.error(error.message);
-                return dispatch(updateError(error));
-            }
-        } catch (e: any) {
-            toast.error("SOMETHING_WENT_WRONG");
-            return dispatch(
-                updateError({ message: "SOMETHING_WENT_WRONG", errors: null })
-            );
-        }
-    };
-
-    export const updatePassword =
-    (user: any, user_id: string,navigate:any): any =>
-    async (dispatch: any) => {
-        try {
-            dispatch(updateLoading());
-
-            const response = await UsersService.updatePassword(user, user_id);
-
-            let data: any = null;
-
+export const updatePassword =
+    (user: any, user_id: string, navigate: any): any =>
+        async (dispatch: any) => {
             try {
-                data = await response.clone().json();
-            } catch {
-                data = await response.clone().text();
+                dispatch(updateLoading());
+
+                const response = await UsersService.updatePassword(user, user_id);
+
+                let data: any = null;
+
+                try {
+                    data = await response.clone().json();
+                } catch {
+                    data = await response.clone().text();
+                }
+
+                if (response.ok) {
+                    dispatch(updateSuccess());
+                    dispatch(loadUsers());
+                    toast.success("PASSWORD_CHANGED_SUCCESSFULLY");
+                    navigate('/dashboard')
+
+                } else {
+                    const error: any = {
+                        message: data.message ? data.message : null,
+                        errors: data.errors ? data.errors : null,
+                    };
+
+                    if (error.message) toast.error(error.message);
+                    return dispatch(updateError(error));
+                }
+            } catch (e: any) {
+                toast.error("SOMETHING_WENT_WRONG");
+                return dispatch(
+                    updateError({ message: "SOMETHING_WENT_WRONG", errors: null })
+                );
             }
-
-            if (response.ok) {
-                dispatch(updateSuccess());
-                dispatch(loadUsers());
-                toast.success("PASSWORD_CHANGED_SUCCESSFULLY");
-                navigate('/dashboard')
-
-            } else {
-                const error: any = {
-                    message: data.message ? data.message : null,
-                    errors: data.errors ? data.errors : null,
-                };
-
-                if (error.message) toast.error(error.message);
-                return dispatch(updateError(error));
-            }
-        } catch (e: any) {
-            toast.error("SOMETHING_WENT_WRONG");
-            return dispatch(
-                updateError({ message: "SOMETHING_WENT_WRONG", errors: null })
-            );
-        }
-    };
+        };

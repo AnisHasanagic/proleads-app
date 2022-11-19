@@ -83,8 +83,6 @@ export const updateCompany =
                 dispatch(updateSuccess());
                 dispatch(loadCompanies(user_id));
                 toast.success("COMPANY_UPDATED_SUCCESSFULLY");
-                navigate("/dashboard")
-
             } else {
                 const error: any = {
                     message: data.message ? data.message : null,
@@ -124,7 +122,6 @@ export const addCompany =
                 dispatch(addSuccess());
                 dispatch(loadCompanies(user_id));
                 toast.success("COMPANY_ADDED_SUCCESSFULLY");
-                window.location.reload();
             } else {
                 const error: any = {
                     message: data.message ? data.message : null,

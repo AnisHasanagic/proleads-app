@@ -15,33 +15,31 @@ import "./ExportPage.scss";
 import { loadCompany } from "../../../store/company/company.actions";
 import { useNavigate, useParams } from "react-router-dom";
 import { utils, writeFile } from "xlsx"
+import { toast } from "react-toastify";
 
 
 
 function ExportPage() {
     const dispatch = useDispatch();
-    const {id} : any  = useParams()
+    const { id }: any = useParams()
 
     const navigate = useNavigate();
 
     const INITIAL_STATE = {
-        company_id:"",
+        company_id: "",
         startDate: "",
         endDate: ""
     }
 
     const [searchValue, setSearchValue] = useState<any>(null)
     const call = useSelector((state: any) => state.call);
-    const company = useSelector((state: any)=> state.company)
+    const company = useSelector((state: any) => state.company)
     const [exportData, setexportData] = useState<any>(INITIAL_STATE)
-    const detail = useSelector((state:any) => state.detail)
-    const [excel,setExcel] = useState(call.list)
+    const detail = useSelector((state: any) => state.detail)
+    const [excel, setExcel] = useState(call.list)
 
-    const [exist,setExist]=useState<any>(false)
-    
+    const [exist, setExist] = useState<any>(false)
 
-    
-    
     let validations: any = {
         startDate: {
             isRequired: true
@@ -54,12 +52,19 @@ function ExportPage() {
         "price_per_call",
         "price_per_minutes_overdue",
         "initial_time",
-        "start_timer",
-        "end_timer",
         "overdue_time",
+        "time",
+        "price"
     ];
 
-    const keys = columnsToShow
+    const keys = [
+        "price_per_call",
+        "price_per_minutes_overdue",
+        "initial_time",
+        "overdue_time",
+        "time",
+        "price"
+    ];
     const search = (data: any) => {
         return data.filter(
             (item: any) =>
@@ -70,7 +75,7 @@ function ExportPage() {
         const name = e.target.name;
         const value = e.target.value;
 
-        
+
 
         const validator = validations[name];
         const errors = [];
@@ -99,7 +104,7 @@ function ExportPage() {
     const blurEvent = (e: any): void => {
         const name = e.target.name;
         const value = e.target.value;
-        
+
 
         const validator = validations[name];
         const errors = [];
@@ -125,41 +130,41 @@ function ExportPage() {
 
     };
 
-    let sum :any = 0;
-    
+    let sum: any = 0;
 
-    const CreateCallList = ():void => {
+
+    const CreateCallList = (): void => {
         console.log(exportData)
         dispatch((loadCalls(exportData)))
-        for(var key in call.list){
-            sum+=call.list.price(key)
-        }
+
         setExcel(call.list)
-        setExcel({
-            ...excel,
-            ["sum"]:sum
-        })
+
         setExist(true);
-        }
+    }
 
-        useEffect(()=>{
-            if(id){
-              setexportData({
-                  company_id:id,
-              }
-              )
+    useEffect(()=>{
+        dispatch((loadCalls(exportData)))
+    },[])
+
+    useEffect(() => {
+        if (id) {
+            setexportData({
+                company_id: id,
             }
-          },[id])
+            )
+        }
+    }, [id])
 
-     const handleExport = () => {
+    const handleExport = () => {
         var wb = utils.book_new(),
-        ws = utils.json_to_sheet(call.list);
+            ws = utils.json_to_sheet(call.list);
 
-        utils.book_append_sheet(wb,ws,"List of calls");
+        utils.book_append_sheet(wb, ws, "List of calls");
 
-        writeFile(wb,"Export.xlsx")
+        writeFile(wb, "Export.xlsx")
         navigate("/dashboard/admin-panel/calls")
-     }
+        toast.success("DATA_EXPORTED_SUCCESSFULLY")
+    }
 
 
     return (
@@ -172,28 +177,28 @@ function ExportPage() {
                 </div>
                 <div id="export-modal">
                     <div className="dates">
-                    <Input
-                        id={"startDate"}
-                        type={"date"}
-                        name={"startDate"}
-                        value={exportData["startDate"]}
-                        onChange={(e: any): void => changeEvent(e)}
-                        onBlur={(e: any): void => blurEvent(e)}
-                        placeholder={"from"}
-                        label="Date from:"
-                    />
-                    
+                        <Input
+                            id={"startDate"}
+                            type={"date"}
+                            name={"startDate"}
+                            value={exportData["startDate"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            placeholder={"from"}
+                            label="Date from:"
+                        />
 
-                    <Input
-                        id={"endDate"}
-                        type={"date"}
-                        name={"endDate"}
-                        value={exportData["endDate"]}
-                        onChange={(e: any): void => changeEvent(e)}
-                        onBlur={(e: any): void => blurEvent(e)}
-                        placeholder={"to"}
-                        label="Date to:"
-                    />
+
+                        <Input
+                            id={"endDate"}
+                            type={"date"}
+                            name={"endDate"}
+                            value={exportData["endDate"]}
+                            onChange={(e: any): void => changeEvent(e)}
+                            onBlur={(e: any): void => blurEvent(e)}
+                            placeholder={"to"}
+                            label="Date to:"
+                        />
                     </div>
                     <Button
                         btnClass={ButtonTypes.primary}
@@ -201,22 +206,22 @@ function ExportPage() {
                     >
                         Create
                     </Button>
-                    {exist &&( 
+                    {exist && (
                         <div className="preview">
-                        <Table
-                        data={call.list}
-                        columnsToShow={columnsToShow}
-                    />
-                    <Button
-                     btnClass={ButtonTypes.primary}
-                     onClick={() => handleExport()}
-                    >
-                     Export
-                    </Button>
-                    </div>)}
-                   
+                            <Table
+                                data={call.list}
+                                columnsToShow={columnsToShow}
+                            />
+                            <Button
+                                btnClass={ButtonTypes.primary}
+                                onClick={() => handleExport()}
+                            >
+                                Export
+                            </Button>
+                        </div>)}
+
                 </div>
-                
+
             </section>
         </DashboardLayout>
     );
