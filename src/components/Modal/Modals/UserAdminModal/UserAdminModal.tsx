@@ -152,6 +152,7 @@ function UserAdminModal({ user, isAdd }: any) {
                 role: user.role,
                 isDeleted: user.isDeleted
             });
+            if(user.role==="admin") setSelected(true)
             setNewUserErrors({});
         }
     }, [user]);
@@ -170,9 +171,10 @@ function UserAdminModal({ user, isAdd }: any) {
     }, [users.add]);
 
     const handleRole = (e: any, value: any): void => {
-        setSelected(value)
+        if(value!==null)
+        {setSelected(value)
         if (!selected) setUserRole("admin")
-        else setUserRole("agent")
+        else setUserRole("agent")}
     };
 
     const createUser = (): void => {

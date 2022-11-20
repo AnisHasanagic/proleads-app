@@ -105,7 +105,7 @@
 
                 .inputDesc {
                     width: 30vw;
-                    height: 4vh;
+                    height: 2vh;
                     max-height: 4vh;
                     text-align: center;
                     align-items: center;
@@ -163,7 +163,9 @@
                 }
 
                 .custom {
-                    height: 220px;
+                    margin-top: 40px;
+                    margin-bottom: 30px;
+                    height: 320px;
                     width: 39vw;
                     overflow-y: scroll;
                     overflow-x: hidden;
