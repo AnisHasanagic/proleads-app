@@ -81,6 +81,7 @@ function AssignModal({ company, isAdd }: any) {
             </div>
             <div className="flex">
                 <div className="assign">
+                    <h2>Unassigned agents</h2>
                     <Input
                         id={"search"}
                         type={"text"}
@@ -95,6 +96,7 @@ function AssignModal({ company, isAdd }: any) {
                     />
                 </div>
                 <div className="unassign">
+                    <h2>Assigned agents</h2>
                     <Input
                         id={"search"}
                         type={"text"}

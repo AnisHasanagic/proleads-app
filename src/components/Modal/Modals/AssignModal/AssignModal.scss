@@ -1,8 +1,17 @@
 #assign-users{
 
+    padding: 30px;
+
 .flex{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-around;
+
+
+    .unassign{
+        margin-left: 5px;
+    }
+
 }
 
 

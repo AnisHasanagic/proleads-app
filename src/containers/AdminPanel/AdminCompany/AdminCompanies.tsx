@@ -14,12 +14,10 @@ import "./AdminCompanies.scss";
 import EditIcon from "@material-ui/icons/Edit";
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
-let PageSize = 10;
 
 
 function AdminCompanies() {
 
-    const [currentPage, setCurrentPage] = useState(1);
 
 
 
@@ -36,11 +34,6 @@ function AdminCompanies() {
 
     const user = useSelector((state: any) => state.user)
 
-    const currentTableData = useMemo(() => {
-        const firstPageIndex = (currentPage - 1) * PageSize;
-        const lastPageIndex = firstPageIndex + PageSize;
-        return company.list.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage]);
 
     useEffect(() => {
         dispatch(loadCompanies(user.id));
@@ -51,16 +44,16 @@ function AdminCompanies() {
     }, [company.list]);
     
 
-    const showCompany = (Company: any) => {
+    const showCompany = (company: any) => {
         setIsAdd(false);
         setIsAssign(false)
-        setCurrentCompany(Company);
+        setCurrentCompany(company);
     };
 
-    const showUsers = (Company: any) => {
+    const showUsers = (company: any) => {
         setIsAdd(false);
         setIsAssign(true)
-        setCurrentCompany(Company);
+        setCurrentCompany(company);
     };
 
     const actions = [
