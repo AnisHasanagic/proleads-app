@@ -16,19 +16,17 @@ type Call = {
     company_id: string;
     user_id:string,
     price_per_call: number,
+    price_per_connect: number,
     initial_time: number,
     price_per_minutes_overdue: number,
     overdue_time: number,
     call_fields: string,
     created_at: Date,
     updated_at: Date,
-    first_name:string,
-    last_name:string,
+    full_name:string,
     gender:string,
     email:string,
     phone:string,
-    country:string,
-    city :string,
     start_timer: number,
     end_timer: number
 };

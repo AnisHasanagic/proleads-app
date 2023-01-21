@@ -1,50 +1,45 @@
-import moment from "moment";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-    addCall,
-    mailSend
-} from "../../store/call/call.actions"
+import { addCall } from "../../store/call/call.actions";
 import { Button, ButtonTypes } from "../../components/Button/Button";
-import { Checkbox } from "../../components/Checkbox/Checkbox";
 import { Form } from "../../components/Form/Form";
 import { Input } from "../../components/Input/Input";
 import "./CallPage.scss";
 import { loadCompany } from "../../store/detail/detail.actions";
 import DashboardLayout from "../../layouts/DashboardLayout";
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import { setSourceMapRange } from "typescript";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Tooltip from "@mui/material/Tooltip";
+import MUIButton from "@mui/material/Button";
+import RNSelect from "react-select";
 
 function CallPage() {
-
-
-    const { id }: any = useParams()
+    const { id }: any = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const companys = useSelector((state: any) => state.company);
-    const detail = useSelector((state: any) => state.detail)
-    const call = useSelector((state: any) => state.call)
-    const users = useSelector((state: any) => state.user)
-    const [sendMail, setSendMail] = useState(false)
-    const [gender, setGender] = useState<any>(false)
-    const [selected, setSelected] = useState<any>(false)
-    const [mr, setMr] = useState("")
+    const detail = useSelector((state: any) => state.detail);
+    const call = useSelector((state: any) => state.call);
+    const users = useSelector((state: any) => state.user);
 
+    const [open, setOpen] = useState(false);
 
+    const handleTooltipClose = () => {
+        setOpen(false);
+    };
 
+    const handleTooltipOpen = () => {
+        setOpen(true);
+    };
 
     let getTimestampInSeconds = () => {
-        return Math.floor(Date.now() / 1000)
-    }
-
+        return Math.floor(Date.now() / 1000);
+    };
 
     useEffect(() => {
-        dispatch(loadCompany(id))
-    }, [])
-
+        dispatch(loadCompany(id));
+    }, []);
 
     const INITIAL_Call = {
         company_id: "",
@@ -52,21 +47,21 @@ function CallPage() {
         start_time: "",
         end_time: "",
         price_per_call: "",
+        price_per_connect: "",
         initial_time: "",
         price_per_minutes_overdue: "",
         overdue_time: "",
         call_fields: "",
-        first_name: "",
-        last_name: "",
+        full_name: "",
         gender: "",
-        email: "",
+        email: [],
         phone: "",
-        country: "",
-        city: "",
         description: "",
         start_timer: "",
-        end_timer: ""
+        end_timer: "",
+        action: "",
     };
+
     const INITIAL_Info = {
         call_info: "",
         call_address: "",
@@ -74,29 +69,19 @@ function CallPage() {
         company_name: "",
         email: "",
         phone: "",
-    }
+    };
 
-    const INITIAL_MAIL = {
-        companyName: "",
-        emailCompany: "",
-        fields: "",
-        first_name: "",
-        last_name: "",
-        gender: "",
-        email: "",
-        phone: "",
-        country: "",
-        city: ""
-    }
     const [inputList, setInputList] = useState<any>([]);
     const [newCall, setNewCall] = useState<any>(INITIAL_Call);
-    const [mailData, setMailData] = useState<any>(INITIAL_MAIL)
     const [newInfo, setNewInfo] = useState<any>(INITIAL_Info);
 
     const [newCallErrors, setNewCallErrors] = useState<any>({});
 
     const validations: any = {
         price_per_call: {
+            isRequired: true,
+        },
+        price_per_connect: {
             isRequired: true,
         },
         initial_time: {
@@ -111,7 +96,6 @@ function CallPage() {
         call_fields: {
             isRequired: true,
         },
-
     };
 
     const changeEvent = (e: any): void => {
@@ -191,17 +175,15 @@ function CallPage() {
     const changeInputEvent = (e: any, index: any): void => {
         const name = e.target.name;
         let value = e.target.value;
-        let list = [...inputList]
-
+        let list = [...inputList];
 
         list = [
             ...list.slice(0, index),
             {
-                [name]: value
+                [name]: value,
             },
-            ...list.slice(index + 1)
-        ]
-
+            ...list.slice(index + 1),
+        ];
 
         const validator = validations[name];
         const errors = [];
@@ -220,23 +202,21 @@ function CallPage() {
             }
         }
 
-        setInputList(
-            list
-        );
+        setInputList(list);
     };
 
     const blurInputEvent = (e: any, index: any): void => {
         const name = e.target.name;
         let value = e.target.value;
-        let list = [...inputList]
+        let list = [...inputList];
 
         list = [
             ...list.slice(0, index),
             {
-                [name]: value
+                [name]: value,
             },
-            ...list.slice(index + 1)
-        ]
+            ...list.slice(index + 1),
+        ];
 
         const validator = validations[name];
         const errors = [];
@@ -265,40 +245,34 @@ function CallPage() {
         return hasErrors;
     };
 
-
-
     useEffect(() => {
         if (detail && detail.id) {
-            console.log(detail)
             let startTime = getTimestampInSeconds();
             setNewInfo({
+                ...INITIAL_Info,
                 call_info: detail.company_info,
                 call_address: detail.address,
                 call_description: detail.description,
                 company_name: detail.name,
                 email: detail.email,
-                phone: detail.phone
+                phone: detail.phone,
             });
             setNewCall({
+                ...INITIAL_Call,
                 user_id: users.id,
                 company_id: detail.id,
                 price_per_call: detail.price_per_call,
+                price_per_connect: detail.price_per_connect,
                 initial_time: detail.initial_time,
                 price_per_minutes_overdue: detail.price_per_minutes_overdue,
                 overdue_time: detail.overdue_time,
-                start_timer: startTime
+                start_timer: startTime,
             });
-            let fields = JSON.parse(detail.company_fields)
-            console.log(detail.company_fields)
-            setInputList(fields)
+            let fields = JSON.parse(detail.company_fields);
+            setInputList(fields);
             setNewCallErrors({});
         }
-
-
     }, [detail]);
-
-
-
 
     useEffect(() => {
         if (call.add.errors) {
@@ -308,225 +282,279 @@ function CallPage() {
 
     const CreateCall = (): void => {
         let endTime = getTimestampInSeconds();
-        console.log(endTime)
-        console.log(newInfo.email)
-        dispatch(addCall({ ...newCall, call_fields: JSON.stringify(inputList), end_timer: endTime, gender: gender }, navigate))
-        if (sendMail) dispatch(mailSend({ ...mailData, fields: JSON.stringify(inputList), emailCompany: newInfo.email, first_name: newCall.first_name, last_name: newCall.last_name, gender: gender, email: newCall.email, city: newCall.city, country: newCall.country, phone: newCall.phone, companyName: newInfo.company_name, description: newCall.description }))
+        dispatch(
+            addCall(
+                {
+                    ...newCall,
+                    email: newCall.email.join(','),
+                    call_fields: JSON.stringify(inputList),
+                    end_timer: endTime,
+                },
+                navigate
+            )
+        );
     };
-
 
     let beutifyString = (value: any) => {
-        let temp = value
-        temp = temp.replace(/_+/g, ' ')
+        let temp = value;
+        temp = temp.replace(/_+/g, " ");
         temp = temp.charAt(0).toUpperCase() + temp.slice(1);
-        return temp
-    }
-
-    const handleGender = (e: any, value: any): void => {
-        if(value!==null)
-        {setSelected(value);
-        if (!selected) setGender("male")
-        else setGender("female")}
+        return temp;
     };
 
+    const handleGender = (e: any): void => {
+        setNewCall({
+            ...newCall,
+            gender: e.target.value,
+        });
+    };
+
+    const handleAction = (e: any): void => {
+        setNewCall({
+            ...newCall,
+            action: e.target.value,
+        });
+    };
+
+    useEffect(() => {
+        setNewCall({
+            ...newCall,
+            email: [],
+        })
+    }, [newCall.action]);
 
     return (
         <DashboardLayout>
             <div id="call-admin-modal">
                 <h1>{newInfo.company_name}</h1>
                 <div className="posDiv">
-                    <div id="info">
-                        <div className="call_information">
-                            <div><strong>Company address:</strong>{newInfo.call_address}</div>
-                            <div><strong>Company email:</strong>{newInfo.email}</div>
-                            <div><strong>Company phone:</strong>{newInfo.phone}</div>
-                            <div className="scrollInfo"><strong>Company information:</strong>{newInfo.call_description}</div>
-                        </div>
-
-                        <div className="company_information">
-                            <div className="scrollInfo"><strong>Call information:</strong>{newInfo.call_info}</div>
-                        </div>
-                    </div>
                     <div className="secDiv">
                         <div className="form">
                             <Form>
+                                {inputList.map((field: any, i: any) => {
+                                    return (
+                                        <Input
+                                            id={"company_field" + i}
+                                            name={Object.keys(field)[0]}
+                                            type={"text"}
+                                            value={Object.values(field)[0]}
+                                            onChange={(e: any): void =>
+                                                changeInputEvent(e, i)
+                                            }
+                                            onBlur={(e: any): void =>
+                                                blurInputEvent(e, i)
+                                            }
+                                            placeholder={beutifyString(
+                                                Object.keys(field)[0]
+                                            )}
+                                            label={beutifyString(
+                                                Object.keys(field)[0]
+                                            )}
+                                        />
+                                    );
+                                })}
+                                <hr />
                                 <div className="divi">
                                     <div className="inputFields">
-
-                                        <h2 className="adm">FirstName</h2>
-                                        <Input
-                                            id={"first_name"}
-                                            className="inputs"
-                                            type={"text"}
-                                            name={"first_name"}
-                                            value={newCall["first_name"]}
-                                            onChange={(e: any): void => changeEvent(e)}
-                                            onBlur={(e: any): void => blurEvent(e)}
-                                            errors={newCallErrors["first_name"]}
-                                            placeholder={"Firstname"}
-                                        />
+                                        <p className="adm">Gender</p>
+                                        <div className="toggle">
+                                            <Select
+                                                id="gender"
+                                                label="Gender"
+                                                onChange={handleGender}
+                                                value={newCall.gender}
+                                                aria-label="Gender"
+                                                color="success"
+                                                displayEmpty
+                                            >
+                                                <MenuItem value={""}>
+                                                    None
+                                                </MenuItem>
+                                                <MenuItem value={"male"}>
+                                                    Mr.
+                                                </MenuItem>
+                                                <MenuItem value={"female"}>
+                                                    Mrs.
+                                                </MenuItem>
+                                            </Select>
+                                        </div>
                                     </div>
-                                    <div className="inputFields">
-
-                                        <h2 className="adm">LastName</h2>
+                                    <div className="inputFields flex1">
                                         <Input
-                                            id={"last_name"}
+                                            id={"full_name"}
                                             className="inputs"
                                             type={"text"}
-                                            name={"last_name"}
-                                            value={newCall["last_name"]}
-                                            onChange={(e: any): void => changeEvent(e)}
-                                            onBlur={(e: any): void => blurEvent(e)}
-                                            errors={newCallErrors["last_name"]}
-                                            placeholder={"Lastname"}
+                                            name={"full_name"}
+                                            value={newCall["full_name"]}
+                                            onChange={(e: any): void =>
+                                                changeEvent(e)
+                                            }
+                                            onBlur={(e: any): void =>
+                                                blurEvent(e)
+                                            }
+                                            errors={newCallErrors["full_name"]}
+                                            placeholder={"Full name"}
+                                            label={"Full name"}
                                         />
                                     </div>
                                 </div>
 
                                 <div className="divi">
-                                <div className="inputFields">
-
-                                    <h2 className="adm">Email</h2>
-                                    <Input
-                                        id={"email"}
-                                        className="inputs"
-                                        type={"text"}
-                                        name={"email"}
-                                        value={newCall["email"]}
-                                        onChange={(e: any): void => changeEvent(e)}
-                                        onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["email"]}
-                                        placeholder={"email"}
-                                    />
-
-                                </div>
-                                <div className="inputFields">
-
-                                    <h2 className="adm">Phone</h2>
                                     <Input
                                         id={"phone"}
                                         className="inputs"
                                         type={"text"}
                                         name={"phone"}
                                         value={newCall["phone"]}
-                                        onChange={(e: any): void => changeEvent(e)}
+                                        onChange={(e: any): void =>
+                                            changeEvent(e)
+                                        }
                                         onBlur={(e: any): void => blurEvent(e)}
                                         errors={newCallErrors["phone"]}
-                                        placeholder={"phone"}
+                                        placeholder={"Phone"}
+                                        label={"Phone"}
                                     />
                                 </div>
-                                </div>
-                                <div className="divi">
-                                <div className="inputFields">
 
-                                    <h2 className="adm">Country</h2>
-                                    <Input
-                                        id={"country"}
-                                        className="inputs"
-                                        type={"text"}
-                                        name={"country"}
-                                        value={newCall["country"]}
-                                        onChange={(e: any): void => changeEvent(e)}
-                                        onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["country"]}
-                                        placeholder={"country"}
-                                    />
-                                </div>
-                                <div className="inputFields">
+                                <Input
+                                    className="desc"
+                                    id={"description"}
+                                    type={"text"}
+                                    name={"description"}
+                                    value={newCall["description"]}
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={newCallErrors["description"]}
+                                    placeholder={"Description"}
+                                    label={"Description"}
+                                    isTextarea
+                                />
 
-                                    <h2 className="adm">City</h2>
+                                <hr />
 
-                                    <Input
-                                        id={"city"}
-                                        className="inputs"
-                                        type={"text"}
-                                        name={"city"}
-                                        value={newCall["city"]}
-                                        onChange={(e: any): void => changeEvent(e)}
-                                        onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["city"]}
-                                        placeholder={"city"}
-                                    />
-
-
-                                </div>
-                                </div>
-
+                                <p className="adm">Action</p>
                                 <div className="toggle">
-                                    <ToggleButtonGroup
-                                        id="gender"
-                                        onChange={handleGender}
-                                        value={selected}
-                                        aria-label="Gender"
+                                    <Select
+                                        id="action"
+                                        onChange={handleAction}
+                                        value={newCall.action}
+                                        aria-label="Action"
                                         color="success"
-                                        exclusive
+                                        displayEmpty
                                     >
-
-                                        <ToggleButton className="tglbtn" value={true} aria-label="male">Male</ToggleButton>
-                                        <ToggleButton className="tglbtn" value={false} aria-label="female">Female</ToggleButton>
-                                    </ToggleButtonGroup>
+                                        <MenuItem value={""}>None</MenuItem>
+                                        <MenuItem value={"send_email"}>
+                                            Send Email
+                                        </MenuItem>
+                                        <MenuItem
+                                            value={"connect_and_send_email"}
+                                        >
+                                            Connect and Send Email
+                                        </MenuItem>
+                                        <MenuItem value={"wrong_number"}>
+                                            Wrong number
+                                        </MenuItem>
+                                    </Select>
                                 </div>
-
-                                <div className="inputDesc">
-                                    <h2 className="adm2">Description</h2>
-                                    <Input
-                                        className="desc"
-                                        id={"description"}
-                                        type={"text"}
-                                        name={"description"}
-                                        value={newCall["description"]}
-                                        onChange={(e: any): void => changeEvent(e)}
-                                        onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["description"]}
-                                        placeholder={"Description"}
-                                        isTextarea
+                                <p className="desc">
+                                    Action indicates what will happen after call
+                                    is created.
+                                </p>
+                                {(newCall.action === 'send_email' || newCall.action === 'connect_and_send_email') && <div className="emails">
+                                    <RNSelect
+                                        isMulti
+                                        name="email"
+                                        placeholder="Select emails"
+                                        options={newInfo.email
+                                            .split(",")
+                                            .map((email: string) => {
+                                                return {
+                                                    value: email,
+                                                    label: email,
+                                                };
+                                            })}
+                                        onChange={(e) => {
+                                            setNewCall({
+                                                ...newCall,
+                                                email: e.map(
+                                                    (email: any) => email.value
+                                                ),
+                                            });
+                                        }}
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
                                     />
-                                </div>
-
-
-
-
-                                <div className="custom wrapper">
-                                    {inputList.map((field: any, i: any) => {
-                                        return (<div key={i} className="inputFields2">
-                                            <h2 className="adm2">{beutifyString(Object.keys(field)[0])}</h2>
-                                            <Input
-                                                id={"company_field" + i}
-                                                name={Object.keys(field)[0]}
-                                                type={"text"}
-                                                value={Object.values(field)[0]}
-                                                onChange={(e: any): void => changeInputEvent(e, i)}
-                                                onBlur={(e: any): void => blurInputEvent(e, i)}
-                                                placeholder={beutifyString(Object.keys(field)[0])}
-                                            />
-                                        </div>)
-                                    })}
-                                </div>
-                                <Checkbox
-                                    checkItem={(): void =>
-                                        setSendMail(true)
-                                    }
-                                    label="Do you want to send email"
-                                >
-                                </Checkbox>
+                                </div>}
+                                <hr />
 
                                 <Button
                                     btnClass={ButtonTypes.primary}
                                     onClick={() => CreateCall()}
                                     loading={call.add.loading}
-                                    disabled={call.add.loading || hasSomeErrors()}
+                                    disabled={
+                                        call.add.loading || hasSomeErrors()
+                                    }
                                 >
                                     Create
                                 </Button>
-
                             </Form>
+                        </div>
+                    </div>
+                    <div id="info">
+                        <ClickAwayListener onClickAway={handleTooltipClose}>
+                            <div>
+                                <Tooltip
+                                    PopperProps={{
+                                        disablePortal: true,
+                                    }}
+                                    onClose={handleTooltipClose}
+                                    open={open}
+                                    disableFocusListener
+                                    disableHoverListener
+                                    disableTouchListener
+                                    title={
+                                        <div>
+                                            <div>
+                                                <strong>
+                                                    Company address:{" "}
+                                                </strong>
+                                                {newInfo.call_address}
+                                            </div>
+                                            <div>
+                                                <strong>Company email: </strong>
+                                                {newInfo.email}
+                                            </div>
+                                            <div>
+                                                <strong>Company phone: </strong>
+                                                {newInfo.phone}
+                                            </div>
+                                        </div>
+                                    }
+                                >
+                                    <MUIButton onClick={handleTooltipOpen}>
+                                        Details
+                                    </MUIButton>
+                                </Tooltip>
+                            </div>
+                        </ClickAwayListener>
 
+                        <div className="company_information">
+                            <div className="scrollInfo">
+                                <strong>Company information: </strong>
+                                {newInfo.call_description}
+                            </div>
                         </div>
 
+                        <div className="company_information">
+                            <div className="scrollInfo">
+                                <strong>Call information: </strong>
+                                {newInfo.call_info}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div >
-        </DashboardLayout >
+            </div>
+        </DashboardLayout>
     );
 }
 

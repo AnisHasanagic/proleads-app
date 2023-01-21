@@ -39,8 +39,7 @@ export const loadUsers = (): any => async (dispatch: any) => {
 export const createAccount =
     (username: string,
         password: string,
-        first_name: string,
-        last_name: string,
+        full_name: string,
         role: string,
         isDeleted: boolean,
         navigate: any): any =>
@@ -51,8 +50,7 @@ export const createAccount =
                 const response = await UsersService.createUser({
                     username,
                     password,
-                    first_name,
-                    last_name,
+                    full_name,
                     role,
                     isDeleted
                 });

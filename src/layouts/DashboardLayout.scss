@@ -17,7 +17,7 @@
             flex: 1;
             overflow: hidden;
             overflow-y: auto;
-            padding: 30px;
+            padding: 55px;
 
             @media screen and (max-width: 480px) {
                 padding: 20px;
@@ -28,6 +28,18 @@
             width: 100vw;
         }
     }
+
+    .green-details {
+        width: 120px;
+        height: 120px;
+        position: fixed;
+        top: 0;
+        right: 0;
+        background: url('../assets/green-details.png');
+        background-size: cover;
+        pointer-events: none;
+    }
+    
 }
 
 @media (min-width: 1536px) {

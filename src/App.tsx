@@ -101,7 +101,7 @@ function App() {
                         }
                     />
                      <Route
-                        path="/dashboard/company"
+                        path="/dashboard/calls"
                         element={
                             <React.Suspense fallback={<>...</>}>
                             <PrivateRoute roles={["admin","agent"]}>

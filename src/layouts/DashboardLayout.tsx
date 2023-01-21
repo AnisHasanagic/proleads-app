@@ -11,6 +11,7 @@ function DashboardLayout({ children }: any) {
             <div className="page">
                 <div className="content">{children}</div>
             </div>
+            <div className="green-details"></div>
         </div>
     );
 }

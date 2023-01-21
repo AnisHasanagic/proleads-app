@@ -1,63 +1,48 @@
 import moment from "moment";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     createAccount,
-    updateAccount
+    updateAccount,
 } from "../../../../store/users/users.actions";
 import { Button, ButtonTypes } from "../../../Button/Button";
-import { Checkbox } from "../../../Checkbox/Checkbox";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Form } from "../../../Form/Form";
 import { Input } from "../../../Input/Input";
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import ToggleButtonGroup from "@mui/lab/ToggleButtonGroup";
 
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import CTBFields from "../../../../assets/CTBFields.svg"
-
-
+import ToggleButton from "@mui/lab/ToggleButton";
+import CTBFields from "../../../../assets/CTBFields.svg";
 
 import "./UserAdminModal.scss";
-import Modal from "../../Modal";
-import ChangePasswordModal from "../ChangePasswordModal/ChangePasswordModal";
 
 function UserAdminModal({ user, isAdd }: any) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const auth = useSelector((state: any) => state.user);
     const users = useSelector((state: any) => state.users);
-    const [currentUser, setCurrentUser] = useState<any>(null);
-
 
     const INITIAL_User = {
         username: "",
-        first_name: "",
-        last_name: "",
-        role: "",
-        isDeleted: ""
+        full_name: "",
+        role: "agent",
+        isDeleted: false,
     };
-
-
 
     const [newUser, setNewUser] = useState<any>(INITIAL_User);
     const [newUserErrors, setNewUserErrors] = useState<any>({});
-    const [isDeleted, setIsDeleted] = useState<any>(false)
-    const [userRole, setUserRole] = useState<any>(false);
-    const [selected, setSelected] = useState<any>(false)
-
 
     const validations: any = {
         username: {
             isRequired: true,
         },
-        first_name: {
+        full_name: {
             isRequired: true,
         },
         last_name: {
             isRequired: true,
         },
-
-
     };
 
     const changeEvent = (e: any): void => {
@@ -144,19 +129,19 @@ function UserAdminModal({ user, isAdd }: any) {
     };
 
     useEffect(() => {
-        if (user) {
+        if (user && !isAdd) {
             setNewUser({
                 username: user.username,
-                first_name: user.first_name,
-                last_name: user.last_name,
+                full_name: user.full_name,
                 role: user.role,
-                isDeleted: user.isDeleted
+                isDeleted: user.isDeleted,
             });
-            if(user.role==="admin") setSelected(true)
+            setNewUserErrors({});
+        } else {
+            setNewUser(INITIAL_User);
             setNewUserErrors({});
         }
     }, [user]);
-
 
     useEffect(() => {
         if (users.update.errors) {
@@ -171,32 +156,38 @@ function UserAdminModal({ user, isAdd }: any) {
     }, [users.add]);
 
     const handleRole = (e: any, value: any): void => {
-        if(value!==null)
-        {setSelected(value)
-        if (!selected) setUserRole("admin")
-        else setUserRole("agent")}
+        setNewUser({
+            ...newUser,
+            role: value ? 'admin' : 'agent'
+        })
     };
 
     const createUser = (): void => {
-        if(userRole == 0) setUserRole("agent")
-        if(userRole == 'false') setUserRole("agent")
-
         dispatch(
-            createAccount(newUser.username, newUser.password, newUser.first_name, newUser.last_name, userRole, isDeleted, navigate)
+            createAccount(
+                newUser.username,
+                newUser.password,
+                newUser.full_name,
+                newUser.role,
+                false,
+                navigate
+            )
         );
     };
 
     const updateUser = (): void => {
-        dispatch(updateAccount({ ...newUser, role: userRole }, user.id, navigate))
-    }
+        dispatch(
+            updateAccount({ ...newUser }, user.id, navigate)
+        );
+    };
+
+    const isCurrentdUser = auth && user && auth.id === user.id;
 
     return (
         <div id="User-admin-modal">
             <div className="tab">
-                <img src={CTBFields}
-                    className="add-image"
-                    alt="" />
-                <h2>Add User</h2>
+                <img src={CTBFields} className="add-image" alt="" />
+                <h2>{isAdd ? "Add User" : "Edit User"}</h2>
             </div>
             <div className="forma">
                 <Form className="form">
@@ -212,91 +203,126 @@ function UserAdminModal({ user, isAdd }: any) {
                             errors={newUserErrors["username"]}
                             placeholder={"username"}
                         />
-                        <h2 className="adm">Firstname</h2>
+                        <h2 className="adm">Full name</h2>
                         <Input
-                            id={"first_name"}
+                            id={"full_name"}
                             type={"text"}
-                            name={"first_name"}
-                            value={newUser["first_name"]}
+                            name={"full_name"}
+                            value={newUser["full_name"]}
                             onChange={(e: any): void => changeEvent(e)}
                             onBlur={(e: any): void => blurEvent(e)}
-                            errors={newUserErrors["first_name"]}
-                            placeholder={"Firstname"}
+                            errors={newUserErrors["full_name"]}
+                            placeholder={"Full name"}
                         />
-                        <h2 className="adm">Lastname</h2>
-                        <Input
-                            id={"last_name"}
-                            type={"text"}
-                            name={"last_name"}
-                            value={newUser["last_name"]}
-                            onChange={(e: any): void => changeEvent(e)}
-                            onBlur={(e: any): void => blurEvent(e)}
-                            errors={newUserErrors["last_name"]}
-                            placeholder={"Lastname"}
-                        />
-
                     </div>
-                    <div className="inp">
-                        {isAdd && (
-                            <div>
-                                <h2 className="adm">Password</h2>
-                                <Input
-                                    id={"password"}
-                                    type={"password"}
-                                    name={"password"}
-                                    value={newUser["password"]}
-                                    onChange={(e: any): void => changeEvent(e)}
-                                    onBlur={(e: any): void => blurEvent(e)}
-                                    errors={newUserErrors["password"]}
-                                    placeholder={"Password"}
-                                />
-                            </div>
-                        )}
-                        {!isAdd && (
-                            <div className="change">
-                                <Button
-                                    btnClass={ButtonTypes.primary}
-                                    onClick={() => setCurrentUser(user)}
-                                    loading={users.add.loading}
-                                    disabled={users.add.loading || hasSomeErrors()}
+                    {!isCurrentdUser && (
+                        <div className="inp">
+                            {isAdd && (
+                                <div>
+                                    <h2 className="adm">Password</h2>
+                                    <Input
+                                        id={"password"}
+                                        type={"password"}
+                                        name={"password"}
+                                        value={newUser["password"]}
+                                        onChange={(e: any): void =>
+                                            changeEvent(e)
+                                        }
+                                        onBlur={(e: any): void => blurEvent(e)}
+                                        errors={newUserErrors["password"]}
+                                        placeholder={"Password"}
+                                    />
+                                </div>
+                            )}
+
+                            <h2 className="adm">Admin?</h2>
+                            <div className="toggle">
+                                <ToggleButtonGroup
+                                    id="role"
+                                    onChange={handleRole}
+                                    value={newUser.role === 'admin'}
+                                    aria-label="Is Admin?"
+                                    color="success"
+                                    exclusive
                                 >
-                                    Change password
-                                </Button>
+                                    <ToggleButton
+                                        className="tglbtn"
+                                        color="success"
+                                        value={false}
+                                        aria-label="false"
+                                    >
+                                        FALSE
+                                    </ToggleButton>
+                                    <ToggleButton
+                                        className="tglbtn"
+                                        color="success"
+                                        value={true}
+                                        aria-label="true"
+                                    >
+                                        TRUE
+                                    </ToggleButton>
+                                </ToggleButtonGroup>
                             </div>
-                        )}
-
-
-                        <h2 className="adm">Admin?</h2>
-                        <div className="toggle">
-                            <ToggleButtonGroup
-                                id="role"
-                                onChange={handleRole}
-                                value={selected}
-                                aria-label="Is Admin?"
-                                color="success"
-                                exclusive
-
-                            >
-                                <ToggleButton className="tglbtn" color='success' value={false} aria-label="false" >FALSE</ToggleButton>
-                                <ToggleButton className="tglbtn" color='success' value={true} aria-label="true" >TRUE</ToggleButton>
-                            </ToggleButtonGroup>
-                            <h3 className="desc">By making an user admin he will get the full access to the app.</h3>
+                            <p className="desc">
+                                By making an user admin he will get the full
+                                access to the app.
+                            </p>
+                            <br />
+                            {!isAdd && (
+                                <>
+                                    <h2 className="adm">Active?</h2>
+                                    <div className="toggle">
+                                        <ToggleButtonGroup
+                                            id="role"
+                                            onChange={(e, value) => {
+                                                setNewUser({
+                                                    ...newUser,
+                                                    isDeleted: !value,
+                                                });
+                                            }}
+                                            value={!newUser.isDeleted}
+                                            aria-label="Is Active?"
+                                            color="success"
+                                            exclusive
+                                        >
+                                            <ToggleButton
+                                                className="tglbtn"
+                                                color="success"
+                                                value={false}
+                                                aria-label="false"
+                                            >
+                                                FALSE
+                                            </ToggleButton>
+                                            <ToggleButton
+                                                className="tglbtn"
+                                                color="success"
+                                                value={true}
+                                                aria-label="true"
+                                            >
+                                                TRUE
+                                            </ToggleButton>
+                                        </ToggleButtonGroup>
+                                    </div>
+                                    <p className="desc">
+                                        By deactivating the user they will not
+                                        be able to use the app until you
+                                        activate them again.
+                                    </p>
+                                </>
+                                // <Checkbox
+                                //     checkItem={() =>
+                                //         setNewUser({
+                                //             ...newUser,
+                                //             isDeleted: !newUser.isDeleted,
+                                //         })
+                                //     }
+                                //     isChecked={newUser.isDeleted}
+                                //     disabled={false}
+                                //     label="Do you want to soft delete this user?"
+                                // />
+                            )}
                         </div>
-                        <br />
-                        {!isAdd && (
-                            <Checkbox
-                                checkItem={() =>
-                                    setNewUser({
-                                        ...newUser,
-                                        isDeleted: !newUser.isDeleted
-                                    })
-                                }
-                                isChecked={newUser.isDeleted}
-                                disabled={false}
-                                label="Do you want to soft delete this user?"
-                            />
-                        )}
-                    </div>
+                    )}
                 </Form>
             </div>
             <div className="butt">
@@ -321,14 +347,7 @@ function UserAdminModal({ user, isAdd }: any) {
                     </Button>
                 )}
             </div>
-            <Modal
-                show={currentUser}
-                closeModal={() => setCurrentUser(null)}
-            >
-                <ChangePasswordModal user={currentUser} />
-            </Modal>
         </div>
-
     );
 }
 

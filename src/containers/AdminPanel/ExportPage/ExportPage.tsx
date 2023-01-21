@@ -7,54 +7,50 @@ import Table from "../../../components/Table/Table";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { loadCalls } from "../../../store/call/call.actions";
 
-
-
 import { Input } from "../../../components/Input/Input";
 
 import "./ExportPage.scss";
 import { loadCompany } from "../../../store/company/company.actions";
 import { useNavigate, useParams } from "react-router-dom";
-import { utils, writeFile } from "xlsx"
+import { utils, writeFile } from "xlsx";
 import { toast } from "react-toastify";
-
-
 
 function ExportPage() {
     const dispatch = useDispatch();
-    const { id }: any = useParams()
+    const { id }: any = useParams();
 
     const navigate = useNavigate();
 
     const INITIAL_STATE = {
         company_id: "",
         startDate: "",
-        endDate: ""
-    }
+        endDate: "",
+    };
 
-    const [searchValue, setSearchValue] = useState<any>(null)
+    const [searchValue, setSearchValue] = useState<any>(null);
     const call = useSelector((state: any) => state.call);
-    const company = useSelector((state: any) => state.company)
-    const [exportData, setexportData] = useState<any>(INITIAL_STATE)
-    const detail = useSelector((state: any) => state.detail)
-    const [excel, setExcel] = useState(call.list)
+    const company = useSelector((state: any) => state.company);
+    const [exportData, setexportData] = useState<any>(INITIAL_STATE);
+    const detail = useSelector((state: any) => state.detail);
+    const [excel, setExcel] = useState(call.list);
 
-    const [exist, setExist] = useState<any>(false)
+    const [exist, setExist] = useState<any>(false);
 
     let validations: any = {
         startDate: {
-            isRequired: true
+            isRequired: true,
         },
         endDate: {
-            isRequired: true
-        }
-    }
+            isRequired: true,
+        },
+    };
     const columnsToShow = [
         "price_per_call",
         "price_per_minutes_overdue",
         "initial_time",
         "overdue_time",
         "time",
-        "price"
+        "price",
     ];
 
     const keys = [
@@ -63,19 +59,19 @@ function ExportPage() {
         "initial_time",
         "overdue_time",
         "time",
-        "price"
+        "price",
     ];
     const search = (data: any) => {
-        return data.filter(
-            (item: any) =>
-                keys.some(key => item[key].toString().toLowerCase().includes(searchValue)))
-    }
+        return data.filter((item: any) =>
+            keys.some((key) =>
+                item[key].toString().toLowerCase().includes(searchValue)
+            )
+        );
+    };
 
     const changeEvent = (e: any): void => {
         const name = e.target.name;
         const value = e.target.value;
-
-
 
         const validator = validations[name];
         const errors = [];
@@ -98,14 +94,12 @@ function ExportPage() {
             ...exportData,
             [name]: value ? value.trim() : "",
         });
-
     };
 
     const blurEvent = (e: any): void => {
         const name = e.target.name;
         const value = e.target.value;
 
-
         const validator = validations[name];
         const errors = [];
 
@@ -127,45 +121,72 @@ function ExportPage() {
             ...exportData,
             [name]: value ? value.trim() : "",
         });
-
     };
 
     let sum: any = 0;
 
-
     const CreateCallList = (): void => {
-        console.log(exportData)
-        dispatch((loadCalls(exportData)))
+        console.log(exportData);
+        dispatch(loadCalls(exportData));
 
-        setExcel(call.list)
+        console.log(call.list);
+
+        setExcel(call.list);
 
         setExist(true);
-    }
+    };
 
-    useEffect(()=>{
-        dispatch((loadCalls(exportData)))
-    },[])
+    useEffect(() => {
+        dispatch(loadCalls(exportData));
+    }, []);
 
     useEffect(() => {
         if (id) {
             setexportData({
                 company_id: id,
-            }
-            )
+            });
         }
-    }, [id])
+    }, [id]);
 
     const handleExport = () => {
+        if (call.list.length === 0) return;
+
         var wb = utils.book_new(),
-            ws = utils.json_to_sheet(call.list);
+            ws = utils.json_to_sheet([
+                ...call.list,
+                {
+                    full_name: "",
+                },
+            ]);
+
+        let headers = Object.keys(call.list[0]);
+
+        headers = headers.map((header) =>
+            header
+                .replace(/_/g, " ")
+                .replace(/(^\w|\s\w)/g, (m) => m.toUpperCase())
+        );
+
+        const total_price = call.list.reduce(
+            (accumulator: number, currentValue: any) => accumulator + currentValue.price,
+            0
+          );
+
+        ws['A' + (call.list.length + 2)] = { t:'s', v: 'Total Price' };
+        ws['M' + (call.list.length + 2)] = { t:'n', v: total_price };
+    
+        utils.sheet_add_aoa(ws, [headers], { origin: "A1" });
 
         utils.book_append_sheet(wb, ws, "List of calls");
 
-        writeFile(wb, "Export.xlsx")
-        navigate("/dashboard/admin-panel/calls")
-        toast.success("DATA_EXPORTED_SUCCESSFULLY")
-    }
+        const name = `${exportData.company_id}-${exportData.startDate}-${
+            exportData.endDate
+        }-${Date.now()}.xlsx`;
 
+        writeFile(wb, name);
+        navigate("/dashboard/admin-panel/calls");
+        toast.success("DATA_EXPORTED_SUCCESSFULLY");
+    };
 
     return (
         <DashboardLayout>
@@ -187,7 +208,6 @@ function ExportPage() {
                             placeholder={"from"}
                             label="Date from:"
                         />
-
 
                         <Input
                             id={"endDate"}
@@ -218,10 +238,9 @@ function ExportPage() {
                             >
                                 Export
                             </Button>
-                        </div>)}
-
+                        </div>
+                    )}
                 </div>
-
             </section>
         </DashboardLayout>
     );

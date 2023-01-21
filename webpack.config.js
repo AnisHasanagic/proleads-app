@@ -2,11 +2,8 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const BundleAnalyzerPlugin =
-    require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
-
+const TerserPlugin = require("terser-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -23,12 +20,12 @@ module.exports = {
     mode: env,
     // devtool: "inline-source-map",
     optimization: {
-        minimizer: [new UglifyJsPlugin({
-            test: /\.js(\?.*)?$/i,
-        }),],
-        removeAvailableModules: false,
-        removeEmptyChunks: false,
-        splitChunks: false,
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                test: /\.js(\?.*)?$/i,
+            }),
+        ],
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
@@ -44,10 +41,6 @@ module.exports = {
             crypto: false,
             "crypto-browserify": require.resolve("crypto-browserify"), //if you want to use this module also don't forget npm i crypto-browserify
         },
-        alias: {
-            FroalaEditor: 'froala_editor.min.js/froala_editor.pkgd.min.js',
-        },
-        modules: ['../node_modules/froala-editor/js', 'node_modules']
     },
     module: {
         rules: [
@@ -76,7 +69,7 @@ module.exports = {
                         loader: "css-loader",
                         options: {
                             sourceMap: false,
-                            importLoaders: 2
+                            importLoaders: 2,
                         },
                     },
                     { loader: "postcss-loader", options: { sourceMap: false } },
@@ -112,12 +105,8 @@ module.exports = {
             algorithm: "gzip",
             test: /\.js$|\.css$|\.html$/,
             threshold: 10240,
-            minRatio: 0.8
+            minRatio: 0.8,
         }),
-        new webpack.ProvidePlugin({
-            FroalaEditor: 'froala_editor.min.js/froala_editor.pkgd.min.js',
-        })
-        // new BundleAnalyzerPlugin(),
     ],
     devServer: {
         static: {

@@ -58,9 +58,7 @@
         }
 
         .desc {
-            width: 354px;
-            height: 16px;
-
+            margin: 0;
             font-family: 'Inter';
             font-style: normal;
             font-weight: 400;
@@ -81,7 +79,7 @@
             width: 180px;
             height: 40px;
             margin-top: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             text-align: center;
             align-items: center;
             border: 1px solid #DCDCE4;
@@ -125,11 +123,11 @@
     }
 
     .butt {
-        height: 64px;
-        float: right;
-        margin-top: 30px;
-        margin-left: 850px;
-        align-items: center;
+        padding: 20px;
+
+        > button {
+            margin-left: auto;
+        }
     }
 
 }

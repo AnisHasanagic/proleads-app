@@ -11,19 +11,14 @@ import { Link, useLocation } from "react-router-dom";
 import { logout } from "../../store/user/user.actions";
 import { onlyCapitalLetters } from "../../utils/helpers";
 
-import DashboardIcon from "../../assets/icon.svg"
+import DashboardIcon from "../../assets/icon.svg";
 import Users from "../../assets/users.svg";
-import Export from "../../assets/export.svg"
-import Companies from "../../assets/Vector.svg"
-import CallIcon from "../../assets/call.svg"
+import Export from "../../assets/export.svg";
+import Companies from "../../assets/Vector.svg";
+import CallIcon from "../../assets/call.svg";
 
-import logo from "../../assets/logo.svg"
+import logo from "../../assets/logo.svg";
 import "./DashboardMenu.scss";
-import { iteratorSymbol } from "immer/dist/internal";
-import Call from "@material-ui/icons/Call";
-
-
-
 
 export const DashboardMenu = React.memo(({ isActive }: any) => {
     const dispatch = useDispatch();
@@ -37,17 +32,15 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
     const route = useLocation();
 
     const menuItems = [
-
         {
-
             sub: [
                 {
                     name: "Dashboard",
                     link: "/dashboard",
                     icon: DashboardIcon,
                     isActive: route.pathname === "/dashboard",
-                }
-            ]
+                },
+            ],
         },
         {
             name: "Admin Panel",
@@ -74,8 +67,7 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                     name: "Export",
                     icon: Export,
                     link: "/dashboard/admin-panel/calls",
-                    isActive:
-                        route.pathname === "/dashboard/admin-panel/calls",
+                    isActive: route.pathname === "/dashboard/admin-panel/calls",
                 },
             ],
         },
@@ -87,14 +79,12 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                 {
                     name: "Calls",
                     icon: CallIcon,
-                    link: "/dashboard/company",
-                    isActive: route.pathname === "/dashboard/company",
+                    link: "/dashboard/calls",
+                    isActive: route.pathname === "/dashboard/calls",
                 },
             ],
         },
-
     ];
-
 
     return (
         <section
@@ -103,8 +93,9 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
         >
             <div
                 onClick={() => setIsMobileMenuActive(!isMobileMenuActive)}
-                className={`flex items-center ml-auto hamburger-menu ${isMobileMenuActive ? "active" : ""
-                    }`}
+                className={`flex items-center ml-auto hamburger-menu ${
+                    isMobileMenuActive ? "active" : ""
+                }`}
             >
                 <FontAwesomeIcon
                     icon={isMobileMenuActive ? faClose : faBars}
@@ -114,9 +105,7 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
             <div className="right active">
                 <Link to="/dashboard" className="mr-5">
                     <div className="top">
-                        <img className="logo-image"
-                            src={logo}
-                            alt="" />
+                        <img className="logo-image" src={logo} alt="" />
                         <div className="proleads">
                             <h1 className="hed">ProLeads</h1>
                             <h2 className="inb">Inbound</h2>
@@ -125,28 +114,40 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
                 </Link>
                 <div className="menu">
                     {menuItems.map((menu, index) => {
-                        if (menu.adminOnly && user.role !== 'admin') return null;
+                        if (menu.adminOnly && user.role !== "admin")
+                            return null;
 
                         return (
                             <div key={index} className="menu-item">
-                                <div className="top-menu-item flex">
-
-                                    <div>
-                                        <p className="title">{menu.name}</p>
+                                {menu.name && (
+                                    <div className="top-menu-item flex">
+                                        <div>
+                                            <p className="title">{menu.name}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                                 <ul className={`active`}>
                                     {menu.sub.map((item, index) => (
-                                        <Link key={index} to={item.link} className="links">
+                                        <Link
+                                            key={index}
+                                            to={item.link}
+                                            className="links"
+                                        >
                                             <li
-                                                className={`flex ${item.isActive
-                                                    ? "active"
-                                                    : ""
-                                                    }`}
+                                                className={`flex ${
+                                                    item.isActive
+                                                        ? "active"
+                                                        : ""
+                                                }`}
                                             >
-                                                <div className="icon"><img src={item.icon} alt="" /></div>
+                                                <div className="icon">
+                                                    <img
+                                                        src={item.icon}
+                                                        alt=""
+                                                    />
+                                                </div>
                                                 <div>
-                                                    <p className="title2">
+                                                    <p className="title">
                                                         {item.name}
                                                     </p>
                                                 </div>

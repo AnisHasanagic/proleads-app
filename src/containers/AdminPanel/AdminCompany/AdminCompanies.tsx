@@ -1,58 +1,52 @@
-import moment from "moment";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, ButtonTypes } from "../../../components/Button/Button";
 import Modal from "../../../components/Modal/Modal";
 import CompanyAdminModal from "../../../components/Modal/Modals/CompanyAdminModal/CompanyAdminModal";
-import AssignModal from "../../../components/Modal/Modals/AssignModal/AssignModal"
+import AssignModal from "../../../components/Modal/Modals/AssignModal/AssignModal";
 import Table from "../../../components/Table/Table";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { loadCompanies } from "../../../store/company/company.actions";
 import { Input } from "../../../components/Input/Input";
 import "./AdminCompanies.scss";
 
-import EditIcon from "@material-ui/icons/Edit";
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-
-
+import EditIcon from "@mui/icons-material/Edit";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CompanyAdminDeleteModal from "../../../components/Modal/Modals/CompanyAdminDeleteModal/CompanyAdminDeleteModal";
+import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
 
 function AdminCompanies() {
-
-
-
-
     const dispatch = useDispatch();
 
     const [currentCompany, setCurrentCompany] = useState<any>(null);
-    const [isAdd, setIsAdd] = useState<any>(false);
-
-
-    const [isAssign, setIsAssign] = useState<any>(false);
+    const [modalType, setModalType] = useState<any>("");
 
     const company = useSelector((state: any) => state.company);
-    const [searchValue, setSearchValue] = useState("")
+    const [searchValue, setSearchValue] = useState("");
 
-    const user = useSelector((state: any) => state.user)
-
+    const user = useSelector((state: any) => state.user);
 
     useEffect(() => {
-        dispatch(loadCompanies(user.id));
+        dispatch(loadCompanies(true));
     }, []);
 
     useEffect(() => {
-        setCurrentCompany(null)
+        setCurrentCompany(null);
     }, [company.list]);
-    
 
     const showCompany = (company: any) => {
-        setIsAdd(false);
-        setIsAssign(false)
+        setModalType("edit");
         setCurrentCompany(company);
     };
 
     const showUsers = (company: any) => {
-        setIsAdd(false);
-        setIsAssign(true)
+        setModalType("assign");
+        setCurrentCompany(company);
+    };
+
+    const deleteCompany = (company: any) => {
+        setModalType("delete");
         setCurrentCompany(company);
     };
 
@@ -68,7 +62,13 @@ function AdminCompanies() {
             row: "id",
             icon: <AssignmentIndIcon />,
             action: showUsers,
-        }
+        },
+        {
+            name: "Delete",
+            row: "id",
+            icon: <DeleteIcon />,
+            action: deleteCompany,
+        },
     ];
 
     const columnsToShow = [
@@ -81,12 +81,14 @@ function AdminCompanies() {
         "overdue_time",
     ];
 
-    const keys = columnsToShow
+    const keys = columnsToShow;
     const search = (data: any) => {
-        return data.filter(
-            (item: any) =>
-                keys.some(key => item[key].toString().toLowerCase().includes(searchValue)))
-    }
+        return data.filter((item: any) =>
+            keys.some((key) =>
+                item[key].toString().toLowerCase().includes(searchValue)
+            )
+        );
+    };
     return (
         <DashboardLayout>
             <section id="admin-company">
@@ -99,15 +101,16 @@ function AdminCompanies() {
                         id={"search"}
                         type={"text"}
                         className={"search"}
-                        onChange={(e: any): void => setSearchValue(e.target.value)}
+                        onChange={(e: any): void =>
+                            setSearchValue(e.target.value)
+                        }
                         placeholder={"Search..."}
                     />
                     <Button
                         btnClass={ButtonTypes.primary}
                         customClass="ml-auto"
                         onClick={() => {
-                            setIsAdd(true);
-                            setIsAssign(false)
+                            setModalType("add");
                             setCurrentCompany({
                                 name: "",
                                 address: "",
@@ -118,7 +121,7 @@ function AdminCompanies() {
                                 price_per_call: "",
                                 price_per_minutes_overdue: "",
                                 initial_time: "",
-                                overdue_time: ""
+                                overdue_time: "",
                             });
                         }}
                     >
@@ -130,24 +133,34 @@ function AdminCompanies() {
                     actions={actions}
                     columnsToShow={columnsToShow}
                 />
-            
             </section>
-            {!isAssign && (
+            {(modalType === "add" || modalType === "edit") && (
                 <Modal
                     show={currentCompany}
                     closeModal={() => setCurrentCompany(null)}
                 >
-                    <CompanyAdminModal company={currentCompany} isAdd={isAdd} />
+                    <CompanyAdminModal
+                        company={currentCompany}
+                        isAdd={modalType === "add"}
+                    />
                 </Modal>
             )}
-            {isAssign && (
+            {modalType === "assign" && (
                 <Modal
                     show={currentCompany}
                     closeModal={() => setCurrentCompany(null)}
                 >
-                    <AssignModal company={currentCompany} isAdd={isAdd} />
-                </Modal>)}
-
+                    <AssignModal company={currentCompany} />
+                </Modal>
+            )}
+            {modalType === "delete" && (
+                <Modal
+                    show={currentCompany}
+                    closeModal={() => setCurrentCompany(null)}
+                >
+                    <CompanyAdminDeleteModal company={currentCompany} closeModal={() => setCurrentCompany(null)} />
+                </Modal>
+            )}
         </DashboardLayout>
     );
 }

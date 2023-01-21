@@ -1,0 +1,31 @@
+#company-admin-delete-modal {
+    background-color: #fff;
+
+    text-align: center;
+    
+    .title {
+        padding: 20px;
+        border-bottom: 1px solid #F6F6F9;
+
+        h3 {
+            margin: 0;
+        }
+    }
+
+    .description {
+        padding: 20px;
+    }
+
+    .actions {
+        padding: 20px;
+        display: flex;
+
+        button {
+            flex: 1;
+
+            + button {
+                margin-left: 10px;
+            }
+        }
+    }
+}

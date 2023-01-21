@@ -1,15 +1,20 @@
 import React from "react";
 import { useTable } from "react-table";
-import { Button, ButtonTypes } from "../Button/Button";
-import TablePagination from "@material-ui/core/TablePagination";
+import classnames from "classnames";
+import TablePagination from "@mui/material/TablePagination";
+import IconButton from "@mui/material/IconButton";
 import { useMemo } from "react";
 
 import "./Table.scss";
-import IconButton from "@material-ui/core/IconButton";
-import EditIcon from "@material-ui/icons/Edit";
 
-
-const Table = ({ data, actions, columnsToShow }: any) => {
+const Table = ({
+    data,
+    actions,
+    columnsToShow,
+    hidePagination,
+    hideHeaders,
+    small,
+}: any) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const columns = useMemo(() => {
@@ -27,10 +32,10 @@ const Table = ({ data, actions, columnsToShow }: any) => {
                     let string = String(value);
 
                     if (string.length >= 100) {
-                        string = string.slice(0, 100) + '...'
+                        string = string.slice(0, 100) + "...";
                     }
 
-                    return string
+                    return string;
                 },
             };
         });
@@ -48,6 +53,7 @@ const Table = ({ data, actions, columnsToShow }: any) => {
                             {action.icon}
                         </IconButton>
                     ),
+                    width: 40,
                 };
             });
 
@@ -68,43 +74,59 @@ const Table = ({ data, actions, columnsToShow }: any) => {
         setPage(0);
     };
 
-    const preparedData = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    const preparedData = hidePagination
+        ? data
+        : data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable({ columns, data:preparedData });
+        useTable({ columns, data: preparedData });
 
     return (
-        <div className="table100 ver1">
+        <div
+            className={classnames("table100 ver1", {
+                small: small,
+            })}
+        >
             <div>
                 <table {...getTableProps()}>
-                    <thead className="table100-head">
-                        {headerGroups.map((headerGroup) => (
-                            <tr
-                                {...headerGroup.getHeaderGroupProps()}
-                                className="row100 head"
-                            >
-                                {headerGroup.headers.map((column) => (
-                                    <th
-                                        {...column.getHeaderProps()}
-                                        className="cell100"
-                                    >
-                                        {column.render("Header")}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
+                    {!hideHeaders && (
+                        <thead className="table100-head">
+                            {headerGroups.map((headerGroup) => (
+                                <tr
+                                    {...headerGroup.getHeaderGroupProps()}
+                                    className="row100 head"
+                                >
+                                    {headerGroup.headers.map((column) => (
+                                        <th
+                                            {...column.getHeaderProps()}
+                                            className="cell100"
+                                        >
+                                            {column.render("Header")}
+                                        </th>
+                                    ))}
+                                </tr>
+                            ))}
+                        </thead>
+                    )}
                     <tbody {...getTableBodyProps()} className="table100-body">
                         {rows.map((row) => {
                             prepareRow(row);
                             return (
                                 <tr
                                     {...row.getRowProps()}
-                                    className="row100 body"
+                                    className={classnames("row100 body", {
+                                        deleted: (row.original as any)
+                                            .isDeleted,
+                                    })}
                                 >
                                     {row.cells.map((cell) => {
                                         return (
                                             <td
-                                                {...cell.getCellProps()}
+                                                {...cell.getCellProps({
+                                                    style: {
+                                                        width: cell.column
+                                                            .width,
+                                                    },
+                                                })}
                                                 className="cell100"
                                             >
                                                 {cell.render("Cell")}
@@ -116,15 +138,17 @@ const Table = ({ data, actions, columnsToShow }: any) => {
                         })}
                     </tbody>
                 </table>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={data.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+                {!hidePagination && (
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={data.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                )}
             </div>
         </div>
     );

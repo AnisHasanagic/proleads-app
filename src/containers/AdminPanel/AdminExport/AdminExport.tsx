@@ -11,7 +11,7 @@ import { loadCompanies } from "../../../store/company/company.actions";
 
 import "./AdminExport.scss";
 
-import GetAppIcon from '@material-ui/icons/GetApp';
+import GetAppIcon from '@mui/icons-material/GetApp';
 import { Input } from "../../../components/Input/Input";
 
 function AdminExport() {
@@ -28,7 +28,7 @@ function AdminExport() {
 
 
     useEffect(() => {
-        dispatch(loadCompanies(user.id));
+        dispatch(loadCompanies(false));
     }, []);
 
     const showCompany = (Company: any) => {

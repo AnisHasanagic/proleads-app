@@ -1,47 +1,37 @@
-import moment from "moment";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-    updateCompany,
-    addCompany,
+    loadAssignedUsers,
+    loadUnAssignedUsers,
 } from "../../../../store/company/company.actions";
-import { Button, ButtonTypes } from "../../../Button/Button";
-import { Checkbox } from "../../../Checkbox/Checkbox";
-import { Form } from "../../../Form/Form";
 import { Input } from "../../../Input/Input";
-import DashboardLayout from "../../../../layouts/DashboardLayout";
-import { loadUsers } from "../../../../store/users/users.actions"
-import { loadAssignedUsers } from "../../../../store/assignedUsers/assignedUsers.actions";
-import { loadUnAssignedUsers } from "../../../../store/unassignedUsers/unassignedUsers.actions";
 import Table from "../../../Table/Table";
 
 import "./AssignModal.scss";
-import { isNullishCoalesce } from "typescript";
-import { addAssign } from "../../../../store/assign/assign.actions";
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import { toggleAssign } from "../../../../store/assign/assign.actions";
+import AssignmentIndIcon from "@mui/icons-material/Add";
+import UnAssignmentIndIcon from "@mui/icons-material/Remove";
+import CTBFields from "../../../../assets/CTBFields.svg";
 
-
-function AssignModal({ company, isAdd }: any) {
-
-
+function AssignModal({ company }: any) {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
-    const users = useSelector((state: any) => state.users);
-    const [searchValue, setSearchValue] = useState("")
-    const assigned = useSelector((state: any) => state.assigned)
-    const unassigned = useSelector((state: any) => state.unAssigned)
+    const [searchValue, setSearchValue] = useState("");
+    const [searchValue2, setSearchValue2] = useState("");
+    const assigned = useSelector((state: any) => state.company.assigned_users);
+    const unassigned = useSelector(
+        (state: any) => state.company.unassigned_users
+    );
 
     useEffect(() => {
-        dispatch(loadAssignedUsers(company.id))
-    }, [])
+        if (company) {
+            dispatch(loadAssignedUsers(company.id));
+            dispatch(loadUnAssignedUsers(company.id));
+        }
+    }, [company]);
 
-    useEffect(() => {
-        dispatch(loadUnAssignedUsers(company.id))
-    }, [])
-
-    const showUser = (user: any) => {
-        dispatch(addAssign({ company_id: company.id, user_id: user.id }, navigate))
+    const toggleAssignUser = (user: any) => {
+        dispatch(toggleAssign({ company_id: company.id, user_id: user.id }));
     };
 
     const actions1 = [
@@ -49,7 +39,7 @@ function AssignModal({ company, isAdd }: any) {
             name: "Assign",
             row: "id",
             icon: <AssignmentIndIcon />,
-            action: showUser,
+            action: toggleAssignUser,
         },
     ];
 
@@ -57,62 +47,76 @@ function AssignModal({ company, isAdd }: any) {
         {
             name: "UnAssign",
             row: "id",
-            icon: <AssignmentIndIcon />,
-            action: showUser,
+            icon: <UnAssignmentIndIcon />,
+            action: toggleAssignUser,
         },
     ];
 
-    const columnsToShow = [
-        "username",
-    ];
+    const columnsToShow = ["username"];
 
-    const keys = columnsToShow
+    const keys = columnsToShow;
     const search = (data: any) => {
-        return data.filter(
-            (item: any) =>
-                keys.some(key => item[key].toLowerCase().includes(searchValue)))
-    }
+        return data.filter((item: any) =>
+            keys.some((key) => item[key].toLowerCase().includes(searchValue))
+        );
+    };
+
+    const search2 = (data: any) => {
+        return data.filter((item: any) =>
+            keys.some((key) => item[key].toLowerCase().includes(searchValue2))
+        );
+    };
 
     return (
         <section id="assign-users">
-            <div>
-                <h1>All Users</h1>
-                <p className="mb-5">List of all users.</p>
+            <div className="tab">
+                <img src={CTBFields} className="add-image" alt="" />
+                <h2>{company && company.name} Assign agent</h2>
             </div>
-            <div className="flex">
+            <div className="form-new flex">
                 <div className="assign">
-                    <h2>Unassigned agents</h2>
+                    <p>Unassigned agents</p>
                     <Input
                         id={"search"}
                         type={"text"}
                         className={"search"}
-                        onChange={(e: any): void => setSearchValue(e.target.value)}
+                        onChange={(e: any): void =>
+                            setSearchValue(e.target.value)
+                        }
                         placeholder={"Search..."}
                     />
                     <Table
                         data={search(unassigned.list)}
                         actions={actions1}
                         columnsToShow={columnsToShow}
+                        hidePagination
+                        hideHeaders
+                        small
                     />
                 </div>
                 <div className="unassign">
-                    <h2>Assigned agents</h2>
+                    <p>Assigned agents</p>
                     <Input
                         id={"search"}
                         type={"text"}
                         className={"search"}
-                        onChange={(e: any): void => setSearchValue(e.target.value)}
+                        onChange={(e: any): void =>
+                            setSearchValue2(e.target.value)
+                        }
                         placeholder={"Search..."}
                     />
                     <Table
-                        data={search(assigned.list)}
+                        data={search2(assigned.list)}
                         actions={actions2}
                         columnsToShow={columnsToShow}
+                        hidePagination
+                        hideHeaders
+                        small
                     />
                 </div>
             </div>
         </section>
     );
-};
+}
 
 export default AssignModal;

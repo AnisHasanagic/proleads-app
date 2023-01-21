@@ -7,9 +7,8 @@ import { Form } from "../../components/Form/Form";
 import { Input } from "../../components/Input/Input";
 import { login } from "../../store/user/user.actions";
 
-import logo from "../../assets/logo.svg"
+import logo from "../../assets/logo.svg";
 import "./Auth.scss";
-
 
 function Auth() {
     const navigate = useNavigate();
@@ -19,7 +18,6 @@ function Auth() {
         password: "",
     };
 
-
     const dispatch = useDispatch();
 
     const user = useSelector((state: any) => state.user);
@@ -27,9 +25,8 @@ function Auth() {
     const [newLoginUser, setNewLoginUser] = useState<any>(INITIAL_USER);
     const [newLoginUserErrors, setNewLoginUserErrors] = useState<any>({});
 
-    const [name, setName] = useState('');
+    const [name, setName] = useState("");
     const [room, setRoom] = useState("onlineUsers");
-
 
     const changeEvent = (e: any): void => {
         const name = e.target.name;
@@ -41,18 +38,10 @@ function Auth() {
         });
     };
 
-
     const loginUser = (): void => {
-        dispatch(
-            login(
-                newLoginUser.username,
-                newLoginUser.password,
-                navigate,
-            )
-        );
-        setName(newLoginUser.username)
+        dispatch(login(newLoginUser.username, newLoginUser.password, navigate));
+        setName(newLoginUser.username);
     };
-
 
     const handleKeypress = (e: any): void => {
         if (e.key === "Enter") {
@@ -68,7 +57,6 @@ function Auth() {
         }
     }, [user]);
 
-
     useEffect(() => {
         if (user.token) {
             navigate("/dashboard");
@@ -79,9 +67,7 @@ function Auth() {
         <div id="page">
             <div id="auth">
                 <div>
-                    <img
-                        className="logo-image"
-                        src={logo} alt="" />
+                    <img className="logo-image" src={logo} alt="" />
                 </div>
                 <h1 id="head">Welcome Back!</h1>
                 <h2 id="underHeader">Log in to your ProLeads account</h2>
@@ -94,12 +80,8 @@ function Auth() {
                                 className="username"
                                 name={"username"}
                                 value={newLoginUser["username"]}
-                                onKeyPress={(e: any): void =>
-                                    handleKeypress(e)
-                                }
-                                onChange={(e: any): void =>
-                                    changeEvent(e)
-                                }
+                                onKeyPress={(e: any): void => handleKeypress(e)}
+                                onChange={(e: any): void => changeEvent(e)}
                                 errors={newLoginUserErrors["username"]}
                                 placeholder={"Username"}
                                 label="Username"
@@ -110,12 +92,8 @@ function Auth() {
                                 className="pass"
                                 name={"password"}
                                 value={newLoginUser["password"]}
-                                onKeyPress={(e: any): void =>
-                                    handleKeypress(e)
-                                }
-                                onChange={(e: any): void =>
-                                    changeEvent(e)
-                                }
+                                onKeyPress={(e: any): void => handleKeypress(e)}
+                                onChange={(e: any): void => changeEvent(e)}
                                 errors={newLoginUserErrors["password"]}
                                 placeholder={"Password"}
                                 label="Password"
@@ -126,7 +104,9 @@ function Auth() {
                                 big
                                 loading={user.loading}
                                 disabled={
-                                    user.loading
+                                    user.loading ||
+                                    !newLoginUser.username ||
+                                    !newLoginUser.password
                                 }
                             >
                                 Login

@@ -1,18 +1,46 @@
-#assign-users{
-
-    padding: 30px;
-
-.flex{
+#assign-users {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    flex: 1;
 
+    .tab {
+        background: #F6F6F9;
+        display: flex;
+        align-items: center;
+        height: 64px;
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
 
-    .unassign{
-        margin-left: 5px;
+        h2 {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 16px;
+            margin-left: 10px;
+        }
     }
 
-}
+    .form-new {
+        background: #FFFFFF;
+        padding: 30px;
+        flex: 1;
+    }
 
+    .flex {
+        display: flex;
+        .assign, .unassign {
+            flex: 1;
 
+            > p {
+                margin: 0;
+                margin-bottom: 10px;
+            }
+        }
+    
+        .unassign {
+            margin-left: 30px;
+        }
+    }
 }

@@ -32,7 +32,7 @@ export const addCall =
                 if (response.ok) {
                     dispatch(addSuccess());
                     toast.success("CALL_MADE_SUCCESSFULLY");
-                    navigate('/dashboard/company')
+                    navigate('/dashboard/calls')
                 } else {
                     const error: any = {
                         message: data.message ? data.message : null,
@@ -74,29 +74,3 @@ export const loadCalls = (
         dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
     }
 };
-
-export const mailSend = (
-    Maildata: any
-): any => async (dispatch: any) => {
-    try {
-        console.log(Maildata)
-        const response = await CallService.sendMail(Maildata);
-
-        let data: any = null;
-
-        try {
-            data = await response.clone().json();
-        } catch {
-            data = await response.clone().text();
-        }
-
-        if (response.ok) {
-            toast.success("MAIL_SENT_SUCCESSFULLY");
-        } else {
-            dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
-        }
-    } catch (e: any) {
-        dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
-    }
-
-}

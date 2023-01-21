@@ -21,8 +21,32 @@
 div.search-butt{
     display: flex;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 .admin-users.search-butt{
     display: flex;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+
+    .title {
+        margin-right: 20px;
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+    
+        p {
+            color: #666687;
+            margin: 0;
+            margin-bottom: 20px;
+        }
+    }
+
+    .actions {
+        margin-left: auto;
+    }
 }

@@ -11,10 +11,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 12px 16px;
-  gap: 8px;
-
-  background: #6BE29A;
   border-radius: 4px;
 
   cursor: pointer;
@@ -23,6 +19,8 @@
   height: 40px;
   box-shadow: none;
   font-weight: 700;
+
+
 
   >span {
     z-index: 1;
@@ -33,7 +31,6 @@
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    color: white;
   }
 
   &.iconOnly {
@@ -61,8 +58,8 @@
 
   &.line {
     background: transparent;
-    border: 1px solid $button;
-    color: $button;
+    border: 1px solid #DCDCE4;
+    color: #32324D;
   }
 
   &.large {
@@ -89,12 +86,12 @@
   }
 
   &.primary {
-    color: #000;
+    color: #fff;
 
     &.line {
       background: transparent;
-      border: 1px solid $button-primary;
-      color: $button-primary;
+      border: 1px solid #6BE29A;
+      color: #6BE29A;
     }
 
     background: #6BE29A;
@@ -105,13 +102,16 @@
 
     &:hover,
     &.active {
-      color: black;
-      border:1px solid #fff;
-      background-position: 100%;
+      box-shadow: 0 2px 5px 0 rgba(#6BE29A, .4);
     }
   }
 
   &.danger {
+    background: $button-danger;
+    transition: 200ms;
+    border: none;
+    color: #fff;
+  
     &.line {
       background: transparent;
       border: 1px solid $button-danger;

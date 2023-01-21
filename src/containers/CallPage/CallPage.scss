@@ -1,33 +1,48 @@
 #call-admin-modal {
+    hr {
+        background-color: #eaeaef;
+        height: 1px;
+        width: 100%;
+        border: 0;
+        margin: 20px 0;
+    }
+
+    > h1 {
+        margin: 0;
+        margin-bottom: 20px;
+    }
 
     .posDiv {
         display: flex;
-        justify-content: space-around;
 
         #info {
-            background: #FFFFFF;
+            background: #ffffff;
 
-            border: 0.5px solid #EAEAEF;
+            border: 0.5px solid #eaeaef;
 
             box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1);
             border-radius: 20px;
-            width: 37vw;
-            height: 85vh;
+            flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 8px;
-
-            .call_information {
-                .scrollInfo{
-                    height: 35vh;
-                    overflow-y: scroll;
-                }
-            }
+            padding: 30px;
+            margin-left: 30px;
 
             .company_information {
-                border-top: 1px solid #EAEAEF;;
+                > div {
+                    font-size: 13px;
+                    background: #f6f6f9;
+                    margin-bottom: 5px;
+                    align-items: center;
+                    border: 1px solid #dcdce4;
+                    border-radius: 4px;
+                    padding: 10px;
+                    text-align: left;
+                }
+
+                border-top: 1px solid #eaeaef;
                 padding-top: 10px;
-                .scrollInfo{
+                .scrollInfo {
                     height: 40vh;
                     overflow-y: scroll;
                 }
@@ -35,63 +50,50 @@
         }
 
         .secDiv {
-            background: #FFFFFF;
+            background: #ffffff;
 
-            border: 0.5px solid #EAEAEF;
+            border: 0.5px solid #eaeaef;
 
             box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1);
             border-radius: 20px;
-            height: 85vh;
-            padding: 8px;
-            text-align: center;
-            align-items: center;
-
-
-
-
-
-
+            padding: 30px;
+            flex: 0 0 auto;
+            align-self: flex-start;
+            width: 400px;
 
             .form {
                 display: flex;
                 flex-direction: column;
-                text-align: center;
-                align-items: center;
-                padding: 20px;
-                border-radius: 20px;
-                background-color: #FFFFFF;
-                width: 37vw;
-                height: 75vh;
-                overflow: hidden;
-
+                padding: 0;
+                background-color: #ffffff;
 
                 .divi {
                     display: flex;
                     flex-direction: row;
-                    justify-content: space-around;
                 }
-
 
                 .inputFields {
-                    width: 15vw;
-                    height: 7vh;
-                    margin-top: -10px;
-                    margin-right: 10px;
                     display: flex;
                     flex-direction: column;
-                    justify-content: start;
+                    justify-content: flex-start;
+
+                    + .inputFields {
+                        margin-left: 10px;
+                    }
+
+                    &.flex1 {
+                        flex: 1;
+                    } 
                 }
                 .inputFields2 {
-                    width: 15vw;
-                    height: 7vh;
                     text-align: center;
                     align-items: center;
                     .adm2 {
                         height: 14px;
-                        float:left;
+                        float: left;
                         display: flex;
                         align-items: flex-end;
-                        font-family: 'Inter';
+                        font-family: "Inter";
                         font-style: normal;
                         font-weight: 700;
                         font-size: 12px;
@@ -99,29 +101,25 @@
                         /* identical to box height, or 133% */
                         /* Light mode/Neutral800 */
                         margin-bottom: -15px;
-                        color: #32324D;
+                        color: #32324d;
                     }
                 }
 
                 .inputDesc {
-                    width: 30vw;
-                    height: 2vh;
-                    max-height: 4vh;
                     text-align: center;
                     align-items: center;
                     justify-content: center;
-                    margin-left: 20%;
                     margin-top: -13px;
                     margin-bottom: 70px;
-                    .desc{
+                    .desc {
                         margin-top: 5px;
                     }
                     .adm2 {
                         height: 14px;
-                        float:left;
+                        float: left;
                         display: flex;
                         align-items: flex-end;
-                        font-family: 'Inter';
+                        font-family: "Inter";
                         font-style: normal;
                         font-weight: 700;
                         font-size: 12px;
@@ -129,67 +127,84 @@
                         /* identical to box height, or 133% */
                         /* Light mode/Neutral800 */
                         margin-bottom: -15px;
-                        color: #32324D;
+                        color: #32324d;
                     }
                 }
 
+                .desc {
+                    margin: 0;
+                    font-family: "Inter";
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 16px;
+                    /* identical to box height, or 133% */
+
+                    display: flex;
+                    align-items: center;
+
+                    /* Light mode/Neutral600 */
+
+                    color: #666687;
+                }
 
                 .toggle {
-                    height: 32px;
-                    margin-top: -10px;
-
+                    display: inline-block;
+                    background: #f6f6f9;
+                    height: 40px;
+                    margin-bottom: 5px;
+                    text-align: center;
+                    align-items: center;
+                    border: 1px solid #dcdce4;
+                    border-radius: 4px;
 
                     .Mui-selected {
-                        color: #6BE29A;
+                        color: #6be29a;
                         background-color: white;
                     }
 
-                    #gender {
+                    .tglbtn {
+                        background-color: #ffffff;
+                        width: 85px;
                         height: 32px;
-                        margin-top: 10px;
-                        margin-bottom: 10px;
+                        margin: 4px;
+                    }
+                    .tglbtn:active {
+                        color: #6be29a;
+                    }
+                    .tglbtn::after {
+                        color: #6be29a;
                     }
                 }
 
-                .wrapper {
-                    display: grid;
-                    grid-template-columns: 8vw 8vw;
-                    grid-template-rows: 7vh 7vh;
-                    justify-content: space-evenly;
-                    margin-top:100px;
-                    row-gap: -30px;
-                    margin-right: 17%;
-                    z-index: 1;
-                }
-
-                .custom {
-                    margin-top: 40px;
-                    margin-bottom: 30px;
-                    height: 320px;
-                    width: 39vw;
-                    overflow-y: scroll;
-                    overflow-x: hidden;
-                }
+                // .wrapper {
+                //     display: grid;
+                //     grid-template-columns: 8vw 8vw;
+                //     grid-template-rows: 7vh 7vh;
+                //     justify-content: space-evenly;
+                //     margin-top: 100px;
+                //     row-gap: -30px;
+                //     margin-right: 17%;
+                //     z-index: 1;
+                // }
 
                 .header {
                     font-size: 20px;
                 }
 
-              
                 .adm {
-                    height: 14px;
-                    float:left;
                     display: flex;
                     align-items: flex-start;
-                    font-family: 'Inter';
+                    font-family: "Inter";
                     font-style: normal;
                     font-weight: 700;
                     font-size: 12px;
                     line-height: 16px;
                     /* identical to box height, or 133% */
                     /* Light mode/Neutral800 */
-                    margin-bottom: -20px;
-                    color: #32324D;
+                    color: #32324d;
+                    margin: 0;
+                    margin-bottom: 5px;
                 }
 
                 .inpWidth {
@@ -206,7 +221,6 @@
                         height: 15vh;
                         overflow: scroll;
                     }
-
                 }
 
                 .inputs {
@@ -219,10 +233,23 @@
                     font-size: 12px;
                 }
             }
-
-
         }
+    }
 
+    .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+        padding: 10px;
+        padding-right: 32px;
+    }
 
+    .MuiOutlinedInput-notchedOutline {
+        border: none;
+    }
+
+    .MuiTooltip-tooltip {
+        font-size: 14px;
+    }
+
+    .emails {
+        margin-top: 10px;
     }
 }

@@ -14,6 +14,16 @@ type CompanySlice = {
         errors: any[];
         message: string;
     };
+    assigned_users: {
+        loading: boolean;
+        list: [],
+        error: string;
+    },
+    unassigned_users: {
+        loading: boolean;
+        list: [],
+        error: string;
+    },
 };
 
 type Company = {
@@ -23,6 +33,7 @@ type Company = {
     description: string,
     company_info: string,
     price_per_call: number,
+    price_per_connect: number,
     initial_time: number,
     price_per_minutes_overdue: number,
     overdue_time: number,
@@ -45,6 +56,16 @@ const INITIAL_STATE: CompanySlice = {
         loading: false,
         errors: [],
         message: "",
+    },
+    assigned_users: {
+        loading: false,
+        list: [],
+        error: "",
+    },
+    unassigned_users: {
+        loading: false,
+        list: [],
+        error: "",
     },
 };
 
@@ -104,6 +125,36 @@ const companySlice = createSlice({
             state.add.loading = false;
             state.add.message = action.payload.message;
             state.add.errors = action.payload.errors;
+        },
+        loadingAssignedUsers: (state) => {
+            state.assigned_users.loading = true;
+            state.assigned_users.list = [];
+            state.assigned_users.error = "";
+        },
+        loadSuccessAssignedUsers: (state, action) => {
+            state.assigned_users.loading = false;
+            state.assigned_users.list = action.payload.list;
+            state.assigned_users.error = "";
+        },
+        loadFailedAssignedUsers: (state, action) => {
+            state.assigned_users.loading = false;
+            state.assigned_users.list = [];
+            state.assigned_users.error = action.payload.message;
+        },
+        loadingUnassignedUsers: (state) => {
+            state.unassigned_users.loading = true;
+            state.unassigned_users.list = [];
+            state.unassigned_users.error = "";
+        },
+        loadSuccessUnassignedUsers: (state, action) => {
+            state.unassigned_users.loading = false;
+            state.unassigned_users.list = action.payload.list;
+            state.unassigned_users.error = "";
+        },
+        loadFailedUnassignedUsers: (state, action) => {
+            state.unassigned_users.loading = false;
+            state.unassigned_users.list = [];
+            state.unassigned_users.error = action.payload.message;
         },
     },
 });

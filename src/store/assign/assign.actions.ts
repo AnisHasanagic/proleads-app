@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { loadAssignedUsers, loadUnAssignedUsers } from "../company/company.actions";
 import AssignService from "./assign.service";
 import AssignSlice from "./assign.slice";
 
@@ -15,15 +16,13 @@ const {
 } = AssignSlice.actions;
 
 
-export const addAssign =
-    (assign: any,
-        navigate:any): any =>
+export const toggleAssign =
+    (assign: any): any =>
     async (dispatch: any) => {
         try {
             dispatch(addLoading());
-            console.log(assign)
 
-            const response = await AssignService.add(assign);
+            const response = await AssignService.toggle(assign);
 
             let data: any = null;
 
@@ -36,7 +35,8 @@ export const addAssign =
             if (response.ok) {
                 dispatch(addSuccess());
                 toast.success(data.message);
-                window.location.reload();
+                dispatch(loadAssignedUsers(assign.company_id))
+                dispatch(loadUnAssignedUsers(assign.company_id))
             } else {
                 const error: any = {
                     message: data.message ? data.message : null,

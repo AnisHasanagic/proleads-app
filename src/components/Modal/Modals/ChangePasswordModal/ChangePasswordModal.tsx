@@ -1,23 +1,13 @@
-import moment from "moment";
-import { strongPassword } from "../../../../utils/helpers";
-
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    createAccount,
-    updateAccount,
-    updatePassword
+    updatePassword,
 } from "../../../../store/users/users.actions";
 import { Button, ButtonTypes } from "../../../Button/Button";
-import { Checkbox } from "../../../Checkbox/Checkbox";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Form } from "../../../Form/Form";
 import { Input } from "../../../Input/Input";
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import CTBFields from "../../../../assets/CTBFields.svg"
 
 import "./ChangePasswordModal.scss";
 
@@ -27,14 +17,12 @@ function ChangePasswordModal({ user }: any) {
     const users = useSelector((state: any) => state.users);
     const [currentUser, setCurrentUser] = useState<any>(null);
 
-
     const INITIAL_USER = {
         new_password: "",
     };
 
     const [newUserPassword, setNewUserPassword] = useState<any>(INITIAL_USER);
     const [newUserPasswordErrors, setNewUserPasswordErrors] = useState<any>({});
-
 
     const validations: any = {
         new_password: {
@@ -103,10 +91,8 @@ function ChangePasswordModal({ user }: any) {
                     }
                 }
 
-                
-
                 if (validator.sameAs && id === "Repeatpassword") {
-                    console.log(value)
+                    console.log(value);
                     if (value !== newUserPassword[validator.sameAs]) {
                         errors.push("PASSWORD_DO_NOT_MATCH");
                     }
@@ -139,9 +125,6 @@ function ChangePasswordModal({ user }: any) {
         return hasErrors;
     };
 
-
-
-
     return (
         <div id="User-password-modal">
             <div className="tab">
@@ -149,7 +132,6 @@ function ChangePasswordModal({ user }: any) {
             </div>
             <div className="forma">
                 <Form className="form">
-
                     <div className="inp">
                         <div>
                             <h2 className="adm">New Password</h2>
@@ -175,15 +157,17 @@ function ChangePasswordModal({ user }: any) {
                                 placeholder={"Repeat Password"}
                             />
                         </div>
-
-
                     </div>
                 </Form>
             </div>
             <div className="butt">
                 <Button
                     btnClass={ButtonTypes.primary}
-                    onClick={() => dispatch(updatePassword(newUserPassword, user.id, navigate))}
+                    onClick={() =>
+                        dispatch(
+                            updatePassword(newUserPassword, user.id, navigate)
+                        )
+                    }
                     loading={users.update.loading}
                     disabled={users.update.loading || hasSomeErrors()}
                 >
@@ -191,7 +175,6 @@ function ChangePasswordModal({ user }: any) {
                 </Button>
             </div>
         </div>
-
     );
 }
 

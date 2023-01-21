@@ -1,12 +1,18 @@
 .Dashboard {
-    
+    > h1 {
+        margin-top: 0;
+    }
+
+    > p {
+        color: #666687;
+    }
 
     .design {
         background-color: white;
         padding: 35px;
-        height: 366px;
-        width: 713px;
+        width: 700px;
         border-radius: 20px;
+
         .headChart{
             display: flex;
             text-align: center;
@@ -27,5 +33,9 @@
             color: #32324D;
         }
 
+    }
+
+    .design + .design {
+        margin-top: 20px;
     }
 }
