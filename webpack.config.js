@@ -14,7 +14,7 @@ module.exports = {
     entry: path.resolve(__dirname, "src", "index.tsx"),
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "bundle.js",
+        filename: "[name].[contenthash].js",
         publicPath: "/",
     },
     mode: env,
@@ -62,9 +62,7 @@ module.exports = {
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                    env === "development"
-                        ? "style-loader"
-                        : MiniCssExtractPlugin.loader,
+                    "style-loader",
                     {
                         loader: "css-loader",
                         options: {
@@ -95,7 +93,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "/public/index.html"),
             favicon: "./public/favicon.ico",
-            inject: false,
+            inject: true,
         }),
         new MiniCssExtractPlugin({
             filename: "css/[name].[contenthash].min.css",

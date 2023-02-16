@@ -71,11 +71,11 @@ function AssignModal({ company }: any) {
         <section id="assign-users">
             <div className="tab">
                 <img src={CTBFields} className="add-image" alt="" />
-                <h2>{company && company.name} Assign agent</h2>
+                <h2>{company && company.name} Agent toewijzen</h2>
             </div>
             <div className="form-new flex">
                 <div className="assign">
-                    <p>Unassigned agents</p>
+                    <p>Niet-toegewezen agenten</p>
                     <Input
                         id={"search"}
                         type={"text"}
@@ -83,7 +83,7 @@ function AssignModal({ company }: any) {
                         onChange={(e: any): void =>
                             setSearchValue(e.target.value)
                         }
-                        placeholder={"Search..."}
+                        placeholder={"Zoekopdracht..."}
                     />
                     <Table
                         data={search(unassigned.list)}
@@ -95,7 +95,7 @@ function AssignModal({ company }: any) {
                     />
                 </div>
                 <div className="unassign">
-                    <p>Assigned agents</p>
+                    <p>AToegewezen agenten</p>
                     <Input
                         id={"search"}
                         type={"text"}
@@ -103,7 +103,7 @@ function AssignModal({ company }: any) {
                         onChange={(e: any): void =>
                             setSearchValue2(e.target.value)
                         }
-                        placeholder={"Search..."}
+                        placeholder={"Zoekopdracht..."}
                     />
                     <Table
                         data={search2(assigned.list)}

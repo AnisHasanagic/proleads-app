@@ -187,12 +187,12 @@ function UserAdminModal({ user, isAdd }: any) {
         <div id="User-admin-modal">
             <div className="tab">
                 <img src={CTBFields} className="add-image" alt="" />
-                <h2>{isAdd ? "Add User" : "Edit User"}</h2>
+                <h2>{isAdd ? "Voeg gebruiker toe" : "Bewerk gebruiker"}</h2>
             </div>
             <div className="forma">
                 <Form className="form">
                     <div className="inp">
-                        <h2 className="adm">Username</h2>
+                        <h2 className="adm">Gebruikersnaam</h2>
                         <Input
                             id={"username"}
                             type={"text"}
@@ -201,9 +201,9 @@ function UserAdminModal({ user, isAdd }: any) {
                             onChange={(e: any): void => changeEvent(e)}
                             onBlur={(e: any): void => blurEvent(e)}
                             errors={newUserErrors["username"]}
-                            placeholder={"username"}
+                            placeholder={"Gebruikersnaam"}
                         />
-                        <h2 className="adm">Full name</h2>
+                        <h2 className="adm">Voor-en</h2>
                         <Input
                             id={"full_name"}
                             type={"text"}
@@ -212,14 +212,14 @@ function UserAdminModal({ user, isAdd }: any) {
                             onChange={(e: any): void => changeEvent(e)}
                             onBlur={(e: any): void => blurEvent(e)}
                             errors={newUserErrors["full_name"]}
-                            placeholder={"Full name"}
+                            placeholder={"Voor-en"}
                         />
                     </div>
                     {!isCurrentdUser && (
                         <div className="inp">
                             {isAdd && (
                                 <div>
-                                    <h2 className="adm">Password</h2>
+                                    <h2 className="adm">Wachtwoord</h2>
                                     <Input
                                         id={"password"}
                                         type={"password"}
@@ -230,12 +230,12 @@ function UserAdminModal({ user, isAdd }: any) {
                                         }
                                         onBlur={(e: any): void => blurEvent(e)}
                                         errors={newUserErrors["password"]}
-                                        placeholder={"Password"}
+                                        placeholder={"Wachtwoord"}
                                     />
                                 </div>
                             )}
 
-                            <h2 className="adm">Admin?</h2>
+                            <h2 className="adm">Beheerder?</h2>
                             <div className="toggle">
                                 <ToggleButtonGroup
                                     id="role"
@@ -251,7 +251,7 @@ function UserAdminModal({ user, isAdd }: any) {
                                         value={false}
                                         aria-label="false"
                                     >
-                                        FALSE
+                                        ONWAAR
                                     </ToggleButton>
                                     <ToggleButton
                                         className="tglbtn"
@@ -259,18 +259,17 @@ function UserAdminModal({ user, isAdd }: any) {
                                         value={true}
                                         aria-label="true"
                                     >
-                                        TRUE
+                                        WAAR
                                     </ToggleButton>
                                 </ToggleButtonGroup>
                             </div>
                             <p className="desc">
-                                By making an user admin he will get the full
-                                access to the app.
+                                Door een gebruiker admin te maken krijgt hij volledige toegang tot de app.
                             </p>
                             <br />
                             {!isAdd && (
                                 <>
-                                    <h2 className="adm">Active?</h2>
+                                    <h2 className="adm">Actief?</h2>
                                     <div className="toggle">
                                         <ToggleButtonGroup
                                             id="role"
@@ -291,7 +290,7 @@ function UserAdminModal({ user, isAdd }: any) {
                                                 value={false}
                                                 aria-label="false"
                                             >
-                                                FALSE
+                                                ONWAAR
                                             </ToggleButton>
                                             <ToggleButton
                                                 className="tglbtn"
@@ -299,14 +298,14 @@ function UserAdminModal({ user, isAdd }: any) {
                                                 value={true}
                                                 aria-label="true"
                                             >
-                                                TRUE
+                                                WAAR
                                             </ToggleButton>
                                         </ToggleButtonGroup>
                                     </div>
                                     <p className="desc">
-                                        By deactivating the user they will not
-                                        be able to use the app until you
-                                        activate them again.
+                                        Door de gebruiker te deactiveren, doen ze dat niet
+                                        in staat zijn om de app te gebruiken totdat u
+                                        activeer ze weer.
                                     </p>
                                 </>
                                 // <Checkbox
@@ -333,7 +332,7 @@ function UserAdminModal({ user, isAdd }: any) {
                         loading={users.update.loading}
                         disabled={users.update.loading || hasSomeErrors()}
                     >
-                        Save
+                        Redden
                     </Button>
                 )}
                 {isAdd && (
@@ -343,7 +342,7 @@ function UserAdminModal({ user, isAdd }: any) {
                         loading={users.add.loading}
                         disabled={users.add.loading || hasSomeErrors()}
                     >
-                        Create
+                        Creëren
                     </Button>
                 )}
             </div>

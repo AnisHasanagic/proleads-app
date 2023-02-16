@@ -128,13 +128,13 @@ function ChangePasswordModal({ user }: any) {
     return (
         <div id="User-password-modal">
             <div className="tab">
-                <h2 className="header">Change Password</h2>
+                <h2 className="header">Verander wachtwoord</h2>
             </div>
             <div className="forma">
                 <Form className="form">
                     <div className="inp">
                         <div>
-                            <h2 className="adm">New Password</h2>
+                            <h2 className="adm">Nieuw</h2>
                             <Input
                                 id={"new_password"}
                                 type={"password"}
@@ -143,9 +143,9 @@ function ChangePasswordModal({ user }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newUserPasswordErrors["new_password"]}
-                                placeholder={"New Password"}
+                                placeholder={"Nieuw"}
                             />
-                            <h2 className="adm">RepeatPassword</h2>
+                            <h2 className="adm">Herhaal</h2>
                             <Input
                                 id={"Repeatpassword"}
                                 type={"password"}
@@ -154,7 +154,7 @@ function ChangePasswordModal({ user }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newUserPasswordErrors["Repeatpassword"]}
-                                placeholder={"Repeat Password"}
+                                placeholder={"Herhaal"}
                             />
                         </div>
                     </div>
@@ -171,7 +171,7 @@ function ChangePasswordModal({ user }: any) {
                     loading={users.update.loading}
                     disabled={users.update.loading || hasSomeErrors()}
                 >
-                    Save
+                    Redden
                 </Button>
             </div>
         </div>

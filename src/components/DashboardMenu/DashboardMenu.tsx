@@ -43,7 +43,7 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
             ],
         },
         {
-            name: "Admin Panel",
+            name: "ADMINISTRATIE PANEEL",
             link: "/dashboard/admin-panel",
             isActiveSub:
                 route.pathname === "/dashboard/admin-panel/users" ||
@@ -51,20 +51,20 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
             adminOnly: true,
             sub: [
                 {
-                    name: "Users List",
+                    name: "Gebruikers lijst",
                     icon: Users,
                     link: "/dashboard/admin-panel/users",
                     isActive: route.pathname === "/dashboard/admin-panel/users",
                 },
                 {
-                    name: "Companies List",
+                    name: "Bedrijven lijst",
                     icon: Companies,
                     link: "/dashboard/admin-panel/company",
                     isActive:
                         route.pathname === "/dashboard/admin-panel/company",
                 },
                 {
-                    name: "Export",
+                    name: "Exporteren",
                     icon: Export,
                     link: "/dashboard/admin-panel/calls",
                     isActive: route.pathname === "/dashboard/admin-panel/calls",
@@ -72,12 +72,12 @@ export const DashboardMenu = React.memo(({ isActive }: any) => {
             ],
         },
         {
-            name: "General",
+            name: "Algemeen",
             link: "/dashboard",
             isActiveSub: route.pathname === "/dashboard",
             sub: [
                 {
-                    name: "Calls",
+                    name: "Oproepen",
                     icon: CallIcon,
                     link: "/dashboard/calls",
                     isActive: route.pathname === "/dashboard/calls",

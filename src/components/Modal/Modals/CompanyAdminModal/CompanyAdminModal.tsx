@@ -37,6 +37,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
         price_per_minutes_overdue: "",
         overdue_time: "",
         company_fields: "",
+        package_calls: "",
         isDeleted: false,
     };
 
@@ -79,6 +80,9 @@ function CompanyAdminModal({ company, isAdd }: any) {
             isRequired: true,
         },
         phone: {
+            isRequired: true,
+        },
+        package_calls: {
             isRequired: true,
         },
     };
@@ -291,6 +295,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                 company_fields: company.company_fields,
                 isDeleted: company.isDeleted,
                 phone: company.phone,
+                package_calls: company.package_calls,
             });
             setNewCompanyErrors({});
             setInputList(JSON.parse(company.company_fields));
@@ -327,7 +332,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
         <div id="company-admin-modal">
             <div className="tab">
                 <img src={CTBFields} className="add-image" alt="" />
-                <h2>Add Company</h2>
+                <h2>Bedrijf toevoegen</h2>
             </div>
             <div className="forma">
                 <Form className="form">
@@ -341,8 +346,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newCompanyErrors["name"]}
-                                placeholder={"Name"}
-                                label={"Name"}
+                                placeholder={"Naam"}
+                                label={"Naam"}
                             />
                             <Input
                                 id={"address"}
@@ -352,11 +357,11 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newCompanyErrors["address"]}
-                                placeholder={"Address"}
-                                label={"Address"}
+                                placeholder={"Adres"}
+                                label={"Adres"}
                             />
                             <div className="inputGroup email">
-                                <label htmlFor="email">List of emails</label>
+                                <label htmlFor="email">Lijst met e-mails</label>
                                 <div className="inputInner">
                                     <ReactMultiEmail
                                         id="email"
@@ -398,14 +403,25 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newCompanyErrors["description"]}
-                                placeholder={"Description"}
-                                label={"Description"}
+                                placeholder={"Beschrijving"}
+                                label={"Beschrijving"}
                                 isTextarea
                             />
                         </FormGroup>
                     </div>
                     <div className="inp">
                         <FormGroup>
+                            <Input
+                                id={"package_calls"}
+                                type={"number"}
+                                name={"package_calls"}
+                                value={newCompany["package_calls"]}
+                                onChange={(e: any): void => changeEvent(e)}
+                                onBlur={(e: any): void => blurEvent(e)}
+                                errors={newCompanyErrors["package_calls"]}
+                                placeholder={"Maandelijkse pakketoproepen"}
+                                label={"Maandelijkse pakketoproepen"}
+                            />
                             <Input
                                 id={"price_per_call"}
                                 type={"number"}
@@ -414,8 +430,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newCompanyErrors["price_per_call"]}
-                                placeholder={"Price per call"}
-                                label={"Price per call"}
+                                placeholder={"Prijs per gesprek"}
+                                label={"Prijs per gesprek"}
                             />
                             <Input
                                 id={"initial_time"}
@@ -425,8 +441,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newCompanyErrors["initial_time"]}
-                                placeholder={"Initial call time (s)"}
-                                label={"Initial call time (s)"}
+                                placeholder={"Initiële beltijd (s)"}
+                                label={"Initiële beltijd (s)"}
                             />
                             <Input
                                 id={"price_per_minutes_overdue"}
@@ -440,8 +456,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                         "price_per_minutes_overdue"
                                     ]
                                 }
-                                placeholder={"Overdue price"}
-                                label={"Overdue price"}
+                                placeholder={"Achterstallige prijs"}
+                                label={"Achterstallige prijs"}
                             />
                             <Input
                                 id={"company_info"}
@@ -451,8 +467,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newCompanyErrors["company_info"]}
-                                placeholder={"Company info"}
-                                label={"Company info"}
+                                placeholder={"Bedrijfsinfo"}
+                                label={"Bedrijfsinfo"}
                                 isTextarea
                             />
                         </FormGroup>
@@ -467,8 +483,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newCompanyErrors["overdue_time"]}
-                                placeholder={"Overdue time (s)"}
-                                label={"Overdue time (s)"}
+                                placeholder={"Achterstallige tijd (s)"}
+                                label={"Achterstallige tijd (s)"}
                             />
                             <Input
                                 id={"price_per_connect"}
@@ -478,8 +494,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newCompanyErrors["price_per_connect"]}
-                                placeholder={"Price per connect"}
-                                label={"Price per connect"}
+                                placeholder={"Prijs per aansluiting"}
+                                label={"Prijs per aansluiting"}
                             />
                             <Input
                                 id={"phone"}
@@ -489,12 +505,12 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newCompanyErrors["phone"]}
-                                placeholder={"Proleads phone"}
-                                label={"Proleads phone"}
+                                placeholder={"Proleads telefoon"}
+                                label={"Proleads telefoon"}
                             />
                         </FormGroup>
                         <p className="title-custom">
-                            Custom fields (Specific to company)
+                            Aangepaste velden (specifiek voor bedrijf)
                         </p>
                         <div id="custom-fileds">
                             <div className="custom">
@@ -516,7 +532,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                                         blurInputEvent(e, i)
                                                     }
                                                     placeholder={
-                                                        "Custom filed (ex. Boat size)"
+                                                        "Aangepast veld (bijv. bootmaat)"
                                                     }
                                                 />
 
@@ -557,7 +573,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                                         blurInputEvent(e, i)
                                                     }
                                                     placeholder={
-                                                        "Custom filed (ex. Boat size)"
+                                                        "Aangepast veld (bijv. bootmaat)"
                                                     }
                                                 />
 
@@ -585,7 +601,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 btnClass={ButtonTypes.primary}
                                 large
                             >
-                                Add Custom Field
+                                Aangepast veld toevoegen
                             </Button>
                         </div>
                     </div>
@@ -614,7 +630,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                             company_state.update.loading || hasSomeErrors()
                         }
                     >
-                        Save
+                        Redden
                     </Button>
                 )}
                 {isAdd && (
@@ -632,7 +648,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                         loading={company_state.add.loading}
                         disabled={company_state.add.loading || hasSomeErrors()}
                     >
-                        Create
+                        Creëren
                     </Button>
                 )}
             </div>

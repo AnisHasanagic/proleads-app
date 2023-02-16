@@ -52,14 +52,14 @@ function Dashboard() {
     return (
         <DashboardLayout>
             <div className="Dashboard">
-                <h1>Welcome 👋 </h1>
-                <p>We hope you are making good progress on your calls!</p>
+                <h1>Welkom 👋 </h1>
+                <p>We hopen dat je goede vorderingen maakt met je telefoontjes!</p>
                 <div className="design">
                     {auth.role === "admin" && (
                         <div>
                             <div className="headChart">
                                 <img src={phoneImage} alt="" />
-                                <h2 className="adm">Number of calls</h2>
+                                <h2 className="adm">Aantal oproepen</h2>
                             </div>
                             <BarChart chartData={userData} />
                         </div>
@@ -69,12 +69,12 @@ function Dashboard() {
                     <div>
                         <div className="headChart">
                             <img src={phoneImage} alt="" />
-                            <h2 className="adm">Number of calls today</h2>
+                            <h2 className="adm">Aantal telefoontjes vandaag</h2>
                         </div>
                         <ul>
-                            <li>Total: {auth.calls.length}</li>
+                            <li>Totaal: {auth.calls.length}</li>
                             <li>
-                                Sent emails:{" "}
+                                Verzonden e-mails:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) =>
@@ -83,7 +83,7 @@ function Dashboard() {
                                 }
                             </li>
                             <li>
-                                Sent email and connected:{" "}
+                                E-mail verzonden en verbonden:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) =>
@@ -93,7 +93,7 @@ function Dashboard() {
                                 }
                             </li>
                             <li>
-                                Wrong number:{" "}
+                                Verkeerd nummer:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) =>

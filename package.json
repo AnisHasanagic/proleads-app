@@ -96,6 +96,7 @@
     "babel-loader": "^8.2.5",
     "compression-webpack-plugin": "^10.0.0",
     "css-loader": "^6.7.1",
+    "css-minimizer-webpack-plugin": "^4.2.2",
     "dotenv": "^16.0.1",
     "html-webpack-plugin": "^5.5.0",
     "json-loader": "^0.5.7",

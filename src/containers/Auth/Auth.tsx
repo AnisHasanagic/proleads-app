@@ -69,8 +69,8 @@ function Auth() {
                 <div>
                     <img className="logo-image" src={logo} alt="" />
                 </div>
-                <h1 id="head">Welcome Back!</h1>
-                <h2 id="underHeader">Log in to your ProLeads account</h2>
+                <h1 id="head">Welkom terug!</h1>
+                <h2 id="underHeader">Log in op uw ProLeads-account</h2>
                 <div className="sign-box">
                     <div className="form-box">
                         <Form>
@@ -83,8 +83,8 @@ function Auth() {
                                 onKeyPress={(e: any): void => handleKeypress(e)}
                                 onChange={(e: any): void => changeEvent(e)}
                                 errors={newLoginUserErrors["username"]}
-                                placeholder={"Username"}
-                                label="Username"
+                                placeholder={"Gebruikersnaam"}
+                                label="Gebruikersnaam"
                             />
                             <Input
                                 id={"loginPassword"}
@@ -95,8 +95,8 @@ function Auth() {
                                 onKeyPress={(e: any): void => handleKeypress(e)}
                                 onChange={(e: any): void => changeEvent(e)}
                                 errors={newLoginUserErrors["password"]}
-                                placeholder={"Password"}
-                                label="Password"
+                                placeholder={"Wachtwoord"}
+                                label="Wachtwoord"
                             />
                             <Button
                                 onClick={() => loginUser()}
@@ -109,7 +109,7 @@ function Auth() {
                                     !newLoginUser.password
                                 }
                             >
-                                Login
+                                Log in
                             </Button>
                         </Form>
                     </div>

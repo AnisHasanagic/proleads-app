@@ -93,8 +93,8 @@ function AdminCompanies() {
         <DashboardLayout>
             <section id="admin-company">
                 <div className="mr-3">
-                    <h1>All company</h1>
-                    <p>List of all company.</p>
+                    <h1>Allemaal gezelschap</h1>
+                    <p>Lijst van alle bedrijven.</p>
                 </div>
                 <div className="search-butt">
                     <Input
@@ -104,7 +104,7 @@ function AdminCompanies() {
                         onChange={(e: any): void =>
                             setSearchValue(e.target.value)
                         }
-                        placeholder={"Search..."}
+                        placeholder={"Zoekopdracht..."}
                     />
                     <Button
                         btnClass={ButtonTypes.primary}
@@ -125,7 +125,7 @@ function AdminCompanies() {
                             });
                         }}
                     >
-                        Add New
+                        + Nieuw toevoegen
                     </Button>
                 </div>
                 <Table

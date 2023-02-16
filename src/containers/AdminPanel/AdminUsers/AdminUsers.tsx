@@ -69,8 +69,8 @@ function AdminUsers() {
             <section id="admin-users">
                 <div className="page-title">
                     <div className="title">
-                        <h1>Users</h1>
-                        <p>{users.list.length} entries found</p>
+                        <h1>Gebruikers</h1>
+                        <p>{users.list.length} inzendingen gevonden</p>
                     </div>
                     <div className="actions">
                         <Button
@@ -88,7 +88,7 @@ function AdminUsers() {
                                 });
                             }}
                         >
-                            + Add new entry
+                            + Voeg een nieuw item toe
                         </Button>
                     </div>
                 </div>
@@ -101,7 +101,7 @@ function AdminUsers() {
                             setSearchValue(e.target.value)
                         }
                         prepend={<SearchIcon />}
-                        placeholder={"Search..."}
+                        placeholder={"Zoekopdracht..."}
                     />
                 </div>
                 <Table

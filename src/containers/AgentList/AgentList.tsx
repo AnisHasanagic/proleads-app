@@ -55,8 +55,8 @@ function AgentList() {
         <DashboardLayout>
             <section id="admin-company">
                 <div className="mr-3">
-                    <h1>Make calls</h1>
-                    <p>List companies assigned to you</p>
+                    <h1>Bellen</h1>
+                    <p>Maak een lijst van bedrijven die aan u zijn toegewezen</p>
                 </div>
                 <div className="search-butt">
                     <Input
@@ -66,7 +66,7 @@ function AgentList() {
                         onChange={(e: any): void =>
                             setSearchValue(e.target.value)
                         }
-                        placeholder={"Search..."}
+                        placeholder={"Zoekopdracht..."}
                         disabled={company.list.length === 0}
                     />
                 </div>

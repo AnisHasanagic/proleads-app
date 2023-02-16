@@ -24,7 +24,6 @@ function ExportPage() {
     const INITIAL_STATE = {
         company_id: "",
         startDate: "",
-        endDate: "",
     };
 
     const [searchValue, setSearchValue] = useState<any>(null);
@@ -38,9 +37,6 @@ function ExportPage() {
 
     let validations: any = {
         startDate: {
-            isRequired: true,
-        },
-        endDate: {
             isRequired: true,
         },
     };
@@ -126,15 +122,13 @@ function ExportPage() {
     let sum: any = 0;
 
     const CreateCallList = (): void => {
-        console.log(exportData);
         dispatch(loadCalls(exportData));
-
-        console.log(call.list);
-
-        setExcel(call.list);
-
         setExist(true);
     };
+
+    useEffect(() => {
+        setExcel(call.list);
+    }, [call.list]);
 
     useEffect(() => {
         dispatch(loadCalls(exportData));
@@ -168,19 +162,20 @@ function ExportPage() {
         );
 
         const total_price = call.list.reduce(
-            (accumulator: number, currentValue: any) => accumulator + currentValue.price,
+            (accumulator: number, currentValue: any) =>
+                accumulator + currentValue.price,
             0
-          );
+        );
 
-        ws['A' + (call.list.length + 2)] = { t:'s', v: 'Total Price' };
-        ws['M' + (call.list.length + 2)] = { t:'n', v: total_price };
-    
+        ws["A" + (call.list.length + 2)] = { t: "s", v: "Total Price" };
+        ws["M" + (call.list.length + 2)] = { t: "n", v: total_price };
+
         utils.sheet_add_aoa(ws, [headers], { origin: "A1" });
 
         utils.book_append_sheet(wb, ws, "List of calls");
 
         const name = `${exportData.company_id}-${exportData.startDate}-${
-            exportData.endDate
+            exportData.startDate
         }-${Date.now()}.xlsx`;
 
         writeFile(wb, name);
@@ -192,39 +187,31 @@ function ExportPage() {
         <DashboardLayout>
             <section id="admin-company">
                 <div className="mr-3">
-                    <h1>All calls</h1>
-                    <p>List of all calls for a company.</p>
+                    <h1>Exporteren</h1>
+                    <p>
+                        Selecteer de maand waarvoor u geëxporteerde gegevens
+                        nodig heeft.
+                    </p>
                     <div>{company.company_info}</div>
                 </div>
                 <div id="export-modal">
                     <div className="dates">
                         <Input
                             id={"startDate"}
-                            type={"date"}
+                            type={"month"}
                             name={"startDate"}
                             value={exportData["startDate"]}
                             onChange={(e: any): void => changeEvent(e)}
                             onBlur={(e: any): void => blurEvent(e)}
                             placeholder={"from"}
-                            label="Date from:"
-                        />
-
-                        <Input
-                            id={"endDate"}
-                            type={"date"}
-                            name={"endDate"}
-                            value={exportData["endDate"]}
-                            onChange={(e: any): void => changeEvent(e)}
-                            onBlur={(e: any): void => blurEvent(e)}
-                            placeholder={"to"}
-                            label="Date to:"
+                            label="Maand:"
                         />
                     </div>
                     <Button
                         btnClass={ButtonTypes.primary}
                         onClick={() => CreateCallList()}
                     >
-                        Create
+                        Creëren
                     </Button>
                     {exist && (
                         <div className="preview">
@@ -232,12 +219,14 @@ function ExportPage() {
                                 data={call.list}
                                 columnsToShow={columnsToShow}
                             />
-                            <Button
-                                btnClass={ButtonTypes.primary}
-                                onClick={() => handleExport()}
-                            >
-                                Export
-                            </Button>
+                            {excel.length > 0 && (
+                                <Button
+                                    btnClass={ButtonTypes.primary}
+                                    onClick={() => handleExport()}
+                                >
+                                    Exporteren
+                                </Button>
+                            )}
                         </div>
                     )}
                 </div>

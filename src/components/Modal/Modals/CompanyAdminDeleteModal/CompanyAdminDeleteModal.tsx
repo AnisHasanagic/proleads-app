@@ -27,21 +27,22 @@ function CompanyAdminDeleteModal({ company, closeModal }: any) {
     return (
         <div id="company-admin-delete-modal">
             <div className="title">
-                <h3>Confirmation</h3>
+                <h3>Bevestiging</h3>
             </div>
             <div className="description">
-                <p>
-                    Are you sure you want to {company.isDeleted ? 'activate' : 'delete'} company
-                    <br />
-                    <b>{company.name}</b>?
-                </p>
+                {!company.isDeleted && <p>
+                    Weet u zeker dat u bedrijf <b>{company.name}</b> wilt verwijderen?
+                </p>}
+                {company.isDeleted && <p>                
+                    Weet je zeker dat je bedrijf <b>{company.name}</b> wilt activeren?
+                </p>}
             </div>
             <div className="actions">
                 <Button onClick={closeModal} line>
-                    Cancel
+                    Annuleren
                 </Button>
                 <Button onClick={confirmDeletion} btnClass={company.isDeleted ? ButtonTypes.primary : ButtonTypes.danger}>
-                    Confirm
+                    Bevestigen
                 </Button>
             </div>
         </div>

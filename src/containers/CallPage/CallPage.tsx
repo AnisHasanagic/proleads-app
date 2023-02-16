@@ -356,7 +356,7 @@ function CallPage() {
                                 <hr />
                                 <div className="divi">
                                     <div className="inputFields">
-                                        <p className="adm">Gender</p>
+                                        <p className="adm">Geslacht</p>
                                         <div className="toggle">
                                             <Select
                                                 id="gender"
@@ -368,13 +368,13 @@ function CallPage() {
                                                 displayEmpty
                                             >
                                                 <MenuItem value={""}>
-                                                    None
+                                                    Gen
                                                 </MenuItem>
                                                 <MenuItem value={"male"}>
-                                                    Mr.
+                                                    Dhr.
                                                 </MenuItem>
                                                 <MenuItem value={"female"}>
-                                                    Mrs.
+                                                    Mevr.
                                                 </MenuItem>
                                             </Select>
                                         </div>
@@ -393,8 +393,8 @@ function CallPage() {
                                                 blurEvent(e)
                                             }
                                             errors={newCallErrors["full_name"]}
-                                            placeholder={"Full name"}
-                                            label={"Full name"}
+                                            placeholder={"Voor-en achternaam"}
+                                            label={"Voor-en achternaam"}
                                         />
                                     </div>
                                 </div>
@@ -411,8 +411,8 @@ function CallPage() {
                                         }
                                         onBlur={(e: any): void => blurEvent(e)}
                                         errors={newCallErrors["phone"]}
-                                        placeholder={"Phone"}
-                                        label={"Phone"}
+                                        placeholder={"Telefoon"}
+                                        label={"Telefoon"}
                                     />
                                 </div>
 
@@ -425,14 +425,14 @@ function CallPage() {
                                     onChange={(e: any): void => changeEvent(e)}
                                     onBlur={(e: any): void => blurEvent(e)}
                                     errors={newCallErrors["description"]}
-                                    placeholder={"Description"}
-                                    label={"Description"}
+                                    placeholder={"Beschrijving"}
+                                    label={"Beschrijving"}
                                     isTextarea
                                 />
 
                                 <hr />
 
-                                <p className="adm">Action</p>
+                                <p className="adm">Actie</p>
                                 <div className="toggle">
                                     <Select
                                         id="action"
@@ -442,29 +442,28 @@ function CallPage() {
                                         color="success"
                                         displayEmpty
                                     >
-                                        <MenuItem value={""}>None</MenuItem>
+                                        <MenuItem value={""}>Geen</MenuItem>
                                         <MenuItem value={"send_email"}>
-                                            Send Email
+                                            E-mail verzenden
                                         </MenuItem>
                                         <MenuItem
                                             value={"connect_and_send_email"}
                                         >
-                                            Connect and Send Email
+                                            Maak verbinding en stuur e-mail
                                         </MenuItem>
                                         <MenuItem value={"wrong_number"}>
-                                            Wrong number
+                                            Verkeerd nummer
                                         </MenuItem>
                                     </Select>
                                 </div>
                                 <p className="desc">
-                                    Action indicates what will happen after call
-                                    is created.
+                                    Actie geeft aan wat er zal gebeuren nadat de oproep is gemaakt.
                                 </p>
                                 {(newCall.action === 'send_email' || newCall.action === 'connect_and_send_email') && <div className="emails">
                                     <RNSelect
                                         isMulti
                                         name="email"
-                                        placeholder="Select emails"
+                                        placeholder="Selecteer e-mails"
                                         options={newInfo.email
                                             .split(",")
                                             .map((email: string) => {
@@ -495,7 +494,7 @@ function CallPage() {
                                         call.add.loading || hasSomeErrors()
                                     }
                                 >
-                                    Create
+                                    Creëren
                                 </Button>
                             </Form>
                         </div>
@@ -516,16 +515,16 @@ function CallPage() {
                                         <div>
                                             <div>
                                                 <strong>
-                                                    Company address:{" "}
+                                                    Bedrijfsadres:{" "}
                                                 </strong>
                                                 {newInfo.call_address}
                                             </div>
                                             <div>
-                                                <strong>Company email: </strong>
+                                                <strong>E-mail bedrijf: </strong>
                                                 {newInfo.email}
                                             </div>
                                             <div>
-                                                <strong>Company phone: </strong>
+                                                <strong>Bedrijfstelefoon: </strong>
                                                 {newInfo.phone}
                                             </div>
                                         </div>
@@ -540,14 +539,14 @@ function CallPage() {
 
                         <div className="company_information">
                             <div className="scrollInfo">
-                                <strong>Company information: </strong>
+                                <strong>Bedrijfsinformatie: </strong>
                                 {newInfo.call_description}
                             </div>
                         </div>
 
                         <div className="company_information">
                             <div className="scrollInfo">
-                                <strong>Call information: </strong>
+                                <strong>Oproepinformatie: </strong>
                                 {newInfo.call_info}
                             </div>
                         </div>

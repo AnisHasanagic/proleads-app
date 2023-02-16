@@ -10,7 +10,6 @@
         right: -50px;
         bottom: 36px;
         border-radius: 0 10px 10px 0;
-        border: 1px solid $footer-color;
         border-left: none;
         height: 50px;
         width: 50px;
@@ -18,7 +17,8 @@
         font-size: 10px;
         align-items: center;
         justify-content: center;
-        background: $box-color;
+        background: #ffffff;
+        box-shadow: 8px 5px 13px 0px rgb(0 0 0 / 5%);
     }
 
     .right {
@@ -258,7 +258,7 @@
         left: 0;
         top: 0;
         bottom: 0;
-        transform: translateX(-280px);
+        transform: translateX(-240px);
 
         .hamburger-menu {
             display: flex;

@@ -63,8 +63,8 @@ function AdminExport() {
         <DashboardLayout>
             <section id="admin-company">
                 <div className="mr-3">
-                    <h1>All company</h1>
-                    <p>List of all company.</p>
+                    <h1>Exportgegevens</h1>
+                    <p>Exporteer lijst met oproepen voor bedrijf met details.</p>
                 </div>
                 <div className="search-butt">
                 <Input
@@ -72,7 +72,7 @@ function AdminExport() {
                     type={"text"}
                     className={"search"}
                     onChange={(e: any): void => setSearchValue(e.target.value)}
-                    placeholder={"Search..."}
+                    placeholder={"Zoekopdracht..."}
                 />
                 </div>
                 <Table
