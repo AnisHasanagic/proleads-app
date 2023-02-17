@@ -30,9 +30,6 @@ function ExportPage() {
     const call = useSelector((state: any) => state.call);
     const company = useSelector((state: any) => state.company);
     const [exportData, setexportData] = useState<any>(INITIAL_STATE);
-    const detail = useSelector((state: any) => state.detail);
-    const [excel, setExcel] = useState(call.list);
-
     const [exist, setExist] = useState<any>(false);
 
     let validations: any = {
@@ -127,39 +124,65 @@ function ExportPage() {
     };
 
     useEffect(() => {
-        setExcel(call.list);
-    }, [call.list]);
-
-    useEffect(() => {
-        dispatch(loadCalls(exportData));
-    }, []);
-
-    useEffect(() => {
         if (id) {
             setexportData({
                 company_id: id,
+                startDate: "",
             });
         }
     }, [id]);
 
     const handleExport = () => {
-        if (call.list.length === 0) return;
+        if (call.list.length === 0 || !call.company_package) return;
+
+        console.log(call.list);
+
+        const new_list = call.list.map((call: any) => {
+            return {
+                behandeldatum: moment(call.created_at).format("DD/MM/YYYY"),
+                behandeltijd: moment(call.created_at).format("HH:mm:ss"),
+                Gespreksduur: moment.utc(call.time * 1000).format("mm:ss"),
+                bedrijfsnaam: `${call.gender === "male" ? "Dhr." : "Mevr."} ${
+                    call.full_name
+                }`,
+                telefoon_nr: call.phone,
+                email: call.email,
+                Waarden: call.action,
+                notitie: call.description,
+                col: ""
+            };
+        });
 
         var wb = utils.book_new(),
             ws = utils.json_to_sheet([
-                ...call.list,
+                ...new_list,
                 {
-                    full_name: "",
+                    behandeldatum: "",
+                },
+                {
+                    behandeldatum: "",
+                },
+                {
+                    behandeldatum: "",
+                },
+                {
+                    behandeldatum: "",
                 },
             ]);
 
         let headers = Object.keys(call.list[0]);
 
-        headers = headers.map((header) =>
-            header
-                .replace(/_/g, " ")
-                .replace(/(^\w|\s\w)/g, (m) => m.toUpperCase())
-        );
+        headers = [
+            "behandeldatum",
+            "behandeltijd",
+            "Gespreksduur",
+            "bedrijfsnaam",
+            "telefoon_nr",
+            "email",
+            "Waarden",
+            "notitie",
+            ""
+        ];
 
         const total_price = call.list.reduce(
             (accumulator: number, currentValue: any) =>
@@ -167,14 +190,103 @@ function ExportPage() {
             0
         );
 
-        ws["A" + (call.list.length + 2)] = { t: "s", v: "Total Price" };
-        ws["M" + (call.list.length + 2)] = { t: "n", v: total_price };
+        const total_over_seconds = call.list.reduce(
+            (accumulator: number, currentValue: any) =>
+                accumulator +
+                (currentValue.time - currentValue.initial_time > 0
+                    ? currentValue.time - currentValue.initial_time
+                    : 0),
+            0
+        );
+
+        const total_connected = call.list.reduce(
+            (accumulator: number, currentValue: any) =>
+                accumulator +
+                (currentValue.action === 'connect_and_send_email' ? 1 : 0),
+            0
+        );
+
+
+        // ws["A" + (call.list.length + 2)] = { t: "s", v: "Total Price" };
+        // ws["M" + (call.list.length + 2)] = { t: "n", v: total_price };
+
+        ws["C" + (call.list.length + 3)] = {
+            t: "s",
+            v: `${total_over_seconds} sec`,
+        };
+        ws["A" + (call.list.length + 4)] = { t: "s", v: "Mand" };
+        ws["B" + (call.list.length + 4)] = { t: "s", v: "Abonnement" };
+        ws["C" + (call.list.length + 4)] = { t: "s", v: "24/7 toeslag" };
+        ws["D" + (call.list.length + 4)] = { t: "s", v: "Aantals calls" };
+        ws["E" + (call.list.length + 4)] = { t: "s", v: "Ingekochte calls" };
+        ws["F" + (call.list.length + 4)] = { t: "s", v: "Sec boven call" };
+        ws["G" + (call.list.length + 4)] = { t: "s", v: "overgebleven calls" };
+        ws["H" + (call.list.length + 4)] = { t: "s", v: "Overgebleven calls" };
+        ws["I" + (call.list.length + 4)] = {
+            t: "s",
+            v: `Doorverbonden  € ${parseFloat(
+                call.list[0].price_per_connect
+            ).toFixed(2)}`,
+        };
+
+        ws["A" + (call.list.length + 5)] = {
+            t: "s",
+            v: moment(exportData.startDate).format("MMM"),
+        };
+        ws["B" + (call.list.length + 5)] = {
+            t: "s",
+            v: `${call.company_package.total_calls_available} calls`,
+        };
+        ws["D" + (call.list.length + 5)] = { t: "s", v: call.list.length };
+        ws["E" + (call.list.length + 5)] = {
+            t: "s",
+            v:
+                call.company_package.total_calls_available +
+                call.company_package.total_calls_from_prev_month,
+        };
+        ws["F" + (call.list.length + 5)] = {
+            t: "s",
+            v: `${total_over_seconds} x € ${parseFloat(
+                call.list[0].price_per_minutes_overdue
+            ).toFixed(2)} = € ${(
+                (total_over_seconds / call.list[0].overdue_time) *
+                call.list[0].price_per_minutes_overdue
+            ).toFixed(2)}`,
+        };
+
+        const total_used =
+            call.company_package.total_calls_available +
+            call.company_package.total_calls_from_prev_month -
+            call.list.length;
+
+        ws["G" + (call.list.length + 5)] = {
+            t: "s",
+            v: `${total_used < 0 ? Math.abs(total_used) : 0} calls x € ${
+                call.list[0].price_per_call
+            } = € ${(
+                (total_used < 0 ? Math.abs(total_used) : 0) * call.list.length
+            ).toFixed(2)}`,
+        };
+
+        ws["H" + (call.list.length + 5)] = {
+            t: "s",
+            v: total_used > 0 ? total_used : 0,
+        };
+
+        ws["I" + (call.list.length + 5)] = {
+            t: "s",
+            v: `${total_connected}  keer  x € ${call.list[0].price_per_connect} = € ${(total_connected * call.list[0].price_per_connect).toFixed(2)}`,
+        };
 
         utils.sheet_add_aoa(ws, [headers], { origin: "A1" });
 
-        utils.book_append_sheet(wb, ws, "List of calls");
+        utils.book_append_sheet(
+            wb,
+            ws,
+            moment(exportData.startDate).format("MMMM")
+        );
 
-        const name = `${exportData.company_id}-${exportData.startDate}-${
+        const name = `${exportData.company_id}-${
             exportData.startDate
         }-${Date.now()}.xlsx`;
 
@@ -219,7 +331,7 @@ function ExportPage() {
                                 data={call.list}
                                 columnsToShow={columnsToShow}
                             />
-                            {excel.length > 0 && (
+                            {call.list.length > 0 && (
                                 <Button
                                     btnClass={ButtonTypes.primary}
                                     onClick={() => handleExport()}

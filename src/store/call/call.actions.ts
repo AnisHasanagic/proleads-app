@@ -65,7 +65,7 @@ export const loadCalls = (
         }
 
         if (response.ok) {
-            dispatch(loadSuccess({ list: data.calls }));
+            dispatch(loadSuccess({ list: data.calls, company_package: data.company_package }));
             console.log(data.calls)
         } else {
             dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));

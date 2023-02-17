@@ -9,6 +9,7 @@ type CallSlice = {
         errors: any[];
         message: string;
     };
+    company_package: any;
 };
 
 type Call = {
@@ -40,6 +41,7 @@ const INITIAL_STATE: CallSlice = {
         errors: [],
         message: "",
     },
+    company_package: null,
 };
 
 const callSlice = createSlice({
@@ -52,17 +54,20 @@ const callSlice = createSlice({
         loadPending: (state) => {
             state.loading = true;
             state.list = [];
+            state.company_package = null;
             state.error = "";
         },
         loadSuccess: (state, action) => {
             state.loading = false;
             state.list = action.payload.list;
+            state.company_package = action.payload.company_package;
             state.error = "";
         },
         loadFailed: (state, action) => {
             state.loading = false;
             state.list = [];
             state.error = action.payload.message;
+            state.company_package = null;
         },
         addLoading: (state) => {
             state.add.loading = true;
