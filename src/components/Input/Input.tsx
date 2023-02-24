@@ -55,7 +55,7 @@ export const Input = React.memo(
                             className="formControl"
                             disabled={disabled}
                             value={value}
-                            autoComplete="none"
+                            autoComplete="new-password"
                         />
                     )}
                     {isTextarea && (
@@ -75,7 +75,7 @@ export const Input = React.memo(
                             disabled={disabled}
                             value={value}
                             rows={7}
-                            autoComplete="none"
+                            autoComplete="new-password"
                         />
                     )}
                     {append ? <div className="append">{append}</div> : null}

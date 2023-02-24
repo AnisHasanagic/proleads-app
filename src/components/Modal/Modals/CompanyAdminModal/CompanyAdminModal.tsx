@@ -38,6 +38,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
         overdue_time: "",
         company_fields: "",
         package_calls: "",
+        package_price: "",
+        support_price: "",
         isDeleted: false,
     };
 
@@ -85,6 +87,12 @@ function CompanyAdminModal({ company, isAdd }: any) {
         package_calls: {
             isRequired: true,
         },
+        package_price: {
+            isRequired: true,
+        },
+        support_price: {
+            isRequired: true,
+        }
     };
 
     const changeEvent = (e: any): void => {
@@ -98,11 +106,11 @@ function CompanyAdminModal({ company, isAdd }: any) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (value !== true || value !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (value.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -135,11 +143,11 @@ function CompanyAdminModal({ company, isAdd }: any) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (value !== true || value !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (value.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -190,8 +198,6 @@ function CompanyAdminModal({ company, isAdd }: any) {
             ...list.slice(index + 1),
         ];
 
-        console.log(list);
-
         const validator = validations[name];
         const errors = [];
 
@@ -199,11 +205,11 @@ function CompanyAdminModal({ company, isAdd }: any) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (name !== true || name !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (name.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -229,7 +235,6 @@ function CompanyAdminModal({ company, isAdd }: any) {
         let list = [...inputList];
 
         value = valueToLowerCase(value);
-        console.log(value);
 
         list = [
             ...list.slice(0, index),
@@ -239,8 +244,6 @@ function CompanyAdminModal({ company, isAdd }: any) {
             ...list.slice(index + 1),
         ];
 
-        console.log(list);
-
         const validator = validations[name];
         const errors = [];
 
@@ -248,11 +251,11 @@ function CompanyAdminModal({ company, isAdd }: any) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (name !== true || name !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (name.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -282,20 +285,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
     useEffect(() => {
         if (company && company.id) {
             setNewCompany({
-                name: company.name,
-                address: company.address,
-                email: company.email.split(','),
-                description: company.description,
-                company_info: company.company_info,
-                price_per_call: company.price_per_call,
-                price_per_connect: company.price_per_connect,
-                initial_time: company.initial_time,
-                price_per_minutes_overdue: company.price_per_minutes_overdue,
-                overdue_time: company.overdue_time,
-                company_fields: company.company_fields,
-                isDeleted: company.isDeleted,
-                phone: company.phone,
-                package_calls: company.package_calls,
+                ...company,
+                email: company.email.split(","),
             });
             setNewCompanyErrors({});
             setInputList(JSON.parse(company.company_fields));
@@ -385,7 +376,9 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                                     </div>
                                                     <span
                                                         data-tag-handle
-                                                        onClick={() => removeEmail(index)}
+                                                        onClick={() =>
+                                                            removeEmail(index)
+                                                        }
                                                     >
                                                         ×
                                                     </span>
@@ -411,53 +404,64 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     </div>
                     <div className="inp">
                         <FormGroup>
+                            <FormGroup row>
+                                <Input
+                                    id={"package_price"}
+                                    type={"number"}
+                                    name={"package_price"}
+                                    value={newCompany["package_price"]}
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={newCompanyErrors["package_price"]}
+                                    placeholder={"Pakket prijs"}
+                                    label={"Pakket prijs"}
+                                />
+                                <Input
+                                    id={"package_calls"}
+                                    type={"number"}
+                                    name={"package_calls"}
+                                    value={newCompany["package_calls"]}
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={newCompanyErrors["package_calls"]}
+                                    placeholder={"Pakket oproepen"}
+                                    label={"Pakket oproepen"}
+                                />
+                            </FormGroup>
+                            <FormGroup row>
+                                <Input
+                                    id={"price_per_call"}
+                                    type={"number"}
+                                    name={"price_per_call"}
+                                    value={newCompany["price_per_call"]}
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={newCompanyErrors["price_per_call"]}
+                                    placeholder={"Prijs per gesprek"}
+                                    label={"Prijs per gesprek"}
+                                />
+                                <Input
+                                    id={"initial_time"}
+                                    type={"number"}
+                                    name={"initial_time"}
+                                    value={newCompany["initial_time"]}
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={newCompanyErrors["initial_time"]}
+                                    placeholder={"Initiële beltijd (s)"}
+                                    label={"Initiële beltijd (s)"}
+                                />
+                            </FormGroup>
                             <Input
-                                id={"package_calls"}
+                                id={"support_price"}
                                 type={"number"}
-                                name={"package_calls"}
-                                value={newCompany["package_calls"]}
+                                name={"support_price"}
+                                value={newCompany["support_price"]}
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
-                                errors={newCompanyErrors["package_calls"]}
-                                placeholder={"Maandelijkse pakketoproepen"}
-                                label={"Maandelijkse pakketoproepen"}
-                            />
-                            <Input
-                                id={"price_per_call"}
-                                type={"number"}
-                                name={"price_per_call"}
-                                value={newCompany["price_per_call"]}
-                                onChange={(e: any): void => changeEvent(e)}
-                                onBlur={(e: any): void => blurEvent(e)}
-                                errors={newCompanyErrors["price_per_call"]}
-                                placeholder={"Prijs per gesprek"}
-                                label={"Prijs per gesprek"}
-                            />
-                            <Input
-                                id={"initial_time"}
-                                type={"number"}
-                                name={"initial_time"}
-                                value={newCompany["initial_time"]}
-                                onChange={(e: any): void => changeEvent(e)}
-                                onBlur={(e: any): void => blurEvent(e)}
-                                errors={newCompanyErrors["initial_time"]}
-                                placeholder={"Initiële beltijd (s)"}
-                                label={"Initiële beltijd (s)"}
-                            />
-                            <Input
-                                id={"price_per_minutes_overdue"}
-                                type={"number"}
-                                name={"price_per_minutes_overdue"}
-                                value={newCompany["price_per_minutes_overdue"]}
-                                onChange={(e: any): void => changeEvent(e)}
-                                onBlur={(e: any): void => blurEvent(e)}
-                                errors={
-                                    newCompanyErrors[
-                                        "price_per_minutes_overdue"
-                                    ]
-                                }
-                                placeholder={"Achterstallige prijs"}
-                                label={"Achterstallige prijs"}
+                                errors={newCompanyErrors["support_price"]}
+                                placeholder={"24/7 toeslag"}
+                                label={"24/7 toeslag"}
                             />
                             <Input
                                 id={"company_info"}
@@ -475,17 +479,36 @@ function CompanyAdminModal({ company, isAdd }: any) {
                     </div>
                     <div className="inp">
                         <FormGroup>
-                            <Input
-                                id={"overdue_time"}
-                                type={"number"}
-                                name={"overdue_time"}
-                                value={newCompany["overdue_time"]}
-                                onChange={(e: any): void => changeEvent(e)}
-                                onBlur={(e: any): void => blurEvent(e)}
-                                errors={newCompanyErrors["overdue_time"]}
-                                placeholder={"Achterstallige tijd (s)"}
-                                label={"Achterstallige tijd (s)"}
-                            />
+                            <FormGroup row>
+                                <Input
+                                    id={"price_per_minutes_overdue"}
+                                    type={"number"}
+                                    name={"price_per_minutes_overdue"}
+                                    value={
+                                        newCompany["price_per_minutes_overdue"]
+                                    }
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={
+                                        newCompanyErrors[
+                                            "price_per_minutes_overdue"
+                                        ]
+                                    }
+                                    placeholder={"Achterstallige prijs"}
+                                    label={"Achterstallige prijs"}
+                                />
+                                <Input
+                                    id={"overdue_time"}
+                                    type={"number"}
+                                    name={"overdue_time"}
+                                    value={newCompany["overdue_time"]}
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={newCompanyErrors["overdue_time"]}
+                                    placeholder={"Achterstallige tijd (s)"}
+                                    label={"Achterstallige tijd (s)"}
+                                />
+                            </FormGroup>
                             <Input
                                 id={"price_per_connect"}
                                 type={"number"}
@@ -494,8 +517,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 onChange={(e: any): void => changeEvent(e)}
                                 onBlur={(e: any): void => blurEvent(e)}
                                 errors={newCompanyErrors["price_per_connect"]}
-                                placeholder={"Prijs per aansluiting"}
-                                label={"Prijs per aansluiting"}
+                                placeholder={"Prijs per doorverbinden"}
+                                label={"Prijs per doorverbinden"}
                             />
                             <Input
                                 id={"phone"}
@@ -617,7 +640,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 updateCompany(
                                     {
                                         ...newCompany,
-                                        email: newCompany.email.join(','),
+                                        email: newCompany.email.join(","),
                                         company_fields:
                                             JSON.stringify(inputList),
                                     },
@@ -640,7 +663,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                             dispatch(
                                 addCompany({
                                     ...newCompany,
-                                    email: newCompany.email.join(','),
+                                    email: newCompany.email.join(","),
                                     company_fields: JSON.stringify(inputList),
                                 })
                             )

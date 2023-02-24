@@ -19,29 +19,25 @@ function ExportCallsModal({ companys }: any) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const call_state = useSelector((state: any) => state.calls);
-    
-   const [calls,setCalls] = useState<any>(null)
 
-
-   
+    const [calls, setCalls] = useState<any>(null);
 
     const INITIAL_STATE = {
-        company_id:"",
+        company_id: "",
         startDate: "",
-        endDate: ""
-    }
+        endDate: "",
+    };
 
     let validations: any = {
         startDate: {
-            isRequired: true
+            isRequired: true,
         },
         endDate: {
-            isRequired: true
-        }
-    }
+            isRequired: true,
+        },
+    };
 
-    const [exportData, setexportData] = useState<any>(INITIAL_STATE)
-
+    const [exportData, setexportData] = useState<any>(INITIAL_STATE);
 
     /*
         useEffect(()=>{
@@ -59,11 +55,11 @@ function ExportCallsModal({ companys }: any) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (value !== true || value !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (value.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -73,7 +69,6 @@ function ExportCallsModal({ companys }: any) {
             ...exportData,
             [name]: value ? value.trim() : "",
         });
-
     };
 
     const blurEvent = (e: any): void => {
@@ -87,11 +82,11 @@ function ExportCallsModal({ companys }: any) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (value !== true || value !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (value.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -101,23 +96,18 @@ function ExportCallsModal({ companys }: any) {
             ...exportData,
             [name]: value ? value.trim() : "",
         });
-
     };
-    useEffect(()=>{
-       if(companys){
-        setexportData({
-        company_id: companys.id
+    useEffect(() => {
+        if (companys) {
+            setexportData({
+                company_id: companys.id,
+            });
         }
-        )
-       }
-    },[companys])
-    
-    const CreateCallList = ():void => {
-        console.log(exportData.company_id)
-        dispatch((loadCalls(exportData))
-        )
-        }
+    }, [companys]);
 
+    const CreateCallList = (): void => {
+        dispatch(loadCalls(exportData));
+    };
 
     return (
         <div id="Company-admin-modal">
@@ -141,11 +131,11 @@ function ExportCallsModal({ companys }: any) {
                 placeholder={"to"}
             />
             <Button
-                        btnClass={ButtonTypes.primary}
-                        onClick={() => CreateCallList()}
-                    >
-                        Create
-                    </Button>
+                btnClass={ButtonTypes.primary}
+                onClick={() => CreateCallList()}
+            >
+                Create
+            </Button>
         </div>
     );
 }

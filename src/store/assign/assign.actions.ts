@@ -47,9 +47,9 @@ export const toggleAssign =
                 return dispatch(addError(error));
             }
         } catch (e: any) {
-            toast.error("SOMETHING_WENT_WRONG");
+            toast.error("Er is iets fout gegaan.");
             return dispatch(
-                addError({ message: "SOMETHING_WENT_WRONG", errors: null })
+                addError({ message: "Er is iets fout gegaan.", errors: null })
             );
         }
     };

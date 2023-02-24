@@ -38,7 +38,6 @@ export const login =
                 await storeToken(data.token);
 
                 socket.emit("user_connected", data.data.user.id);
-                console.log(data.data.user.id);
                 const user = data.data.user;
                 let Online = {};
                 // socket.on("users_status", function (users) {
@@ -61,10 +60,9 @@ export const login =
                 return dispatch(loginError(error));
             }
         } catch (e: any) {
-            console.log(e);
-            toast.error("LOGIN_ERROR");
+            toast.error("Login fout.");
             return dispatch(
-                loginError({ message: "LOGIN_ERROR", errors: null })
+                loginError({ message: "Login fout.", errors: null })
             );
         }
     };
@@ -74,7 +72,7 @@ export const logout = (): any => async (dispatch: any) => {
         dispatch(loading());
 
         await removeToken();
-        toast.success("SUCCESSFUL_LOGOUT");
+        toast.success("Succesvol uitgelogd.");
 
         return dispatch(logoutSuccess());
     } catch (e: any) {
@@ -129,7 +127,7 @@ export const createAccount =
             }
 
             if (response.ok) {
-                toast.success("NEW_USER_CREATED");
+                toast.success("Nieuwe gebruiker aangemaakt.");
 
                 return dispatch(createAccountSuccess());
             } else {
@@ -142,10 +140,10 @@ export const createAccount =
                 return dispatch(createAccountError(error));
             }
         } catch (e: any) {
-            toast.error("REGISTRATION_ERROR");
+            toast.error("Registratie fout.");
             return dispatch(
                 createAccountError({
-                    message: "REGISTRATION_ERROR",
+                    message: "Registratie fout.",
                     errors: null,
                 })
             );

@@ -40,7 +40,7 @@ function UserAdminModal({ user, isAdd }: any) {
         full_name: {
             isRequired: true,
         },
-        last_name: {
+        password: {
             isRequired: true,
         },
     };
@@ -56,11 +56,11 @@ function UserAdminModal({ user, isAdd }: any) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (value !== true || value !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (value.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -93,11 +93,11 @@ function UserAdminModal({ user, isAdd }: any) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (value !== true || value !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (value.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -251,7 +251,7 @@ function UserAdminModal({ user, isAdd }: any) {
                                         value={false}
                                         aria-label="false"
                                     >
-                                        ONWAAR
+                                        Nee
                                     </ToggleButton>
                                     <ToggleButton
                                         className="tglbtn"
@@ -259,7 +259,7 @@ function UserAdminModal({ user, isAdd }: any) {
                                         value={true}
                                         aria-label="true"
                                     >
-                                        WAAR
+                                        Ja
                                     </ToggleButton>
                                 </ToggleButtonGroup>
                             </div>
@@ -290,7 +290,7 @@ function UserAdminModal({ user, isAdd }: any) {
                                                 value={false}
                                                 aria-label="false"
                                             >
-                                                ONWAAR
+                                                Nee
                                             </ToggleButton>
                                             <ToggleButton
                                                 className="tglbtn"
@@ -298,7 +298,7 @@ function UserAdminModal({ user, isAdd }: any) {
                                                 value={true}
                                                 aria-label="true"
                                             >
-                                                WAAR
+                                                Ja
                                             </ToggleButton>
                                         </ToggleButtonGroup>
                                     </div>

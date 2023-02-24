@@ -17,7 +17,7 @@ const {
     loadFailedAssignedUsers,
     loadingUnassignedUsers,
     loadSuccessUnassignedUsers,
-    loadFailedUnassignedUsers
+    loadFailedUnassignedUsers,
 } = CompanySlice.actions;
 
 export const loadCompanies =
@@ -39,10 +39,10 @@ export const loadCompanies =
             if (response.ok) {
                 dispatch(loadSuccess({ list: data.companys }));
             } else {
-                dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+                dispatch(loadFailed({ message: "Er is iets fout gegaan." }));
             }
         } catch (e: any) {
-            dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+            dispatch(loadFailed({ message: "Er is iets fout gegaan." }));
         }
     };
 
@@ -61,14 +61,13 @@ export const loadCompany =
             } catch {
                 data = await response.clone().text();
             }
-            console.log('company', data);
             if (response.ok) {
                 dispatch(loadSuccess({ list: data.company }));
             } else {
-                dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+                dispatch(loadFailed({ message: "Er is iets fout gegaan." }));
             }
         } catch (e: any) {
-            dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+            dispatch(loadFailed({ message: "Er is iets fout gegaan." }));
         }
     };
 
@@ -90,7 +89,7 @@ export const updateCompany =
             if (response.ok) {
                 dispatch(updateSuccess());
                 dispatch(loadCompanies(true));
-                toast.success("COMPANY_UPDATED_SUCCESSFULLY");
+                toast.success("Bedrijfsrecord succesvol bijgewerkt.");
             } else {
                 const error: any = {
                     message: data.message ? data.message : null,
@@ -101,9 +100,12 @@ export const updateCompany =
                 return dispatch(updateError(error));
             }
         } catch (e: any) {
-            toast.error("SOMETHING_WENT_WRONG");
+            toast.error("Er is iets fout gegaan.");
             return dispatch(
-                updateError({ message: "SOMETHING_WENT_WRONG", errors: null })
+                updateError({
+                    message: "Er is iets fout gegaan.",
+                    errors: null,
+                })
             );
         }
     };
@@ -127,7 +129,7 @@ export const addCompany =
             if (response.ok) {
                 dispatch(addSuccess());
                 dispatch(loadCompanies(true));
-                toast.success("COMPANY_ADDED_SUCCESSFULLY");
+                toast.success("Bedrijfsrecord succesvol toegevoegd.");
             } else {
                 const error: any = {
                     message: data.message ? data.message : null,
@@ -138,9 +140,9 @@ export const addCompany =
                 return dispatch(addError(error));
             }
         } catch (e: any) {
-            toast.error("SOMETHING_WENT_WRONG");
+            toast.error("Er is iets fout gegaan.");
             return dispatch(
-                addError({ message: "SOMETHING_WENT_WRONG", errors: null })
+                addError({ message: "Er is iets fout gegaan.", errors: null })
             );
         }
     };
@@ -150,8 +152,6 @@ export const loadAssignedUsers =
     async (dispatch: any) => {
         try {
             dispatch(loadingAssignedUsers());
-
-            console.log(company_id);
 
             const response = await CompanyService.getAllAssigned(company_id);
 
@@ -167,12 +167,14 @@ export const loadAssignedUsers =
                 dispatch(loadSuccessAssignedUsers({ list: data.users }));
             } else {
                 dispatch(
-                    loadFailedAssignedUsers({ message: "SOMETHING_WENT_WRONG" })
+                    loadFailedAssignedUsers({
+                        message: "Er is iets fout gegaan.",
+                    })
                 );
             }
         } catch (e: any) {
             dispatch(
-                loadFailedAssignedUsers({ message: "SOMETHING_WENT_WRONG" })
+                loadFailedAssignedUsers({ message: "Er is iets fout gegaan." })
             );
         }
     };
@@ -196,9 +198,17 @@ export const loadUnAssignedUsers =
             if (response.ok) {
                 dispatch(loadSuccessUnassignedUsers({ list: data.users }));
             } else {
-                dispatch(loadFailedUnassignedUsers({ message: "SOMETHING_WENT_WRONG" }));
+                dispatch(
+                    loadFailedUnassignedUsers({
+                        message: "Er is iets fout gegaan.",
+                    })
+                );
             }
         } catch (e: any) {
-            dispatch(loadFailedUnassignedUsers({ message: "SOMETHING_WENT_WRONG" }));
+            dispatch(
+                loadFailedUnassignedUsers({
+                    message: "Er is iets fout gegaan.",
+                })
+            );
         }
     };

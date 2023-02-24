@@ -44,17 +44,11 @@ function CallPage() {
     const INITIAL_Call = {
         company_id: "",
         user_id: "",
-        start_time: "",
-        end_time: "",
-        price_per_call: "",
-        price_per_connect: "",
-        initial_time: "",
-        price_per_minutes_overdue: "",
-        overdue_time: "",
         call_fields: "",
         full_name: "",
         gender: "",
         email: [],
+        user_email: "",
         phone: "",
         description: "",
         start_timer: "",
@@ -77,26 +71,7 @@ function CallPage() {
 
     const [newCallErrors, setNewCallErrors] = useState<any>({});
 
-    const validations: any = {
-        price_per_call: {
-            isRequired: true,
-        },
-        price_per_connect: {
-            isRequired: true,
-        },
-        initial_time: {
-            isRequired: true,
-        },
-        price_per_minutes_overdue: {
-            isRequired: true,
-        },
-        overdue_time: {
-            isRequired: true,
-        },
-        call_fields: {
-            isRequired: true,
-        },
-    };
+    const validations: any = {};
 
     const changeEvent = (e: any): void => {
         const name = e.target.name;
@@ -109,11 +84,11 @@ function CallPage() {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (value !== true || value !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (value.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -146,11 +121,11 @@ function CallPage() {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (value !== true || value !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (value.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -192,11 +167,11 @@ function CallPage() {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (name !== true || name !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (name.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -225,11 +200,11 @@ function CallPage() {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (name !== true || name !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (name.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -261,11 +236,6 @@ function CallPage() {
                 ...INITIAL_Call,
                 user_id: users.id,
                 company_id: detail.id,
-                price_per_call: detail.price_per_call,
-                price_per_connect: detail.price_per_connect,
-                initial_time: detail.initial_time,
-                price_per_minutes_overdue: detail.price_per_minutes_overdue,
-                overdue_time: detail.overdue_time,
                 start_timer: startTime,
             });
             let fields = JSON.parse(detail.company_fields);
@@ -286,7 +256,7 @@ function CallPage() {
             addCall(
                 {
                     ...newCall,
-                    email: newCall.email.join(','),
+                    email: newCall.email.join(","),
                     call_fields: JSON.stringify(inputList),
                     end_timer: endTime,
                 },
@@ -320,7 +290,7 @@ function CallPage() {
         setNewCall({
             ...newCall,
             email: [],
-        })
+        });
     }, [newCall.action]);
 
     return (
@@ -331,29 +301,6 @@ function CallPage() {
                     <div className="secDiv">
                         <div className="form">
                             <Form>
-                                {inputList.map((field: any, i: any) => {
-                                    return (
-                                        <Input
-                                            id={"company_field" + i}
-                                            name={Object.keys(field)[0]}
-                                            type={"text"}
-                                            value={Object.values(field)[0]}
-                                            onChange={(e: any): void =>
-                                                changeInputEvent(e, i)
-                                            }
-                                            onBlur={(e: any): void =>
-                                                blurInputEvent(e, i)
-                                            }
-                                            placeholder={beutifyString(
-                                                Object.keys(field)[0]
-                                            )}
-                                            label={beutifyString(
-                                                Object.keys(field)[0]
-                                            )}
-                                        />
-                                    );
-                                })}
-                                <hr />
                                 <div className="divi">
                                     <div className="inputFields">
                                         <p className="adm">Geslacht</p>
@@ -398,23 +345,52 @@ function CallPage() {
                                         />
                                     </div>
                                 </div>
-
-                                <div className="divi">
-                                    <Input
-                                        id={"phone"}
-                                        className="inputs"
-                                        type={"text"}
-                                        name={"phone"}
-                                        value={newCall["phone"]}
-                                        onChange={(e: any): void =>
-                                            changeEvent(e)
-                                        }
-                                        onBlur={(e: any): void => blurEvent(e)}
-                                        errors={newCallErrors["phone"]}
-                                        placeholder={"Telefoon"}
-                                        label={"Telefoon"}
-                                    />
-                                </div>
+                                <Input
+                                    id={"phone"}
+                                    className="inputs"
+                                    type={"text"}
+                                    name={"phone"}
+                                    value={newCall["phone"]}
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={newCallErrors["phone"]}
+                                    placeholder={"Telefoon"}
+                                    label={"Telefoon"}
+                                />
+                                <Input
+                                    id={"user_email"}
+                                    className="inputs"
+                                    type={"text"}
+                                    name={"user_email"}
+                                    value={newCall["user_email"]}
+                                    onChange={(e: any): void => changeEvent(e)}
+                                    onBlur={(e: any): void => blurEvent(e)}
+                                    errors={newCallErrors["user_email"]}
+                                    placeholder={"Email"}
+                                    label={"Email"}
+                                />
+                                {inputList.map((field: any, i: any) => {
+                                    return (
+                                        <Input
+                                            id={"company_field" + i}
+                                            name={Object.keys(field)[0]}
+                                            type={"text"}
+                                            value={Object.values(field)[0]}
+                                            onChange={(e: any): void =>
+                                                changeInputEvent(e, i)
+                                            }
+                                            onBlur={(e: any): void =>
+                                                blurInputEvent(e, i)
+                                            }
+                                            placeholder={beutifyString(
+                                                Object.keys(field)[0]
+                                            )}
+                                            label={beutifyString(
+                                                Object.keys(field)[0]
+                                            )}
+                                        />
+                                    );
+                                })}
 
                                 <Input
                                     className="desc"
@@ -449,41 +425,47 @@ function CallPage() {
                                         <MenuItem
                                             value={"connect_and_send_email"}
                                         >
-                                            Maak verbinding en stuur e-mail
+                                            Doorverbinden en stuur e-mail
                                         </MenuItem>
-                                        <MenuItem value={"wrong_number"}>
-                                            Verkeerd nummer
+                                        <MenuItem value={"connect"}>
+                                            Doorverbinden
                                         </MenuItem>
                                     </Select>
                                 </div>
                                 <p className="desc">
-                                    Actie geeft aan wat er zal gebeuren nadat de oproep is gemaakt.
+                                    Actie geeft aan wat er zal gebeuren nadat de
+                                    oproep is gemaakt.
                                 </p>
-                                {(newCall.action === 'send_email' || newCall.action === 'connect_and_send_email') && <div className="emails">
-                                    <RNSelect
-                                        isMulti
-                                        name="email"
-                                        placeholder="Selecteer e-mails"
-                                        options={newInfo.email
-                                            .split(",")
-                                            .map((email: string) => {
-                                                return {
-                                                    value: email,
-                                                    label: email,
-                                                };
-                                            })}
-                                        onChange={(e) => {
-                                            setNewCall({
-                                                ...newCall,
-                                                email: e.map(
-                                                    (email: any) => email.value
-                                                ),
-                                            });
-                                        }}
-                                        className="basic-multi-select"
-                                        classNamePrefix="select"
-                                    />
-                                </div>}
+                                {(newCall.action === "send_email" ||
+                                    newCall.action ===
+                                        "connect_and_send_email") && (
+                                    <div className="emails">
+                                        <RNSelect
+                                            isMulti
+                                            name="email"
+                                            placeholder="Selecteer e-mails"
+                                            options={newInfo.email
+                                                .split(",")
+                                                .map((email: string) => {
+                                                    return {
+                                                        value: email,
+                                                        label: email,
+                                                    };
+                                                })}
+                                            onChange={(e) => {
+                                                setNewCall({
+                                                    ...newCall,
+                                                    email: e.map(
+                                                        (email: any) =>
+                                                            email.value
+                                                    ),
+                                                });
+                                            }}
+                                            className="basic-multi-select"
+                                            classNamePrefix="select"
+                                        />
+                                    </div>
+                                )}
                                 <hr />
 
                                 <Button
@@ -514,17 +496,19 @@ function CallPage() {
                                     title={
                                         <div>
                                             <div>
-                                                <strong>
-                                                    Bedrijfsadres:{" "}
-                                                </strong>
+                                                <strong>Bedrijfsadres: </strong>
                                                 {newInfo.call_address}
                                             </div>
                                             <div>
-                                                <strong>E-mail bedrijf: </strong>
+                                                <strong>
+                                                    E-mail bedrijf:{" "}
+                                                </strong>
                                                 {newInfo.email}
                                             </div>
                                             <div>
-                                                <strong>Bedrijfstelefoon: </strong>
+                                                <strong>
+                                                    Bedrijfstelefoon:{" "}
+                                                </strong>
                                                 {newInfo.phone}
                                             </div>
                                         </div>

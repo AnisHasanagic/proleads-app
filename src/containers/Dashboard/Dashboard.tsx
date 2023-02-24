@@ -83,7 +83,7 @@ function Dashboard() {
                                 }
                             </li>
                             <li>
-                                E-mail verzonden en verbonden:{" "}
+                                Doorverbinden en stuur e-mail:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) =>
@@ -93,11 +93,11 @@ function Dashboard() {
                                 }
                             </li>
                             <li>
-                                Verkeerd nummer:{" "}
+                                Doorverbinden:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) =>
-                                            call.action === "wrong_number"
+                                            call.action === "connect"
                                     ).length
                                 }
                             </li>

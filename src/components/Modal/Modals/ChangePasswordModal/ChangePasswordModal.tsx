@@ -45,11 +45,11 @@ function ChangePasswordModal({ user }: any) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (value !== true || value !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (value.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
             }
@@ -83,16 +83,15 @@ function ChangePasswordModal({ user }: any) {
             if (validator.isRequired) {
                 if (validator.isBoolean) {
                     if (value !== true || value !== false) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 } else {
                     if (value.length < 1) {
-                        errors.push("REQUIRED_FIELD");
+                        errors.push("Veld is verplicht.");
                     }
                 }
 
                 if (validator.sameAs && id === "Repeatpassword") {
-                    console.log(value);
                     if (value !== newUserPassword[validator.sameAs]) {
                         errors.push("PASSWORD_DO_NOT_MATCH");
                     }

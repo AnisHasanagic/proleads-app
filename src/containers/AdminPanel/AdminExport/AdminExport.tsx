@@ -32,7 +32,6 @@ function AdminExport() {
     }, []);
 
     const showCompany = (Company: any) => {
-        console.log(Company)
         setCurrentCompany(Company);
         navigate('/dashboard/admin-panel/export/' + Company.id, Company.id)
     };

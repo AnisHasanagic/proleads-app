@@ -31,7 +31,7 @@ export const addCall =
 
                 if (response.ok) {
                     dispatch(addSuccess());
-                    toast.success("CALL_MADE_SUCCESSFULLY");
+                    toast.success("Oproep succesvol gedaan.");
                     navigate('/dashboard/calls')
                 } else {
                     const error: any = {
@@ -43,9 +43,9 @@ export const addCall =
                     return dispatch(addError(error));
                 }
             } catch (e: any) {
-                toast.error("SOMETHING_WENT_WRONG");
+                toast.error("Er is iets fout gegaan.");
                 return dispatch(
-                    addError({ message: "SOMETHING_WENT_WRONG", errors: null })
+                    addError({ message: "Er is iets fout gegaan.", errors: null })
                 );
             }
         };
@@ -66,11 +66,10 @@ export const loadCalls = (
 
         if (response.ok) {
             dispatch(loadSuccess({ list: data.calls, company_package: data.company_package }));
-            console.log(data.calls)
         } else {
-            dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+            dispatch(loadFailed({ message: "Er is iets fout gegaan." }));
         }
     } catch (e: any) {
-        dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+        dispatch(loadFailed({ message: "Er is iets fout gegaan." }));
     }
 };

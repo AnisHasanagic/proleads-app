@@ -30,10 +30,10 @@ export const loadUsers = (): any => async (dispatch: any) => {
         if (response.ok) {
             dispatch(loadSuccess({ list: data.users }));
         } else {
-            dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+            dispatch(loadFailed({ message: "Er is iets fout gegaan." }));
         }
     } catch (e: any) {
-        dispatch(loadFailed({ message: "SOMETHING_WENT_WRONG" }));
+        dispatch(loadFailed({ message: "Er is iets fout gegaan." }));
     }
 };
 export const createAccount =
@@ -67,7 +67,7 @@ export const createAccount =
 
                     dispatch(createAccountSuccess())
                     dispatch(loadUsers())
-                    toast.success("USER_CREATED_SUCCESSFULLY")
+                    toast.success("Gebruiker succesvol aangemaakt.")
                 } else {
                     const error: any = {
                         message: data.message ? data.message : null,
@@ -78,10 +78,10 @@ export const createAccount =
                     return dispatch(createAccountError(error));
                 }
             } catch (e: any) {
-                toast.error("REGISTRATION_ERROR");
+                toast.error("Registratie fout.");
                 return dispatch(
                     createAccountError({
-                        message: "REGISTRATION_ERROR",
+                        message: "Registratie fout.",
                         errors: null,
                     })
                 );
@@ -107,7 +107,7 @@ export const updateAccount =
                 if (response.ok) {
                     dispatch(updateSuccess());
                     dispatch(loadUsers())
-                    toast.success("USER_UPDATED_SUCCESSFULLY")
+                    toast.success("Gebruiker succesvol geüpdatet.")
 
                 } else {
                     const error: any = {
@@ -119,9 +119,9 @@ export const updateAccount =
                     return dispatch(updateError(error));
                 }
             } catch (e: any) {
-                toast.error("SOMETHING_WENT_WRONG");
+                toast.error("Er is iets fout gegaan.");
                 return dispatch(
-                    updateError({ message: "SOMETHING_WENT_WRONG", errors: null })
+                    updateError({ message: "Er is iets fout gegaan.", errors: null })
                 );
             }
         };
@@ -145,7 +145,7 @@ export const updatePassword =
                 if (response.ok) {
                     dispatch(updateSuccess());
                     dispatch(loadUsers());
-                    toast.success("PASSWORD_CHANGED_SUCCESSFULLY");
+                    toast.success("Wachtwoord succesvol veranderd.");
                     navigate('/dashboard')
 
                 } else {
@@ -158,9 +158,9 @@ export const updatePassword =
                     return dispatch(updateError(error));
                 }
             } catch (e: any) {
-                toast.error("SOMETHING_WENT_WRONG");
+                toast.error("Er is iets fout gegaan.");
                 return dispatch(
-                    updateError({ message: "SOMETHING_WENT_WRONG", errors: null })
+                    updateError({ message: "Er is iets fout gegaan.", errors: null })
                 );
             }
         };
