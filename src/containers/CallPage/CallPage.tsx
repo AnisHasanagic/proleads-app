@@ -256,7 +256,7 @@ function CallPage() {
             addCall(
                 {
                     ...newCall,
-                    email: newCall.email.join(","),
+                    email: newCall.email.map((email: any) => email.value).join(","),
                     call_fields: JSON.stringify(inputList),
                     end_timer: endTime,
                 },
@@ -286,11 +286,29 @@ function CallPage() {
         });
     };
 
+    const email_options = newInfo.email.split(",").map((email: string) => {
+        return {
+            value: email,
+            label: email,
+        };
+    });
+
+
     useEffect(() => {
-        setNewCall({
-            ...newCall,
-            email: [],
-        });
+        if (newCall.action === 'send_email' || newCall.action === 'connect_and_send_email' && email_options.length === 1) {
+            setNewCall({
+                ...newCall,
+                email: [{
+                    label: email_options[0].label,
+                    value: email_options[0].value
+                }],
+            });
+        } else {
+            setNewCall({
+                ...newCall,
+                email: [],
+            });
+        }
     }, [newCall.action]);
 
     return (
@@ -372,6 +390,7 @@ function CallPage() {
                                 {inputList.map((field: any, i: any) => {
                                     return (
                                         <Input
+                                            key={"company_field" + i}
                                             id={"company_field" + i}
                                             name={Object.keys(field)[0]}
                                             type={"text"}
@@ -444,21 +463,12 @@ function CallPage() {
                                             isMulti
                                             name="email"
                                             placeholder="Selecteer e-mails"
-                                            options={newInfo.email
-                                                .split(",")
-                                                .map((email: string) => {
-                                                    return {
-                                                        value: email,
-                                                        label: email,
-                                                    };
-                                                })}
+                                            options={email_options}
+                                            value={newCall.email}
                                             onChange={(e) => {
                                                 setNewCall({
                                                     ...newCall,
-                                                    email: e.map(
-                                                        (email: any) =>
-                                                            email.value
-                                                    ),
+                                                    email: e
                                                 });
                                             }}
                                             className="basic-multi-select"
