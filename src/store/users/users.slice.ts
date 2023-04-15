@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type UsersSlice = {
-    loading: boolean,
-    list: User[],
-    error: string,
+    loading: boolean;
+    list: User[];
+    error: string;
     update: {
         loading: boolean;
         errors: any[];
@@ -14,17 +14,22 @@ type UsersSlice = {
         errors: any[];
         message: string;
     };
-}
+    statistics: {
+        loading: boolean;
+        error: string;
+        list: any[];
+    };
+};
 
 type User = {
-    id: string,
-    role: string,
-    username: string,
-    full_name: string,
-    created_at: Date,
-    updated_at: Date
-}
-const INITIAL_STATE :UsersSlice = {
+    id: string;
+    role: string;
+    username: string;
+    full_name: string;
+    created_at: Date;
+    updated_at: Date;
+};
+const INITIAL_STATE: UsersSlice = {
     list: [],
     loading: false,
     error: "",
@@ -37,6 +42,11 @@ const INITIAL_STATE :UsersSlice = {
         loading: false,
         errors: [],
         message: "",
+    },
+    statistics: {
+        loading: false,
+        list: [],
+        error: "",
     },
 };
 
@@ -87,15 +97,30 @@ const usersSlice = createSlice({
             state.add.message = action.payload.message;
             state.add.errors = action.payload.errors;
         },
-        createAccountSuccess: (state:any) => {
+        createAccountSuccess: (state: any) => {
             state.loading = false;
-          },
-          createAccountError: (state:any, action:any) => {
+        },
+        createAccountError: (state: any, action: any) => {
             state.message = action.payload.message;
             state.errors = action.payload.errors;
             state.userChecked = true;
             state.loading = false;
-          },
+        },
+        loadingStatistics: (state) => {
+            state.statistics.loading = true;
+            state.statistics.error = '';
+            state.statistics.list = [];
+        },
+        loadStatisticsSuccess: (state, action) => {
+            state.statistics.loading = false;
+            state.statistics.list = action.payload.list;
+            state.statistics.error = "";
+        },
+        loadStatisticsFailed: (state, action) => {
+            state.statistics.loading = false;
+            state.statistics.error = action.payload.message;
+            state.statistics.list = [];
+        },
     },
 });
 

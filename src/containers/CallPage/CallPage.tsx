@@ -15,6 +15,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MUIButton from "@mui/material/Button";
 import RNSelect from "react-select";
 
+import phoneImage from "../../assets/FeatherSquare.svg";
+
 function CallPage() {
     const { id }: any = useParams();
     const dispatch = useDispatch();
@@ -22,6 +24,7 @@ function CallPage() {
     const detail = useSelector((state: any) => state.detail);
     const call = useSelector((state: any) => state.call);
     const users = useSelector((state: any) => state.user);
+    const auth = useSelector((state: any) => state.user);
 
     const [open, setOpen] = useState(false);
 
@@ -256,7 +259,9 @@ function CallPage() {
             addCall(
                 {
                     ...newCall,
-                    email: newCall.email.map((email: any) => email.value).join(","),
+                    email: newCall.email
+                        .map((email: any) => email.value)
+                        .join(","),
                     call_fields: JSON.stringify(inputList),
                     end_timer: endTime,
                 },
@@ -293,15 +298,20 @@ function CallPage() {
         };
     });
 
-
     useEffect(() => {
-        if (newCall.action === 'send_email' || newCall.action === 'connect_and_send_email' && email_options.length === 1) {
+        if (
+            newCall.action === "send_email" ||
+            (newCall.action === "connect_and_send_email" &&
+                email_options.length === 1)
+        ) {
             setNewCall({
                 ...newCall,
-                email: [{
-                    label: email_options[0].label,
-                    value: email_options[0].value
-                }],
+                email: [
+                    {
+                        label: email_options[0].label,
+                        value: email_options[0].value,
+                    },
+                ],
             });
         } else {
             setNewCall({
@@ -315,6 +325,44 @@ function CallPage() {
         <DashboardLayout>
             <div id="call-admin-modal">
                 <h1>{newInfo.company_name}</h1>
+                <div className="design">
+                    <div>
+                        <div className="headChart">
+                            <img src={phoneImage} alt="" />
+                            <h2 className="adm">Aantal telefoontjes vandaag</h2>
+                        </div>
+                        <ul className="list-active">
+                            <li>Totaal: {auth.calls.length}</li>
+                            <li>
+                                Verzonden e-mails:{" "}
+                                {
+                                    auth.calls.filter(
+                                        (call: any) =>
+                                            call.action === "send_email"
+                                    ).length
+                                }
+                            </li>
+                            <li>
+                                Doorverbinden en stuur e-mail:{" "}
+                                {
+                                    auth.calls.filter(
+                                        (call: any) =>
+                                            call.action ===
+                                            "connect_and_send_email"
+                                    ).length
+                                }
+                            </li>
+                            <li>
+                                Doorverbinden:{" "}
+                                {
+                                    auth.calls.filter(
+                                        (call: any) => call.action === "connect"
+                                    ).length
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div className="posDiv">
                     <div className="secDiv">
                         <div className="form">
@@ -468,7 +516,7 @@ function CallPage() {
                                             onChange={(e) => {
                                                 setNewCall({
                                                     ...newCall,
-                                                    email: e
+                                                    email: e,
                                                 });
                                             }}
                                             className="basic-multi-select"

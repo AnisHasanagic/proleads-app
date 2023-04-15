@@ -138,7 +138,36 @@ function ExportPage() {
             'connect': 'Doorverbinden'
         }
 
+        let customFields: string[] = [];
+
+        call.list.forEach((call: any) => {
+            const customFields2 = JSON.parse(call.call_fields);
+
+            for (let value of customFields2) {
+                const keys = Object.keys(value);
+
+                customFields = [...customFields, ...keys];
+            }
+        });
+
+        customFields = [...new Set(customFields)];
+
         const new_list = call.list.map((call: any) => {
+            const customFields2 = JSON.parse(call.call_fields);
+
+            const customInputs = {};
+
+            console.log(customFields2);
+            
+            customFields.forEach((key) => {
+                const valueIndex = customFields2.findIndex((val) => val[key]);
+                console.log(valueIndex);
+                
+                customInputs[key] = valueIndex > -1 ? customFields2[valueIndex][key] : '-';
+            });
+
+            console.log(customInputs);
+
             return {
                 behandeldatum: moment(call.created_at).format("DD/MM/YYYY"),
                 behandeltijd: moment(call.created_at).format("HH:mm:ss"),
@@ -150,9 +179,12 @@ function ExportPage() {
                 email: call.user_email,
                 Waarden: callAction[call.action],
                 notitie: call.description,
+                ...customInputs,
                 col: "",
             };
         });
+
+        console.log(new_list);
 
         var wb = utils.book_new(),
             ws = utils.json_to_sheet([
@@ -183,6 +215,7 @@ function ExportPage() {
             "email",
             "Waarden",
             "notitie",
+            ...customFields,
             "",
         ];
 
@@ -205,7 +238,7 @@ function ExportPage() {
             0
         );
 
-        ws["!ref"] = "A1:I10";
+        ws["!ref"] = "A1:I" + call.list.length + 5;
 
         ws["A" + (call.list.length + 4)] = { t: "s", v: "Mand" };
         ws["B" + (call.list.length + 4)] = { t: "s", v: "Abonnement" };
@@ -224,7 +257,7 @@ function ExportPage() {
 
         ws["A" + (call.list.length + 5)] = {
             t: "s",
-            v: moment(exportData.startDate).format("MMM"),
+            v: moment(exportData.startDate).format("MMMM"),
         };
         ws["B" + (call.list.length + 5)] = {
             t: "s",
@@ -244,11 +277,11 @@ function ExportPage() {
         ws["F" + (call.list.length + 5)] = {
             t: "s",
             v: `${
-                total_over_seconds / call.company_package.overdue_time
+                total_over_seconds / (call.company_package.overdue_time || 1)
             } x € ${parseFloat(
                 call.company_package.price_per_minutes_overdue
             ).toFixed(2)} = € ${(
-                (total_over_seconds / call.company_package.overdue_time) *
+                (total_over_seconds / (call.company_package.overdue_time || 1)) *
                 call.company_package.price_per_minutes_overdue
             ).toFixed(2)}`,
         };
@@ -263,7 +296,7 @@ function ExportPage() {
             v: `${total_used < 0 ? Math.abs(total_used) : 0} calls x € ${
                 call.company_package.price_per_call
             } = € ${(
-                (total_used < 0 ? Math.abs(total_used) : 0) * call.list.length
+                (total_used < 0 ? Math.abs(total_used) : 0) * call.company_package.price_per_call
             ).toFixed(2)}`,
         };
 
@@ -284,9 +317,9 @@ function ExportPage() {
         const total_price =
             call.company_package.package_price +
             call.company_package.support_price +
-            (total_over_seconds / call.company_package.overdue_time) *
+            (total_over_seconds / (call.company_package.overdue_time || 1)) *
                 call.company_package.price_per_minutes_overdue +
-            (total_used < 0 ? Math.abs(total_used) : 0) * call.list.length +
+            (total_used < 0 ? Math.abs(total_used) : 0) * call.company_package.price_per_call +
             total_connected * call.company_package.price_per_connect;
 
         ws["A" + (call.list.length + 7)] = { t: "s", v: "Total" };

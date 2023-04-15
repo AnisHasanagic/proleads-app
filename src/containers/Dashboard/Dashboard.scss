@@ -1,4 +1,7 @@
 .Dashboard {
+    overflow: hidden;
+    overflow-x: scroll;
+
     > h1 {
         margin-top: 0;
     }
@@ -33,9 +36,33 @@
             color: #32324D;
         }
 
+        .list-active {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li + li {
+                margin-left: 20px;
+            }
+        }
+
     }
 
     .design + .design {
         margin-top: 20px;
+    }
+
+    .status {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 6px;
+        background-color: #999999;
+        margin-right: 10px;
+
+        &.active {
+            background-color: rgb(44, 177, 44);
+        }
     }
 }

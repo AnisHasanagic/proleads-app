@@ -1,4 +1,7 @@
 #call-admin-modal {
+    overflow: hidden;
+    overflow-x: auto;
+
     hr {
         background-color: #eaeaef;
         height: 1px;
@@ -43,7 +46,7 @@
                 border-top: 1px solid #eaeaef;
                 padding-top: 10px;
                 .scrollInfo {
-                    height: 40vh;
+                    max-height: 40vh;
                     overflow-y: scroll;
                 }
             }
@@ -251,5 +254,48 @@
 
     .emails {
         margin-top: 10px;
+    }
+
+    .design {
+        background-color: white;
+        padding: 20px;
+        width: 100%;
+        border-radius: 20px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+
+        .headChart{
+            display: flex;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .adm {
+            
+            margin-left: 10px;
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 16px;
+            /* identical to box height, or 133% */
+
+
+            /* Light mode/Neutral800 */
+            margin-bottom: -20px;
+            color: #32324D;
+        }
+
+        .list-active {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li + li {
+                margin-left: 20px;
+            }
+        }
+
     }
 }

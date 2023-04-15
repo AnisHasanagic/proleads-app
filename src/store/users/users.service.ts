@@ -24,4 +24,8 @@ export default class UsersService {
             true
         );
     }
+
+    static getStatistics(): Promise<Response> {
+        return apiCall(API_URI + "/user/statistics", null, "GET", true);
+    }
 }

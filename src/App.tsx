@@ -22,7 +22,8 @@ const AdminCompany = React.lazy(()=>import("./containers/AdminPanel/AdminCompany
 const Dashboard = React.lazy(()=>import("./containers/Dashboard/Dashboard"))
 const AgentList = React.lazy(()=>import("./containers/AgentList/AgentList"))
 
-
+import moment from 'moment';
+moment.locale('nl');
 
 function App() {
     return (
