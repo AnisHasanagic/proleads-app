@@ -121,7 +121,7 @@ function Dashboard() {
                                                 }
                                             </li>
                                             <li>
-                                                Doorverbinden en stuur e-mail:{" "}
+                                                Doorverbonden en stuur e-mail:{" "}
                                                 {
                                                     stat.calls.filter(
                                                         (call: any) =>
@@ -131,7 +131,7 @@ function Dashboard() {
                                                 }
                                             </li>
                                             <li>
-                                                Doorverbinden:{" "}
+                                                Doorverbonden:{" "}
                                                 {
                                                     stat.calls.filter(
                                                         (call: any) =>
@@ -177,7 +177,7 @@ function Dashboard() {
                                 }
                             </li>
                             <li>
-                                Doorverbinden en stuur e-mail:{" "}
+                                Doorverbonden en stuur e-mail:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) =>
@@ -187,7 +187,7 @@ function Dashboard() {
                                 }
                             </li>
                             <li>
-                                Doorverbinden:{" "}
+                                Doorverbonden:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) => call.action === "connect"

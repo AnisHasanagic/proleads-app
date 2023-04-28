@@ -28,9 +28,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
         name: "",
         address: "",
         email: [],
-        description: "",
         phone: "",
-        company_info: "",
         price_per_call: "",
         price_per_connect: "",
         initial_time: "",
@@ -45,6 +43,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
 
     const [inputList, setInputList] = useState<any>([]);
     const [newCompany, setNewCompany] = useState<any>(INITIAL_Company);
+    const [description, setDescription] = useState<any>('');
+    const [companyInfo, setCompanyInfo] = useState<any>('');
     const [newCompanyErrors, setNewCompanyErrors] = useState<any>({});
 
     const validations: any = {
@@ -288,10 +288,14 @@ function CompanyAdminModal({ company, isAdd }: any) {
                 ...company,
                 email: company.email.split(","),
             });
+            setCompanyInfo(company.company_info);
+            setDescription(company.description);
             setNewCompanyErrors({});
             setInputList(JSON.parse(company.company_fields));
         } else {
             setNewCompany(INITIAL_Company);
+            setCompanyInfo('');
+            setDescription('');
             setNewCompanyErrors({});
             setInputList([]);
         }
@@ -317,6 +321,15 @@ function CompanyAdminModal({ company, isAdd }: any) {
 
     const handleAddClick = () => {
         setInputList([...inputList, { "": "" }]);
+    };
+
+    const handleChangeRichEditor = (html: string, key: string) => {
+        console.log(html);
+        if (key === 'company_info') {
+            setCompanyInfo(html);
+        } else if (key === 'description') {
+            setDescription(html);
+        }
     };
 
     return (
@@ -392,13 +405,14 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 id={"description"}
                                 type={"text"}
                                 name={"description"}
-                                value={newCompany["description"]}
-                                onChange={(e: any): void => changeEvent(e)}
-                                onBlur={(e: any): void => blurEvent(e)}
+                                value={description}
+                                onChange={handleChangeRichEditor}
+                                onBlur={handleChangeRichEditor}
                                 errors={newCompanyErrors["description"]}
                                 placeholder={"Beschrijving"}
                                 label={"Beschrijving"}
                                 isTextarea
+                                isRich
                             />
                         </FormGroup>
                     </div>
@@ -467,13 +481,14 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                 id={"company_info"}
                                 type={"text"}
                                 name={"company_info"}
-                                value={newCompany["company_info"]}
-                                onChange={(e: any): void => changeEvent(e)}
-                                onBlur={(e: any): void => blurEvent(e)}
+                                value={companyInfo}
+                                onChange={handleChangeRichEditor}
+                                onBlur={handleChangeRichEditor}
                                 errors={newCompanyErrors["company_info"]}
                                 placeholder={"Bedrijfsinfo"}
                                 label={"Bedrijfsinfo"}
                                 isTextarea
+                                isRich
                             />
                         </FormGroup>
                     </div>
@@ -643,6 +658,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                         email: newCompany.email.join(","),
                                         company_fields:
                                             JSON.stringify(inputList),
+                                        company_info: companyInfo,
+                                        description: description
                                     },
                                     company.id
                                 )
@@ -665,6 +682,8 @@ function CompanyAdminModal({ company, isAdd }: any) {
                                     ...newCompany,
                                     email: newCompany.email.join(","),
                                     company_fields: JSON.stringify(inputList),
+                                    company_info: companyInfo,
+                                    description: description
                                 })
                             )
                         }

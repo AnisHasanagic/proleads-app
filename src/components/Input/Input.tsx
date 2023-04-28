@@ -1,5 +1,6 @@
 import React from "react";
 import "./Input.scss";
+import RichEditor from "../RichEditor/RichEditor.component";
 
 export const Input = React.memo(
     ({
@@ -22,6 +23,7 @@ export const Input = React.memo(
         onKeyPress,
         light,
         isTextarea,
+        isRich,
     }: any) => {
         return (
             <div
@@ -39,7 +41,7 @@ export const Input = React.memo(
                         )}
                     </label>
                 )}
-                <div className="inputInner">
+                <div className={'inputInner ' + (isRich ? 'rich' : '')}>
                     {prepend ? <div className="prepend">{prepend}</div> : null}
                     {!isTextarea && (
                         <input
@@ -58,7 +60,10 @@ export const Input = React.memo(
                             autoComplete="new-password"
                         />
                     )}
-                    {isTextarea && (
+                    {isTextarea && isRich && (
+                        <RichEditor editorId={'editor' + name} value={value} handleChange={(html: string) => onChange(html, name)} enableHR />
+                    )}
+                    {isTextarea && !isRich && (
                         <textarea
                             name={name}
                             id={id}

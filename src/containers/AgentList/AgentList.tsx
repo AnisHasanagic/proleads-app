@@ -78,7 +78,7 @@ function AgentList() {
                                 }
                             </li>
                             <li>
-                                Doorverbinden en stuur e-mail:{" "}
+                                Doorverbonden en stuur e-mail:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) =>
@@ -88,7 +88,7 @@ function AgentList() {
                                 }
                             </li>
                             <li>
-                                Doorverbinden:{" "}
+                                Doorverbonden:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) => call.action === "connect"

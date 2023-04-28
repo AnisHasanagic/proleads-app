@@ -343,7 +343,7 @@ function CallPage() {
                                 }
                             </li>
                             <li>
-                                Doorverbinden en stuur e-mail:{" "}
+                                Doorverbonden en stuur e-mail:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) =>
@@ -353,7 +353,7 @@ function CallPage() {
                                 }
                             </li>
                             <li>
-                                Doorverbinden:{" "}
+                                Doorverbonden:{" "}
                                 {
                                     auth.calls.filter(
                                         (call: any) => call.action === "connect"
@@ -485,17 +485,17 @@ function CallPage() {
                                         color="success"
                                         displayEmpty
                                     >
-                                        <MenuItem value={""}>Geen</MenuItem>
+                                        <MenuItem value={""}>Overige</MenuItem>
                                         <MenuItem value={"send_email"}>
-                                            E-mail verzenden
+                                            Email notificatie
                                         </MenuItem>
                                         <MenuItem
                                             value={"connect_and_send_email"}
                                         >
-                                            Doorverbinden en stuur e-mail
+                                            Doorverbonden en stuur e-mail
                                         </MenuItem>
                                         <MenuItem value={"connect"}>
-                                            Doorverbinden
+                                            Doorverbonden
                                         </MenuItem>
                                     </Select>
                                 </div>
@@ -582,14 +582,14 @@ function CallPage() {
                         <div className="company_information">
                             <div className="scrollInfo">
                                 <strong>Bedrijfsinformatie: </strong>
-                                {newInfo.call_description}
+                                <div dangerouslySetInnerHTML={{ __html: newInfo.call_description }} />
                             </div>
                         </div>
 
                         <div className="company_information">
                             <div className="scrollInfo">
                                 <strong>Oproepinformatie: </strong>
-                                {newInfo.call_info}
+                                <div dangerouslySetInnerHTML={{ __html: newInfo.call_info }} />
                             </div>
                         </div>
                     </div>

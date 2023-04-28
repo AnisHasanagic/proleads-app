@@ -36,22 +36,11 @@ function ExportPage() {
         },
     };
     const columnsToShow = [
-        "price_per_call",
-        "price_per_minutes_overdue",
-        "initial_time",
-        "overdue_time",
+        "created_at",
         "time",
-        "price",
     ];
 
-    const keys = [
-        "price_per_call",
-        "price_per_minutes_overdue",
-        "initial_time",
-        "overdue_time",
-        "time",
-        "price",
-    ];
+    const keys = [];
     const search = (data: any) => {
         return data.filter((item: any) =>
             keys.some((key) =>
@@ -132,10 +121,10 @@ function ExportPage() {
         if (call.list.length === 0 || !call.company_package) return;
 
         const callAction: any = {
-            '': 'Genn',
-            'send_email': 'E-mail verzenden',
-            'connect_and_send_email': 'Doorverbinden en stuur e-mail',
-            'connect': 'Doorverbinden'
+            '': 'Geen email naar de klant',
+            'send_email': 'Email notificatie',
+            'connect_and_send_email': 'Doorverbonden en stuur e-mail',
+            'connect': 'Doorverbonden'
         }
 
         let customFields: string[] = [];
@@ -222,8 +211,8 @@ function ExportPage() {
         const total_over_seconds = call.list.reduce(
             (accumulator: number, currentValue: any) =>
                 accumulator +
-                (currentValue.time - currentValue.initial_time > 0
-                    ? currentValue.time - currentValue.initial_time
+                (currentValue.time - call.company_package.initial_time > 0
+                    ? currentValue.time - call.company_package.initial_time
                     : 0),
             0
         );
@@ -378,8 +367,13 @@ function ExportPage() {
                     {exist && (
                         <div className="preview">
                             <Table
-                                data={call.list}
+                                data={call.list.map((call) => ({
+                                    created_at: moment(call.created_at).format('DD-MM-YYYY HH:mm:ss'),
+                                    time: call.time,
+                                }))}
                                 columnsToShow={columnsToShow}
+                                showAll
+                                hidePagination
                             />
                             {call.list.length > 0 && (
                                 <Button

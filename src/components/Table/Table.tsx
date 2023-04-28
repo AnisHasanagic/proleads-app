@@ -14,9 +14,10 @@ const Table = ({
     hidePagination,
     hideHeaders,
     small,
+    showAll,
 }: any) => {
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(!showAll ? 5 : -1);
     const columns = useMemo(() => {
         let columns: any = [];
         if (columnsToShow)

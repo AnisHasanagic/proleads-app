@@ -1,0 +1,22 @@
+.editor
+    width: 100%
+
+    .ql-toolbar
+        background: #ecf0f1
+        border-bottom: 1px solid #d7e0e2
+        position: sticky
+        top: 0
+        z-index: 3
+        display: flex
+
+        button
+            transition: 100ms
+
+            &.ql-active,&:hover
+                background-color: #fff
+                border: 1px solid rgb(221 221 221)
+                border-radius: 3px
+
+                .ql-stroke
+                    stroke: #444!important
+                    color: #444!important

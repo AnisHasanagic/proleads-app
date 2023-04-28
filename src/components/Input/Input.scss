@@ -62,6 +62,12 @@
 
     border: 1px solid #DCDCE4;
     border-radius: 4px;
+
+    &.rich {
+      min-height: auto;
+      max-height: none;
+      overflow: visible;
+    }
   }
 
   .formControl {
