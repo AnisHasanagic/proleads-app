@@ -40,15 +40,6 @@ function ExportPage() {
         "time",
     ];
 
-    const keys = [];
-    const search = (data: any) => {
-        return data.filter((item: any) =>
-            keys.some((key) =>
-                item[key].toString().toLowerCase().includes(searchValue)
-            )
-        );
-    };
-
     const changeEvent = (e: any): void => {
         const name = e.target.name;
         const value = e.target.value;
@@ -120,6 +111,8 @@ function ExportPage() {
     const handleExport = async () => {
         if (call.list.length === 0 || !call.company_package) return;
 
+        console.log(call.list);
+
         const callAction: any = {
             '': 'Geen email naar de klant',
             'send_email': 'Email notificatie',
@@ -166,9 +159,9 @@ function ExportPage() {
                 }`,
                 telefoon_nr: call.phone,
                 email: call.user_email,
+                ...customInputs,
                 Waarden: callAction[call.action],
                 notitie: call.description,
-                ...customInputs,
                 col: "",
             };
         });
@@ -202,9 +195,9 @@ function ExportPage() {
             "bedrijfsnaam",
             "telefoon_nr",
             "email",
+            ...customFields,
             "Waarden",
             "notitie",
-            ...customFields,
             "",
         ];
 

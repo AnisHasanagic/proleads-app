@@ -75,7 +75,7 @@ function AdminExport() {
                 />
                 </div>
                 <Table
-                    data={company.list}
+                    data={search(company.list)}
                     actions={actions}
                     columnsToShow={columnsToShow}
                 />

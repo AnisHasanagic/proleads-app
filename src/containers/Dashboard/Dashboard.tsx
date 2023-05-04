@@ -23,6 +23,10 @@ function Dashboard() {
     useEffect(() => {
         if (auth.role && auth.role === "admin") {
             dispatch(loadStatistics());
+            const interval = setInterval(() => {
+                dispatch(loadStatistics());
+            }, 2000);
+            return () => clearInterval(interval);
         }
     }, [auth.role]);
 
@@ -41,8 +45,11 @@ function Dashboard() {
                     borderRadius: 5,
                 },
             ],
+            totalCalls: statistics.list.reduce((accumulator, currentValue) => {
+                return [...accumulator, ...currentValue.calls]
+            }, []),
         });
-    }, [statistic.list]);
+    }, [statistic.list, statistics.list]);
 
     const [userData, setUserData] = useState({
         labels: statistic.list.map((data: { dan: any }) => data.dan),
@@ -56,6 +63,7 @@ function Dashboard() {
                 borderRadius: 5,
             },
         ],
+        totalCalls: [],
     });
 
     return (
@@ -166,11 +174,11 @@ function Dashboard() {
                             <h2 className="adm">Aantal telefoontjes vandaag</h2>
                         </div>
                         <ul>
-                            <li>Totaal: {auth.calls.length}</li>
+                            <li>Totaal: {userData.totalCalls.length}</li>
                             <li>
                                 Verzonden e-mails:{" "}
                                 {
-                                    auth.calls.filter(
+                                    userData.totalCalls.filter(
                                         (call: any) =>
                                             call.action === "send_email"
                                     ).length
@@ -179,7 +187,7 @@ function Dashboard() {
                             <li>
                                 Doorverbonden en stuur e-mail:{" "}
                                 {
-                                    auth.calls.filter(
+                                    userData.totalCalls.filter(
                                         (call: any) =>
                                             call.action ===
                                             "connect_and_send_email"
@@ -189,7 +197,7 @@ function Dashboard() {
                             <li>
                                 Doorverbonden:{" "}
                                 {
-                                    auth.calls.filter(
+                                    userData.totalCalls.filter(
                                         (call: any) => call.action === "connect"
                                     ).length
                                 }

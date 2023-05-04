@@ -35,7 +35,7 @@ function AgentList() {
     const showCompany = (companys: any) => {
         setIsAdd(false);
         setCurrentCompany(companys);
-        navigate("/dashboard/call/" + companys.id, companys.id);
+        window.location.href = "/dashboard/call/" + companys.id, companys.id;
     };
 
     const actions = [
@@ -53,14 +53,16 @@ function AgentList() {
 
     const search = (data: any) => {
         return data.filter((item: any) =>
-            keys.some((key) => item[key].toLowerCase().includes(searchValue))
+            keys.some((key) =>
+                item[key].toString().toLowerCase().includes(searchValue)
+            )
         );
     };
 
     return (
         <DashboardLayout>
             <section id="agent-company">
-            <div className="design">
+                <div className="design">
                     <div>
                         <div className="headChart">
                             <img src={phoneImage} alt="" />
@@ -120,6 +122,9 @@ function AgentList() {
                     data={search(company.list)}
                     actions={actions}
                     columnsToShow={columnsToShow}
+                    actionsOnRow={{
+                        name: showCompany,
+                    }}
                 />
             </section>
         </DashboardLayout>

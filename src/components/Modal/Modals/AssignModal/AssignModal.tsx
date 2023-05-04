@@ -57,13 +57,13 @@ function AssignModal({ company }: any) {
     const keys = columnsToShow;
     const search = (data: any) => {
         return data.filter((item: any) =>
-            keys.some((key) => item[key].toLowerCase().includes(searchValue))
+            keys.some((key) => item[key].toString().toLowerCase().includes(searchValue))
         );
     };
 
     const search2 = (data: any) => {
         return data.filter((item: any) =>
-            keys.some((key) => item[key].toLowerCase().includes(searchValue2))
+            keys.some((key) => item[key].toString().toLowerCase().includes(searchValue2))
         );
     };
 

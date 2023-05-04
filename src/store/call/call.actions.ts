@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import CallService from "./call.service";
 import CallSlice from "./call.slice";
+import { checkIfUserIsAuthenticated } from "../user/user.actions";
 
 const {
     addLoading,
@@ -32,7 +33,10 @@ export const addCall =
                 if (response.ok) {
                     dispatch(addSuccess());
                     toast.success("Oproep succesvol gedaan.");
-                    navigate('/dashboard/calls')
+                    navigate('/dashboard/calls');
+                    setTimeout(() => {
+                        dispatch(checkIfUserIsAuthenticated())
+                    }, 5000);
                 } else {
                     const error: any = {
                         message: data.message ? data.message : null,

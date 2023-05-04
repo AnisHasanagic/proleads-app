@@ -15,6 +15,7 @@ const Table = ({
     hideHeaders,
     small,
     showAll,
+    actionsOnRow = {},
 }: any) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(!showAll ? 5 : -1);
@@ -129,6 +130,7 @@ const Table = ({
                                                     },
                                                 })}
                                                 className="cell100"
+                                                onClick={actionsOnRow[cell.column.id] ? () => actionsOnRow[cell.column.id](cell.row.original) : undefined}
                                             >
                                                 {cell.render("Cell")}
                                             </td>

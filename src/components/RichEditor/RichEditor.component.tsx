@@ -4,6 +4,7 @@ import "quill/dist/quill.snow.css";
 
 import "./RichEditor.sass";
 import QuillPaste from "./QuillPaste";
+import DOMPurify from 'dompurify';
 
 const Quill = require("quill");
 
@@ -115,7 +116,7 @@ const RichEditor = ({
     };
 
     const onChange = (html) => {
-        handleChange && handleChange(html);
+        handleChange && handleChange(DOMPurify.sanitize(html));
     };
 
     return (

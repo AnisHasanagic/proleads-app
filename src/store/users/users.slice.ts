@@ -109,7 +109,6 @@ const usersSlice = createSlice({
         loadingStatistics: (state) => {
             state.statistics.loading = true;
             state.statistics.error = '';
-            state.statistics.list = [];
         },
         loadStatisticsSuccess: (state, action) => {
             state.statistics.loading = false;

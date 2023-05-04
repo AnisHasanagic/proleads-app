@@ -3,7 +3,6 @@ import AuthService from "./user.service";
 import userSlice from "./user.slice";
 
 import { toast } from "react-toastify";
-import { socket } from "../../utils/socket";
 
 const {
     loginSuccess,
@@ -37,16 +36,15 @@ export const login =
             if (response.ok) {
                 await storeToken(data.token);
 
-                socket.emit("user_connected", data.data.user.id);
+                // socket.emit("user_connected", data.data.user.id);
                 const user = data.data.user;
-                let Online = {};
+                // let Online = {};
                 // socket.on("users_status", function (users) {
                 //     Online = users;
                 // });
                 dispatch(
                     loginSuccess({
                         token: data.token,
-                        OnlineUsers: Online,
                         user,
                     }),
                     toast.success(data.message)
