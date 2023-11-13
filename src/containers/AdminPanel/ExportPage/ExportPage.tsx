@@ -111,8 +111,6 @@ function ExportPage() {
     const handleExport = async () => {
         if (call.list.length === 0 || !call.company_package) return;
 
-        console.log(call.list);
-
         const callAction: any = {
             '': 'Geen email naar de klant',
             'send_email': 'Email notificatie',
@@ -159,6 +157,7 @@ function ExportPage() {
                 }`,
                 telefoon_nr: call.phone,
                 email: call.user_email,
+                agent: call.agent.username,
                 ...customInputs,
                 Waarden: callAction[call.action],
                 notitie: call.description,
@@ -195,6 +194,7 @@ function ExportPage() {
             "bedrijfsnaam",
             "telefoon_nr",
             "email",
+            "agent",
             ...customFields,
             "Waarden",
             "notitie",
