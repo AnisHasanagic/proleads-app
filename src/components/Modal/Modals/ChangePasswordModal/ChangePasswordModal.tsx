@@ -170,7 +170,7 @@ function ChangePasswordModal({ user }: any) {
                     loading={users.update.loading}
                     disabled={users.update.loading || hasSomeErrors()}
                 >
-                    Redden
+                    Opslaan
                 </Button>
             </div>
         </div>

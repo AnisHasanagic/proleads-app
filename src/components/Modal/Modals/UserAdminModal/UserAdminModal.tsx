@@ -332,7 +332,7 @@ function UserAdminModal({ user, isAdd }: any) {
                         loading={users.update.loading}
                         disabled={users.update.loading || hasSomeErrors()}
                     >
-                        Redden
+                        Opslaan
                     </Button>
                 )}
                 {isAdd && (

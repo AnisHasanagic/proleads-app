@@ -95,7 +95,7 @@ function AssignModal({ company }: any) {
                     />
                 </div>
                 <div className="unassign">
-                    <p>AToegewezen agenten</p>
+                    <p>Agent toewijzen</p>
                     <Input
                         id={"search"}
                         type={"text"}

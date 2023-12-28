@@ -670,7 +670,7 @@ function CompanyAdminModal({ company, isAdd }: any) {
                             company_state.update.loading || hasSomeErrors()
                         }
                     >
-                        Redden
+                        Opslaan
                     </Button>
                 )}
                 {isAdd && (
